@@ -13,10 +13,11 @@ import {
     Row,
     Col
   } from "reactstrap";
+  import { Link } from "react-router-dom"
 
 const Login = () => {
     return <>
-<section className="section section-shaped">
+<section className="login section section-shaped full-width">
  <div className="shape shape-style-1 section-background">
               <span />
               <span />
@@ -81,6 +82,16 @@ const Login = () => {
                           </Button>
                         </div>
                       </Form>
+                      <Row className="mt-4"> 
+                        <Col>
+                          <p className="small-text">Don't have an account, signup <Link to="/signup">Here</Link></p>
+                        </Col>
+                        <Col>
+                            <p className="small-text">Go back to <Link to="/">
+                            home page
+                              </Link></p>
+                        </Col>
+                      </Row>
                     </CardBody>
                   </Card>
                 </Col>
