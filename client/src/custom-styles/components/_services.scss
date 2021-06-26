@@ -1,0 +1,225 @@
+.services {
+  padding: 40px 3px;
+  position: relative;
+  margin-top: -9px;
+  width: 100%;
+}
+
+.services-container {
+  width: 90%;
+}
+
+// styling for card
+.card-custom {
+  //card functionality
+
+  perspective: 150rem;
+  -moz-perspective: 150rem;
+  position: relative;
+  height: 370px;
+  max-width: 350px;
+  margin-bottom: 50px;
+  border: none;
+
+  &__side {
+    height: 370px;
+    transition: all 0.8s;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 1.5rem 4rem rgba($color: rgb(0, 0, 0), $alpha: 0.15);
+    max-width: 350px;
+
+    &--front {
+      background-color: #ffffff;
+    }
+
+    &--back {
+      transform: rotateY(180deg);
+
+      &-1 {
+        background-image: linear-gradient(
+          to right bottom,
+          var(--site-theme-color),
+          #9ba8f1
+        );
+      }
+
+      &-2 {
+        background-image: linear-gradient(
+          to right bottom,
+          var(--site-orange-color),
+          #fda28d
+        );
+      }
+
+      &-3 {
+        background-image: linear-gradient(
+          to right bottom,
+          var(--site-green-color),
+          #9be9c8
+        );
+      }
+
+      &-4 {
+        background-image: linear-gradient(
+          to right bottom,
+          var(--site-red-color),
+          #fa93a8
+        );
+      }
+    }
+  }
+
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0);
+  }
+
+  //card styling
+  &__picture {
+    background-size: cover;
+    height: 370px;
+    background-blend-mode: screen;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    -moz-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+    &--1 {
+      background-image: linear-gradient(
+          to right bottom,
+          var(--site-theme-color),
+          #9ba8f1
+        ),
+        url(../../images/dstv.png);
+    }
+
+    &--2 {
+      background-image: linear-gradient(
+          to right bottom,
+          var(--site-orange-color),
+          #fda28d
+        ),
+        url(../../images/topup.png);
+    }
+
+    &--3 {
+      background-image: linear-gradient(
+          to right bottom,
+          var(--site-green-color),
+          #9be9c8
+        ),
+        url(../../images/data.png);
+    }
+
+    &--4 {
+      background-image: linear-gradient(
+          to right bottom,
+          var(--site-red-color),
+          #fa93a8
+        ),
+        url(../../images/movie.png);
+    }
+  }
+
+  &__heading {
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: right;
+    font-weight: 300;
+    color: #fff;
+    position: absolute;
+    top: 230px;
+    right: 2rem;
+    width: 75%;
+  }
+
+  &__heading-span {
+    padding: 7px 10px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+
+    &--1 {
+      background-image: linear-gradient(
+        to right bottom,
+        var(--site-theme-color),
+        #9ba8f1
+      );
+    }
+
+    &--2 {
+      background-image: linear-gradient(
+        to right bottom,
+        var(--site-orange-color),
+        #fda28d
+      );
+    }
+
+    &--3 {
+      background-image: linear-gradient(
+        to right bottom,
+        var(--site-green-color),
+        #9be9c8
+      );
+    }
+
+    &--4 {
+      background-image: linear-gradient(
+        to right bottom,
+        var(--site-red-color),
+        #fa93a8
+      );
+      margin-top: 15px;
+    }
+  }
+
+  // back side styling
+  &__cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+  }
+
+  &__price-box {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+
+  &__price-only {
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  &__platforms {
+    padding: 10px;
+    margin-bottom: 25px;
+
+    ul {
+      list-style: none;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    li {
+      text-align: center;
+      font-size: 15px;
+      padding: 6px;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+}

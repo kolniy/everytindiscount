@@ -1,0 +1,83 @@
+.contact-section {
+  width: 100%;
+  position: relative;
+  padding: 70px 5px;
+
+  & .contact-section-social p {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--site-theme-color);
+  }
+
+  & .contact-section-social {
+    & .social-icons-section .social-icon-link {
+      margin-left: 10px;
+      background-color: var(--site-theme-color);
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    & .social-icon {
+      color: var(--site-white-color);
+    }
+
+    & .silent {
+      font-size: 13px;
+      font-weight: 300;
+      color: #525f7f;
+      text-transform: lowercase;
+      letter-spacing: 0.8px;
+    }
+
+    & .no-display {
+      display: none;
+    }
+  }
+
+  & .para-style {
+    font-size: 16px;
+  }
+
+  & .contact-us-methods {
+    margin-top: 38px;
+  }
+
+  & .contact-section-form p {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 15px;
+    color: var(--site-theme-color);
+    text-align: center;
+  }
+
+  & .contact-section-form .card {
+    padding: 7px 2px;
+    box-shadow: none !important;
+    transition: all 0.8s;
+    max-width: 25rem;
+    border-radius: 15px;
+    // box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+  }
+
+  & .contact-section-form button {
+    margin-top: 2rem;
+  }
+
+  .contact-input-style {
+    background-color: #fafafa;
+    box-shadow: none;
+    border-radius: 15px;
+  }
+
+  .message-submit-btn {
+    border-radius: 25px;
+    padding: 12px 40px;
+  }
+
+  .submit-message-btn-container {
+    width: fit-content;
+    margin-left: auto;
+  }
+}

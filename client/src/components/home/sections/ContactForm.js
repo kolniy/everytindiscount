@@ -31,8 +31,8 @@ const ContactForm = () => {
                 >
                 <FormGroup>
                     <Input
-                    className="form-control-alternative"
-                     placeholder="John smith"
+                    className="form-control-alternative contact-input-style"
+                     placeholder="Name"
                      type="name"
                      value={name}
                      name="name"
@@ -42,8 +42,8 @@ const ContactForm = () => {
                     </FormGroup>
                     <FormGroup>
                     <Input
-                    className="form-control-alternative"
-                     placeholder="name@example.com"
+                    className="form-control-alternative contact-input-style"
+                     placeholder="Email"
                      type="email"
                      value={email}
                      name="email"
@@ -52,8 +52,8 @@ const ContactForm = () => {
                 />
                     </FormGroup>
             <Input
-            className="form-control-alternative"
-            placeholder="Your message here..."
+            className="form-control-alternative contact-input-style"
+            placeholder="Message"
             rows="3"
             type="textarea"
             name="message"
@@ -61,8 +61,8 @@ const ContactForm = () => {
             onChange={(e) => updateFormData(e)}
             required
           />
-          <FormGroup>
-              <Button className="btn-icon" type="submit" color="primary" size="lg"> Send Message {" "} <i className="fa fa-envelope" aria-hidden="true"></i> </Button>
+          <FormGroup className="submit-message-btn-container">
+              <Button className="btn-icon message-submit-btn" type="submit" color="primary" size="lg"> Send {" "} <i className="fa fa-envelope" aria-hidden="true"></i> </Button>
           </FormGroup>
                 </Form>
             </CardBody>

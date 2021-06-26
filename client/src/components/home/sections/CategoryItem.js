@@ -3,7 +3,7 @@ import { Col, Card, CardImg, CardBody, Button } from "reactstrap"
 
 const CategoryItem = ({ billerLogo, billerName, billerDesc }) => {
     return <>
-        <Col md="4" lg="4" className="mb-4">
+        <Col md="3" sm="3" className="mb-4">
                       <Card className="card-lift--hover shadow border-0 category-item">
                         <CardBody className="py-5">
                           <div className="card-image-container">

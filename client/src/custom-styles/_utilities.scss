@@ -1,0 +1,12 @@
+.site-section-heading {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--site-theme-color);
+  transition: all 0.3s;
+  cursor: pointer;
+  margin-bottom: 60px;
+}
+
+.site-section-heading:hover {
+  transform: skewX(-15deg);
+}

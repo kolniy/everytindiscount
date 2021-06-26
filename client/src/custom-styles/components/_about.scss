@@ -1,0 +1,57 @@
+.about-section {
+  width: 100%;
+  position: relative;
+  padding: 110px 5px;
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: cover;
+  position: relative;
+
+  & .color-white {
+    color: var(--site-grey-color);
+  }
+
+  & p {
+    font-size: 18px;
+    font-weight: 500;
+    z-index: 1000;
+  }
+}
+
+.services-container {
+  z-index: 1000;
+  position: relative;
+}
+
+.about-circles {
+  border-radius: 50%;
+  background-color: #b6b2e2;
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+}
+
+.circle-1 {
+  height: 140px;
+  width: 140px;
+  top: 0;
+}
+
+.circle-2 {
+  height: 200px;
+  width: 200px;
+  left: 20%;
+}
+
+.circle-3 {
+  height: 160px;
+  width: 160px;
+  right: 0;
+  top: 10;
+}
+
+.circle-4 {
+  height: 240px;
+  width: 240px;
+  left: 40%;
+  bottom: 0;
+}

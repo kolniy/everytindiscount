@@ -14,6 +14,7 @@ import {
     Col
   } from "reactstrap";
   import { Link } from "react-router-dom"
+  import logo from "../../images/logo.png"
 
 const Register = () => {
     return <>
@@ -28,12 +29,15 @@ const Register = () => {
               <span />
               <span />
     </div>
-            <Container className="pt-lg-7">
+            <Container className="pt-lg-2">
               <Row className="justify-content-center">
                 <Col lg="5">
                   <Card className="bg-secondary shadow border-0">
-                    <CardBody className="px-lg-5 py-lg-5">
-                      <div className="text-center text-muted mb-4">
+                    <CardBody className="px-lg-5">
+                    <div className="site-logo-container">
+                        <img src={logo} className="img-fluid" alt="everytindiscount logo" />
+                      </div>
+                      <div className="text-center text-muted mb-3 mt-3">
                         <small>Create a new account with your credentials</small>
                       </div>
                       <Form role="form">
@@ -71,14 +75,6 @@ const Register = () => {
                             />
                           </InputGroup>
                         </FormGroup>
-                        <div className="text-muted font-italic">
-                          <small>
-                            password strength:{" "}
-                            <span className="text-success font-weight-700">
-                              strong
-                            </span>
-                          </small>
-                        </div>
                         <Row className="my-4">
                           <Col xs="12">
                             <div className="custom-control custom-control-alternative custom-checkbox">
@@ -106,24 +102,33 @@ const Register = () => {
                         </Row>
                         <div className="text-center">
                           <Button
-                            className="mt-4"
+                            className="mt-3 btn-signup"
                             color="primary"
                             type="button"
                           >
-                            Create account
+                            Sign up
                           </Button>
                         </div>
                       </Form>
-                      <Row className="mt-4"> 
+                      <Row className="mt-3"> 
                         <Col>
-                          <p className="small-text">Have an account, Login <Link to="/login">Here</Link></p>
-                        </Col>
-                        <Col>
-                            <p className="small-text">Go back to <Link to="/">
+                            <p className="small-text text-center">Go back to <Link to="/">
                             home page
                               </Link></p>
                         </Col>
                       </Row>
+                    </CardBody>
+                  </Card>
+                  <Card className="mt-3">
+                    <CardBody className="card-body-sm-pb">
+                    <Row>
+                    <Col sm="7"> 
+                    <p className="small-text">Already Have An Account?</p>
+                    </Col>
+                    <Col sm="5">
+                    <Link className="signin-cta" to="/login">Sign in</Link>
+                    </Col>
+                    </Row>
                     </CardBody>
                   </Card>
                 </Col>

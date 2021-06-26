@@ -28,7 +28,7 @@ const CategoryTabs = () => {
     }
 
     return <>
-    <div className="nav-wrapper mb-5">
+    <div className="nav-wrapper mb-2">
               <Nav
                 className="nav-fill flex-column flex-md-row"
                 id="tabs-icons-text"

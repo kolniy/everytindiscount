@@ -1,0 +1,23 @@
+.navbar-dark {
+  max-height: 70px;
+
+  .navbar-nav .nav-link {
+    color: var(--site-text-color);
+    font-weight: 400;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: var(--site-text-color);
+    font-weight: 400;
+  }
+
+  .navbar-btn {
+    color: var(--site-white-color);
+    background-color: var(--site-theme-color);
+    border-radius: 25px;
+  }
+
+  .toggler-style {
+    color: var(--site-theme-color);
+  }
+}

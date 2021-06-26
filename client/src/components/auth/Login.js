@@ -14,6 +14,7 @@ import {
     Col
   } from "reactstrap";
   import { Link } from "react-router-dom"
+  import logo from "../../images/logo.png"
 
 const Login = () => {
     return <>
@@ -28,12 +29,15 @@ const Login = () => {
               <span />
               <span />
     </div>
-            <Container className="pt-lg-7">
+            <Container className="pt-lg-4">
               <Row className="justify-content-center">
                 <Col lg="5">
                   <Card className="bg-secondary shadow border-0">
-                    <CardBody className="px-lg-5 py-lg-5">
-                      <div className="text-center text-muted mb-4">
+                    <CardBody className="px-lg-5">
+                      <div className="site-logo-container">
+                        <img src={logo} className="img-fluid" alt="everytindiscount logo" />
+                      </div>
+                      <div className="text-center text-muted mt-3 mb-3">
                         <small>Login with your credentials</small>
                       </div>
                       <Form role="form">
@@ -61,20 +65,12 @@ const Login = () => {
                             />
                           </InputGroup>
                         </FormGroup>
-                        <Row className="my-4">
-                          <Col xs="12">
-                            <div className="custom-control custom-control-alternative custom-checkbox">
-                              <input
-                                className="custom-control-input"
-                                id="customCheckRegister"
-                                type="checkbox"
-                              />
-                            </div>
-                          </Col>
-                        </Row>
+                        <div className="text-muted mt-1 mb-1">
+                        <small>Forgot your passord? Click Here</small>
+                      </div>
                         <div className="text-center">
                           <Button
-                            className="mt-4"
+                            className="mt-4 btn-login"
                             color="primary"
                             type="button"
                           >
@@ -84,14 +80,23 @@ const Login = () => {
                       </Form>
                       <Row className="mt-4"> 
                         <Col>
-                          <p className="small-text">Don't have an account, signup <Link to="/signup">Here</Link></p>
-                        </Col>
-                        <Col>
-                            <p className="small-text">Go back to <Link to="/">
+                            <p className="small-text text-center">Go back to <Link to="/">
                             home page
                               </Link></p>
                         </Col>
                       </Row>
+                    </CardBody>
+                  </Card>
+                  <Card className="mt-3">
+                    <CardBody className="card-body-sm-pb">
+                    <Row>
+                    <Col sm="7"> 
+                    <p className="small-text">Don't have an account yet?</p>
+                    </Col>
+                    <Col sm="5">
+                    <Link className="signin-cta" to="/signup">Sign up</Link>
+                    </Col>
+                    </Row>
                     </CardBody>
                   </Card>
                 </Col>

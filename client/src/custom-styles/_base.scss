@@ -1,0 +1,28 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* // site-theme-color-blue : 5E72E4
+// site-secondary-color-blue : 11CDEF
+// site-green-color : 2DCE89
+// site-red-color : F5365C
+// site-orange-color: FB6340 */
+:root {
+  --site-white-color: #ffffff;
+  --site-theme-color: #5e72e4;
+  --site-secondary-blue: #11cdef;
+  --site-green-color: #2dce89;
+  --site-red-color: #f5365c;
+  --site-orange-color: #fb6340;
+  --site-grey-color: #f4f5f7;
+  --site-text-color: #181818;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Lato" sans-serif;
+}

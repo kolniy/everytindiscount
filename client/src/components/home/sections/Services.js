@@ -8,20 +8,20 @@ import CardRed from "./cards/CardRed"
 const Services = () => {
     return (
         <>
-        <div id="services" className="services">
-            <Container>
+        <div id="services" className="services text-center">
+            <Container className="services-container" fluid>
                 <h2 className="text-center site-section-heading">Our Services</h2>
                 <Row>
-                    <Col md="4">
+                    <Col sm="6" md="3">
                         <CardBlue />
                     </Col>
-                    <Col md="4">
+                    <Col sm="6" md="3">
                     <CardOrange />
                     </Col>
-                    <Col md="4">
+                    <Col sm="6" md="3">
                     <CardGreen />
                     </Col>
-                    <Col md="4">
+                    <Col sm="6" md="3">
                     <CardRed />
                     </Col>
                 </Row>

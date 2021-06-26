@@ -1,6 +1,4 @@
 import React from "react"
-import { Link } from "react-router-dom"
-import { Button } from "reactstrap"
 
 const CardOrange = () => {
     return (<>
@@ -16,9 +14,6 @@ const CardOrange = () => {
               <div className="card-custom__side card-custom__side--back card-custom__side--back-2">
                 <div className="card-custom__cta">
                 <div className="card-custom__price-box">
-                    <p className="card-custom__price-only">
-                      Supported PlatForms
-                    </p>
                   </div>
                   <div className="card-custom__platforms">
                     <ul>
@@ -31,16 +26,6 @@ const CardOrange = () => {
                       <li>spectranet</li>
                     </ul>
                   </div>
-                  <Button
-                    color="warning"
-                    size="lg"
-                    type="button"
-                    className="ml-1"
-                    tag={Link}
-                    to="/signup"
-                  >
-                    GET STARTED
-                  </Button>
                 </div>
               </div>
             </div>

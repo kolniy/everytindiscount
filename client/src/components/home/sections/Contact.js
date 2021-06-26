@@ -17,11 +17,13 @@ const Contact = () => {
             <p className="h6">Follow us on</p>
             
             <div className="social-icons-section">
-            <a href="https://www.facebook.com/everytindiscount/" rel="noopener noreferrer" target="_blank" className="social-icon-facebook"> <i class="fa fa-facebook-official social-icon-facebook" aria-hidden="true"></i><p className="no-display">Facebook</p></a>
-
-            <a href="https://www.instagram.com/everytindiscount/" rel="noopener noreferrer" target="_blank" className="social-icon"><i className="fa fa-instagram social-icon-instagram" aria-hidden="true"></i><p className="no-display">some hidden text</p></a>
-
-            <p className="h6">Email</p>
+            <span className="social-icon-link">
+            <a href="https://www.facebook.com/everytindiscount/" rel="noopener noreferrer" target="_blank"> <i className="fa fa-facebook-official social-icon" aria-hidden="true"></i><span className="no-display">Facebook</span></a>
+            </span>
+            <span className="social-icon-link">
+            <a href="https://www.instagram.com/everytindiscount/" rel="noopener noreferrer" target="_blank"><i className="fa fa-instagram social-icon" aria-hidden="true"></i><span className="no-display">some hidden text</span></a>
+            </span>
+            <p className="h6 mt-3">Email</p>
             <p className="silent"><i className="fa fa-envelope" aria-hidden="true"></i>{"  "}
             customerservice@everytindiscount.com</p>
             <p className="h6">Telephone</p>

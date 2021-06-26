@@ -1,0 +1,47 @@
+.categorySection {
+  padding: 70px 3px;
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+
+  .category-container {
+    width: 90%;
+  }
+
+  & .nav-pills .nav-link {
+    cursor: pointer;
+    background-color: var(--site-grey-color);
+    border-radius: 17px;
+    color: #949191;
+    box-shadow: none;
+    transition: all 0.4s;
+  }
+
+  & .nav-pills .nav-link:hover {
+    color: var(--site-white-color);
+    background-color: var(--site-theme-color);
+  }
+
+  & .nav-pills .nav-link.active,
+  .nav-pills .show > .nav-link {
+    color: var(--site-white-color);
+    background-color: var(--site-theme-color);
+  }
+
+  & .card {
+    border: none;
+
+    & h6 {
+      font-weight: 700;
+    }
+
+    & .card-image-container {
+      max-width: 120px;
+      margin-bottom: 19px;
+    }
+  }
+
+  & .para-style {
+    text-transform: capitalize;
+  }
+}
