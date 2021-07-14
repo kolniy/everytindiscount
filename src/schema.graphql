@@ -1,0 +1,62 @@
+type Query {
+  me: User!
+  packagetypes: [PackageType!]!
+}
+
+type Mutation {
+  adminSignup(data: createAdminInput!): UserAuthPayload!
+  adminSignin(data: adminSigninInput!): UserAuthPayload!
+  resetUserPassword(password: String!): User!
+  createPackageType(data: createPackageTypeInput): PackageType!
+  deletePackageType(id: ID!): PackageType!
+  updatePackageType(id: ID!, data: updatePackageTypeInput!): PackageType!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: Role
+  password: String!
+  createdpackagetype: [PackageType!]!
+}
+
+type PackageType {
+  id: ID!
+  name: String!
+  iconname: String!
+  createdat: String!
+  createdby: User!
+}
+
+type UserAuthPayload {
+  user: User!
+  token: String!
+}
+
+input createAdminInput {
+  name: String!
+  email: String!
+  role: String!
+  password: String!
+}
+
+input adminSigninInput {
+  email: String!
+  password: String!
+}
+
+input createPackageTypeInput {
+  name: String!
+  iconname: String!
+}
+
+input updatePackageTypeInput {
+  name: String
+  iconname: String
+}
+
+enum Role {
+  user
+  admin
+}

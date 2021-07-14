@@ -37,6 +37,7 @@ const ContactForm = () => {
                      value={name}
                      name="name"
                      onChange={(e) => updateFormData(e)}
+                     autoComplete="off"
                      required
                 />
                     </FormGroup>
@@ -48,6 +49,7 @@ const ContactForm = () => {
                      value={email}
                      name="email"
                      onChange={(e) => updateFormData(e)}
+                     autoComplete="off"
                      required
                 />
                     </FormGroup>
@@ -58,6 +60,7 @@ const ContactForm = () => {
             type="textarea"
             name="message"
             value={message}
+            autoComplete="off"
             onChange={(e) => updateFormData(e)}
             required
           />

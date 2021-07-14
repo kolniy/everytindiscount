@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  name               String
+  email              String         @unique
+  role               Role           @default(user)
+  password           String
+  createdpackagetype Package_Type[]
+  createdpackages    Package[]
+  packageplan        Package_Plan[]
+}
+
+enum Role {
+  user
+  admin
+}
+
+model Package_Type {
+  id          String    @id @default(uuid())
+  name        String
+  iconname    String
+  createdby   User      @relation(fields: [createdbyid], references: [id])
+  createdbyid String
+  package     Package[]
+  createdat   DateTime  @default(now())
+}
+
+model Package {
+  id                      String         @id @default(uuid())
+  packagetype             Package_Type   @relation(fields: [packagetypeId], references: [id])
+  packagetypeId           String
+  packagename             String
+  packageimage            String
+  packagediscount         Float
+  packagedescription      String
+  packagelandingpageimage String
+  packagelogo             String
+  createdby               User           @relation(fields: [createdbyid], references: [id])
+  createdbyid             String
+  packageplan             Package_Plan[]
+  createdat               DateTime       @default(now())
+}
+
+model Package_Plan {
+  id              String   @id @default(uuid())
+  planname        String
+  plandescription String
+  planprice       Int
+  createdby       User     @relation(fields: [createdbyid], references: [id])
+  createdbyid     String
+  package         Package  @relation(fields: [packageid], references: [id])
+  packageid       String
+  createdat       DateTime @default(now())
+}
