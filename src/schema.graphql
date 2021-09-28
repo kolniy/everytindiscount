@@ -1,6 +1,7 @@
 type Query {
   me: User!
   packagetypes: [PackageType!]!
+  packages(packageTypeId: ID!): [Package!]!
 }
 
 type Mutation {
@@ -10,6 +11,9 @@ type Mutation {
   createPackageType(data: createPackageTypeInput): PackageType!
   deletePackageType(id: ID!): PackageType!
   updatePackageType(id: ID!, data: updatePackageTypeInput!): PackageType!
+  createPackage(data: createPackageInput): Package!
+  deletePackage(idOfPackageToBeDeleted: ID!): Package!
+  updatePackage(idOfPackageToBeUpdated: ID!, data: updatePackageInput): Package!
 }
 
 type User {
@@ -29,6 +33,29 @@ type PackageType {
   createdby: User!
 }
 
+type Package {
+  id: ID!
+  packagetype: PackageType
+  packagename: String
+  packageimage: String
+  packagediscount: Float
+  packagedescription: String
+  packagelandingpageimage: String
+  packagelogo: String
+  createdBy: User
+  packageplan: [PackagePlan!]!
+}
+
+type PackagePlan {
+  id: ID!
+  planname: String!
+  plandescription: String!
+  planprice: Int!
+  createdBy: User!
+  package: Package!
+  createdat: String!
+}
+
 type UserAuthPayload {
   user: User!
   token: String!
@@ -39,6 +66,25 @@ input createAdminInput {
   email: String!
   role: String!
   password: String!
+}
+
+input createPackageInput {
+  packagename: String!
+  packageimage: String!
+  packagediscount: Float!
+  packagedescription: String!
+  packagelandingpageimage: String!
+  packagelogo: String!
+  packagetypeId: String!
+}
+
+input updatePackageInput {
+  packagename: String
+  packageimage: String
+  packagediscount: Float
+  packagedescription: String
+  packagelandingpageimage: String
+  packagelogo: String
 }
 
 input adminSigninInput {

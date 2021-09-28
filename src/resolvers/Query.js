@@ -17,4 +17,14 @@ const packagetypes = async (parent, args, { prisma }, info) => {
     return packagetypes
 }
 
-export { me, packagetypes }
+const packages = async (parent, args, { prisma }, info) => {
+    const packagesByPackageTypeId = await prisma.package.findMany({
+        where: {
+           packagetypeId: args.packageTypeId
+        }
+    })
+
+    return packagesByPackageTypeId
+}
+
+export { me, packagetypes, packages }

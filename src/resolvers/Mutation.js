@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-// import { PrismaClient } from "@prisma/client"
-// const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
 
 const tokenSecret = process.env.JWTSECRET
 
@@ -179,10 +179,131 @@ const resetUserPassword = async (parent, { password }, { prisma, userId }, info)
     return updatedUser
 }
 
+const createPackage = async (parent, args, { prisma, userId }, info ) => {
+
+    const { packagename, packageimage, 
+        packagediscount, packagedescription, 
+        packagelandingpageimage, packagelogo,
+         packagetypeId } = args.data
+
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const newpackage = await prisma.package.create({
+        data: {
+            packagetype: {
+                connect: {
+                    id: packagetypeId
+                }
+            },
+            createdby: {
+                connect:{
+                    id: user.id
+                }
+            },
+            packagename: packagename,
+            packageimage: packageimage,
+            packagediscount:packagediscount,
+            packagelandingpageimage: packagelandingpageimage,
+            packagedescription: packagedescription,
+            packagelogo:packagelogo,
+
+        }
+    })
+
+    return newpackage
+}
+
+const updatePackage = async (parent, { idOfPackageToBeUpdated, data }, { userId }, info) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const packageToBeUpdated = await prisma.package.findUnique({
+        where: {
+            id: idOfPackageToBeUpdated
+        }
+     })
+
+     if(!packageToBeUpdated) {
+         throw new Error("package not found")
+     }
+
+     let update = {}
+     if(data.packagename){
+         update['packagename'] = data.packagename
+     }
+
+     if(data.packageimage){
+         update['packageimage'] = data.packageimage
+     }
+
+     if(data.packagediscount){
+         update['packagediscount'] = data.packagediscount
+     }
+
+     if(data.packagedescription){
+         update['packagedescription'] = data.packagedescription
+     }
+
+     if(data.packagelandingpageimage){
+         update['packagelandingpageimage'] = data.packagelandingpageimage
+     }
+
+     if(data.packagelogo){
+         update['packagelogo'] = data.packagelogo
+     }
+
+     const updatedPackage = await prisma.package.update({
+         where: {
+             id: idOfPackageToBeUpdated
+         },
+         data : update
+     })
+
+     return updatedPackage
+}
+
+const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId }, info ) => {
+
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const deletedPackage = await prisma.package.delete({
+       where: {
+           id:idOfPackageToBeDeleted
+       }
+    })
+    return deletedPackage
+}
+
 export { adminSignup,
      adminSignin,
     createPackageType, 
     deletePackageType, 
     updatePackageType,
-    resetUserPassword
+    resetUserPassword,
+    createPackage,
+    deletePackage,
+    updatePackage
 }

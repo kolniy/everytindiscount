@@ -94,7 +94,7 @@ const Login = () => {
                     <p className="small-text">Don't have an account yet?</p>
                     </Col>
                     <Col sm="5">
-                    <Link className="signin-cta" to="/signup">Sign up</Link>
+                    <Link className="signin-cta mb-2" to="/signup">Sign up</Link>
                     </Col>
                     </Row>
                     </CardBody>

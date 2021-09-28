@@ -11,17 +11,17 @@ const Services = () => {
         <div id="services" className="services text-center">
             <Container className="services-container" fluid>
                 <h2 className="text-center site-section-heading">Our Services</h2>
-                <Row>
-                    <Col sm="6" md="3">
+                <Row className="align-items-center">
+                    <Col xs="12" sm="6" md="4" xl="3">
                         <CardBlue />
                     </Col>
-                    <Col sm="6" md="3">
+                    <Col xs="12" sm="6" md="4" xl="3">
                     <CardOrange />
                     </Col>
-                    <Col sm="6" md="3">
+                    <Col xs="12" sm="6" md="4" xl="3">
                     <CardGreen />
                     </Col>
-                    <Col sm="6" md="3">
+                    <Col xs="12" sm="6" md="4" xl="3">
                     <CardRed />
                     </Col>
                 </Row>

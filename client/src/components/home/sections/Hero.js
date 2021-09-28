@@ -16,7 +16,7 @@ const Hero = () => {
       <div className="hero-info">
       <Container fluid className="hero-container">
         <Row>
-          <Col xs="6" sm="12" md="6">
+          <Col xs="6" sm="6" md="6" xl="6">
             <div className="hero-text">
             <h1 className="site-heading">EVERYTINDISCOUNT</h1>
               <p className="lead site-paragraph">
@@ -34,7 +34,7 @@ const Hero = () => {
       </Button>
             </div>
           </Col>
-          <Col xs="6" sm="12" md="6">
+          <Col xs="6" sm="6" md="6" xl="6">
             <div className="img-container">
               <div className="rounded-circle"></div>
             <img className="img-fluid hero-img-style" src={beautifulLady} alt="everytindiscount beautiful lady" />

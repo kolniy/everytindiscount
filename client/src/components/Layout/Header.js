@@ -12,6 +12,7 @@ import {
   Row,
   Col
  } from "reactstrap"
+ import { Link as ScrollLink } from "react-scroll"
  import logo from "../../images/logo.png"
 
 const Header = () => {
@@ -42,19 +43,19 @@ const Header = () => {
                 </div>
                 <Nav className="ml-small align-items-lg-center ml-lg-auto" navbar>
                   <NavItem>
-                    <NavLink className="navitem-links" tag={Link} to="/about">
-                      About Us
-                    </NavLink>
+                    <ScrollLink activeClass="active" to="about" spy={true} smooth={true} duration={1000} className="nav-link">
+                    About Us
+                  </ScrollLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} to="/services">
-                      Services
-                    </NavLink>
+                  <ScrollLink activeClass="active" to="services" spy={true} smooth={true} duration={1000} className="nav-link">
+                    Services
+                  </ScrollLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} to="/contact">
-                     Contact Us
-                    </NavLink>
+                  <ScrollLink activeClass="active" to="contact" spy={true} smooth={true} duration={1000} className="nav-link">
+                    Contact Us
+                  </ScrollLink>
                   </NavItem>
                   <NavItem>
                     <NavLink tag={Link} to="/login">

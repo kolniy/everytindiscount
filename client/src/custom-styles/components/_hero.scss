@@ -98,3 +98,13 @@
     fill: #ffffff;
   }
 }
+
+@media (max-width: 850px) {
+  .hero-section {
+    & .img-container {
+      .rounded-circle {
+        display: none;
+      }
+    }
+  }
+}

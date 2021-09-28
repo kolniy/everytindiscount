@@ -126,7 +126,7 @@ const Register = () => {
                     <p className="small-text">Already Have An Account?</p>
                     </Col>
                     <Col sm="5">
-                    <Link className="signin-cta" to="/login">Sign in</Link>
+                    <Link className="signin-cta mb-2" to="/login">Sign in</Link>
                     </Col>
                     </Row>
                     </CardBody>
