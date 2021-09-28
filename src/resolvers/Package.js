@@ -1,5 +1,5 @@
-// import { PrismaClient } from "@prisma/client"
-// const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
 
 const packagetype = async (parent, args, { prisma }, info ) => {
     const packagetype = await prisma.package.findUnique({
@@ -10,6 +10,16 @@ const packagetype = async (parent, args, { prisma }, info ) => {
 
     return packagetype
 
+}
+
+const createdBy = async (parent, args, {  }, info) => {
+    const user = await prisma.package.findUnique({
+        where: {
+            id: parent.id
+        }
+    }).createdby()
+
+    return user
 }
 
 const packageplan = async (parent, args, { prisma }, info) => {
@@ -23,4 +33,4 @@ const packageplan = async (parent, args, { prisma }, info) => {
 
 }
 
-export { packagetype, packageplan }
+export { packagetype, packageplan, createdBy }

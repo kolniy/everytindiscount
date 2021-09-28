@@ -2,6 +2,7 @@ type Query {
   me: User!
   packagetypes: [PackageType!]!
   packages(packageTypeId: ID!): [Package!]!
+  singlePackage(packageId: ID!): Package!
 }
 
 type Mutation {
@@ -14,6 +15,12 @@ type Mutation {
   createPackage(data: createPackageInput): Package!
   deletePackage(idOfPackageToBeDeleted: ID!): Package!
   updatePackage(idOfPackageToBeUpdated: ID!, data: updatePackageInput): Package!
+  createPackagePlan(data: createPackagePlanInput): PackagePlan!
+  updatePackagePlan(
+    idOfPackagePlanToUpdated: ID!
+    data: updatePackagePlanInput
+  ): PackagePlan!
+  deletePackagePlan(idOfPackagePlanToDelete: ID!): PackagePlan!
 }
 
 type User {
@@ -23,6 +30,7 @@ type User {
   role: Role
   password: String!
   createdpackagetype: [PackageType!]!
+  createpackage: [Package!]!
 }
 
 type PackageType {
@@ -85,6 +93,19 @@ input updatePackageInput {
   packagedescription: String
   packagelandingpageimage: String
   packagelogo: String
+}
+
+input createPackagePlanInput {
+  planname: String!
+  plandescription: String!
+  planprice: Int!
+  idOfPackageToSaveTo: ID!
+}
+
+input updatePackagePlanInput {
+  planname: String
+  plandescription: String
+  planprice: Int
 }
 
 input adminSigninInput {

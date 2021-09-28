@@ -1,3 +1,6 @@
+import { PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
+
 const createdpackagetype = async (parent, args, { prisma }, info ) => {
     const createdpackageType = await prisma.package_Type.findMany({
         where: {
@@ -7,4 +10,13 @@ const createdpackagetype = async (parent, args, { prisma }, info ) => {
     return createdpackageType
 }
 
-export { createdpackagetype }
+const createpackage = async (parent, args, {  }, info) => {
+    const createdPackages = await prisma.package.findMany({
+        where: {
+            createdbyid: parent.id
+        }
+    })
+    return createdPackages
+}
+
+export { createdpackagetype, createpackage }
