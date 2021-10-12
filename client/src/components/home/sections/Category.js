@@ -3,6 +3,7 @@ import { Container } from "reactstrap"
 import CategoryTabs from "./CategoryTabs"
 
 const CategorySection = () => {
+
     return (
     <>
     <div id="category" className="categorySection">

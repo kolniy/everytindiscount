@@ -8,6 +8,7 @@ import About from "./sections/About"
 import Contact from "./sections/Contact"
 
 const Landing = () => {
+
   return <>
     <Header />
     <Hero />

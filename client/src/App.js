@@ -7,11 +7,10 @@ import "./styles/assets/css/argon-design-system-react.css";
 // custom styles
 import './App.scss';
 
-
-
 import Landing from "./components/home/Landing"
 import Register from "./components/auth/Register"
 import Login from "./components/auth/Login"
+// import ExchangeRates from "./ExchangeRates";
 
 function App() {
   return (

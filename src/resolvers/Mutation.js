@@ -336,6 +336,70 @@ const createPackagePlan = async (_, args, { userId }, info) => {
     return newPackagePlan
 }
 
+const updatePackagePlan = async ( _, { idOfPackagePlanToUpdated, data }, { userId }, info) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const packagePlanToBeUpdated = await prisma.package_Plan.findUnique({
+        where: {
+            id: idOfPackagePlanToUpdated
+        }
+    })
+
+    if(!packagePlanToBeUpdated){
+        throw new Error("package plan not found")
+    }
+   
+    let updates = {}
+    if(data.planname){
+        updates['planname'] = data.planname
+    }
+
+    if(data.plandescription){
+        updates['plandescription'] = data.plandescription
+    }
+
+    if(data.planprice){
+        updates['planprice'] = data.planprice
+    }
+
+    const updatedPackagePlan = await prisma.package_Plan.update({
+        where: {
+            id: idOfPackagePlanToUpdated
+        },
+        data: updates
+    })
+
+    return updatedPackagePlan
+}
+
+const deletePackagePlan = async ( _, args, { userId }, info) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const deletedPackagePlan = await prisma.package_Plan.delete({
+        where: {
+            id: args.idOfPackagePlanToDelete
+        }
+    })
+
+    return deletedPackagePlan
+}
+
 export { adminSignup,
      adminSignin,
     createPackageType, 
@@ -345,5 +409,7 @@ export { adminSignup,
     createPackage,
     deletePackage,
     updatePackage,
-    createPackagePlan
+    createPackagePlan,
+    updatePackagePlan,
+    deletePackagePlan
 }

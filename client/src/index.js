@@ -1,12 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client"
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { url } from "./service/globals"
+
+const httpLink = createHttpLink({
+  uri: url
+})
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+  // onError: ({ networkError, graphqlErrors }) => {
+  //   console.log(networkError, "networkError")
+  //   console.log(graphqlErrors, "graphqlErrors")
+  // }
+  onError: (e) => console.log(e)
+})
 
 ReactDOM.render(
   <React.StrictMode>
+  <ApolloProvider client={client}>
     <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -8,7 +8,7 @@
     "start": "npm run build && node dist/index.js",
     "build": "babel src -d dist",
     "client": "npm start --prefix client",
-    "dev": "env-cmd -f ./src/config/.dev.env nodemon -e js,graphql --exec babel-node ./src/index.js"
+    "dev": "env-cmd -f ./src/config/.dev.env nodemon -e js,graphql --ignore client --exec babel-node ./src/index.js"
   },
   "repository": {
     "type": "git",
