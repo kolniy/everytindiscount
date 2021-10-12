@@ -1,4 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
+import { withRouter } from 'react-router-dom'
+import { gql, useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { useAlert } from 'react-alert'
 import {
     Button,
     Card,
@@ -13,11 +17,64 @@ import {
     Row,
     Col
   } from "reactstrap";
-  import { Link } from "react-router-dom"
   import logo from "../../images/logo.png"
 
-const Login = () => {
-    return <>
+  const SIGN_IN = gql`
+  mutation($signinData: signInInput!) {
+    signin(data: $signinData) {
+      token
+      user {
+        id
+        email
+        role
+        id
+        name
+      }
+    }
+  }
+  `
+
+const Login = ({ history }) => {
+
+  const [ signinData, setSigninData ] = useState({
+    email: '',
+    password:''
+  })
+
+  const alert = useAlert()
+
+  const [ signin, { loading } ] = useMutation(SIGN_IN, {
+    variables: {
+      signinData: {
+        email: signinData.email,
+        password: signinData.password
+      }
+    },
+    onCompleted: ({ signin }) => {
+      localStorage.setItem('token', signin.token)
+      alert.show('sign in was successful', {
+        type:'success'
+      })
+      history.push('/', 'category')
+    },
+    onError: (error) => {
+      alert.show(error.message, {
+        type:'error'
+      })
+    }
+  })
+
+  const updateSignInDetails = (e) => setSigninData({
+    ...signinData,
+    [e.target.name]: e.target.value
+  })
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    signin()
+  }
+
+return <>
 <section className="login section section-shaped full-width">
  <div className="shape shape-style-1 section-background">
               <span />
@@ -40,7 +97,7 @@ const Login = () => {
                       <div className="text-center text-muted mt-3 mb-3">
                         <small>Login with your credentials</small>
                       </div>
-                      <Form role="form">
+                      <Form role="form" onSubmit={e => handleFormSubmit(e)}>
                         <FormGroup>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
@@ -48,7 +105,15 @@ const Login = () => {
                                 <i className="ni ni-email-83" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Email" type="email" />
+                            <Input
+                             placeholder="Email" 
+                             type="email"
+                             name="email"
+                             autoComplete="off"
+                             required
+                             value={signinData.email}
+                             onChange={e => updateSignInDetails(e)}
+                             />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
@@ -62,17 +127,22 @@ const Login = () => {
                               placeholder="Password"
                               type="password"
                               autoComplete="off"
+                              name="password"
+                              required
+                              value={signinData.password}
+                              onChange={e => updateSignInDetails(e)}
                             />
                           </InputGroup>
                         </FormGroup>
                         <div className="text-muted mt-1 mb-1">
-                        <small>Forgot your passord? Click Here</small>
+                        <small>Forgot your passord? <Link>Click Here</Link></small>
                       </div>
                         <div className="text-center">
                           <Button
                             className="mt-4 btn-login"
                             color="primary"
-                            type="button"
+                            type="submit"
+                            disabled={loading}
                           >
                             Login
                           </Button>
@@ -106,4 +176,4 @@ const Login = () => {
     </>
 }
 
-export default Login
+export default withRouter(Login)

@@ -48,6 +48,11 @@ const Header = () => {
                   </ScrollLink>
                   </NavItem>
                   <NavItem>
+                    <ScrollLink activeClass="active" to="category" spy={true} smooth={true} duration={1000} className="nav-link">
+                    Category
+                  </ScrollLink>
+                  </NavItem>
+                  <NavItem>
                   <ScrollLink activeClass="active" to="services" spy={true} smooth={true} duration={1000} className="nav-link">
                     Services
                   </ScrollLink>

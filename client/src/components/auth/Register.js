@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+import { withRouter } from 'react-router-dom'
+import { useAlert } from 'react-alert'
+import { gql, useMutation } from "@apollo/client";
 import {
     Button,
     Card,
@@ -16,8 +19,73 @@ import {
   import { Link } from "react-router-dom"
   import logo from "../../images/logo.png"
 
-const Register = () => {
-    return <>
+const SIGN_UP = gql`
+  mutation ($signupData: signUpInput!) {
+  signup(data: $signupData) {
+    token
+    user {
+      id
+      email
+      role
+      id
+      name
+    }
+  }
+}
+`
+
+const Register = ({ history }) => {
+
+  const [ signupData, setSignupData ] = useState({
+    name:'',
+    email:'',
+    password:'',
+    password2:'',
+  })
+  
+  const alert = useAlert()
+  const [ signup, { loading } ] = useMutation(SIGN_UP, {
+    variables: {
+      signupData: {
+        name: signupData.name,
+        email: signupData.email,
+        password: signupData.password,
+        isAdmin: false
+      }
+    },
+    onCompleted: ({ signup }) => {
+      console.log(signup.user, 'registration data')
+      alert.show('sign up completed successfully', {
+        type:'success'
+      })
+      localStorage.setItem('token', signup.token)
+      history.push('/', 'category')
+    },
+    onError: (error) => {
+      console.log(error)
+      alert.show(error.message, {
+        type:'error'
+      })
+    }
+  })
+
+  const updateSignupForm = (e) => setSignupData({
+    ...signupData,
+    [e.target.name]: e.target.value
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(signupData.password !== signupData.password2){
+      return alert.show('invalid confirm password', {
+        type:'error'
+      })
+    }
+  
+    signup()
+  }
+
+return <>
 <section className="register section section-shaped full-width">
  <div className="shape shape-style-1 section-background">
               <span />
@@ -40,7 +108,7 @@ const Register = () => {
                       <div className="text-center text-muted mb-3 mt-3">
                         <small>Create a new account with your credentials</small>
                       </div>
-                      <Form role="form">
+                      <Form role="form" onSubmit={e => handleSubmit(e)}>
                         <FormGroup>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
@@ -48,7 +116,15 @@ const Register = () => {
                                 <i className="ni ni-hat-3" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Name" type="text" />
+                            <Input 
+                            placeholder="Name" 
+                            type="text"
+                            name="name"
+                            autoComplete="off"
+                            value={signupData.name}
+                            required
+                            onChange={e => updateSignupForm(e)}
+                             />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
@@ -58,7 +134,15 @@ const Register = () => {
                                 <i className="ni ni-email-83" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Email" type="email" />
+                            <Input
+                             placeholder="Email"
+                              type="email"
+                              name="email"
+                              autoComplete="off"
+                              required
+                              value={signupData.email}
+                              onChange={e => updateSignupForm(e)}
+                              />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
@@ -72,10 +156,32 @@ const Register = () => {
                               placeholder="Password"
                               type="password"
                               autoComplete="off"
+                              required
+                              name="password"
+                              value={signupData.password}
+                              onChange={e => updateSignupForm(e)}
                             />
                           </InputGroup>
                         </FormGroup>
-                        <Row className="my-4">
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-lock-circle-open" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Confirm Password"
+                              type="password"
+                              required
+                              autoComplete="off"
+                              name="password2"
+                              value={signupData.password2}
+                              onChange={e => updateSignupForm(e)}
+                            />
+                          </InputGroup>
+                        </FormGroup>
+                        {/* <Row className="my-4">
                           <Col xs="12">
                             <div className="custom-control custom-control-alternative custom-checkbox">
                               <input
@@ -99,12 +205,13 @@ const Register = () => {
                               </label>
                             </div>
                           </Col>
-                        </Row>
+                        </Row> */}
                         <div className="text-center">
                           <Button
                             className="mt-3 btn-signup"
                             color="primary"
-                            type="button"
+                            type="submit"
+                            disabled={loading}
                           >
                             Sign up
                           </Button>
@@ -138,4 +245,4 @@ const Register = () => {
     </>
 }
 
-export default Register
+export default withRouter(Register)

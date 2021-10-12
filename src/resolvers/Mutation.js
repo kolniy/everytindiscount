@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 const tokenSecret = process.env.JWTSECRET
 
-const adminSignup = async (parent, { data }, { prisma }, info ) => {
+const signup = async (parent, { data }, { prisma }, info ) => {
     const userExists = await prisma.user.findUnique({
         where: {
             email: data.email
@@ -17,6 +17,8 @@ const adminSignup = async (parent, { data }, { prisma }, info ) => {
         throw new Error("user already exists")
     }
 
+    const role = data.isAdmin === true ? 'admin' : 'user'
+
     const salt = await bcrypt.genSalt(8)
     const password = await bcrypt.hash(data.password, salt)
 
@@ -24,7 +26,7 @@ const adminSignup = async (parent, { data }, { prisma }, info ) => {
         data: {
             name: data.name,
             email: data.email,
-            role: data.role,
+            role: role,
             password: password,
         }
     })
@@ -41,7 +43,7 @@ const adminSignup = async (parent, { data }, { prisma }, info ) => {
     }
 }
 
-const adminSignin = async (parent, { data }, { prisma }, info) => {
+const signin = async (parent, { data }, { prisma }, info) => {
     const user = await prisma.user.findUnique({
         where : {
             email: data.email
@@ -400,8 +402,8 @@ const deletePackagePlan = async ( _, args, { userId }, info) => {
     return deletedPackagePlan
 }
 
-export { adminSignup,
-     adminSignin,
+export { signup,
+     signin,
     createPackageType, 
     deletePackageType, 
     updatePackageType,

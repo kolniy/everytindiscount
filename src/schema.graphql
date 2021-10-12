@@ -6,8 +6,8 @@ type Query {
 }
 
 type Mutation {
-  adminSignup(data: createAdminInput!): UserAuthPayload!
-  adminSignin(data: adminSigninInput!): UserAuthPayload!
+  signup(data: signUpInput!): UserAuthPayload!
+  signin(data: signInInput!): UserAuthPayload!
   resetUserPassword(password: String!): User!
   createPackageType(data: createPackageTypeInput): PackageType!
   deletePackageType(id: ID!): PackageType!
@@ -69,10 +69,15 @@ type UserAuthPayload {
   token: String!
 }
 
-input createAdminInput {
+input signUpInput {
   name: String!
   email: String!
-  role: String!
+  password: String!
+  isAdmin: Boolean!
+}
+
+input signInInput {
+  email: String!
   password: String!
 }
 
@@ -106,11 +111,6 @@ input updatePackagePlanInput {
   planname: String
   plandescription: String
   planprice: Int
-}
-
-input adminSigninInput {
-  email: String!
-  password: String!
 }
 
 input createPackageTypeInput {
