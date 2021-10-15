@@ -1,32 +1,37 @@
 import React from "react"
+import { Link } from 'react-router-dom'
 import { Col, Card, CardImg, CardBody, Button } from "reactstrap"
 
-const CategoryItem = ({ billerLogo, billerName, billerDesc }) => {
+const CategoryItem = ({ packageItem }) => {
+
     return <>
         <Col xs="12" sm="6" md="4" xl="3" className="mb-4">
                       <Card className="card-lift--hover shadow border-0 category-item">
-                        <CardBody className="py-5">
+                        <CardBody>
                           <div className="card-image-container">
                           <CardImg
-                            src={billerLogo}
+                            src={packageItem.packagelogo}
                             alt="biller logo"
                            />
                           </div>
                           <h6 className="text-primary text-uppercase">
-                              {billerName}
+                              {packageItem.packagename}
                           </h6>
                           <p className="description mt-3">
-                                {billerDesc}
+                                {packageItem.packagedescription}
                           </p>
                           <Button
-                            className="mt-4"
+                            tag={Link}
+                            to={`/package/single/${packageItem.id}`}
+                            className="mt-2"
                             color="primary"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
                           >
-                            Learn more
+                          Buy Now
                           </Button>
                         </CardBody>
+                        <div className="card-item-primary__img">
+                            <img src={packageItem.packageimage} alt="secondary for card" />
+                        </div>
                       </Card>
             </Col>
     </>

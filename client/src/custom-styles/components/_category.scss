@@ -30,14 +30,44 @@
 
   & .card {
     border: none;
+  }
+
+  & .category-item {
+    border: none;
+    display: flex;
+    flex-direction: row;
+
+    & .card-item-primary__img {
+      width: 80px;
+      border-bottom-right-radius: 3px;
+
+      img {
+        height: 100%;
+        width: 80px;
+      }
+    }
+
+    & .card-body {
+      width: 100%;
+    }
 
     & h6 {
       font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    & p {
+      font-size: 12px;
     }
 
     & .card-image-container {
       max-width: 120px;
-      margin-bottom: 19px;
+      height: 100px;
+      margin-bottom: 14px;
+
+      img {
+        height: 100%;
+      }
     }
   }
 

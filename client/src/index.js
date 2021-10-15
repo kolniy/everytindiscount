@@ -7,15 +7,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { url } from "./service/globals"
 import AlertTemplate from 'react-alert-template-basic'
+import dispatch from './state'
+import typePolicies from './typePolicies'
+
+window.dispatch = dispatch
 
 // react alert config optional configuration
 const options = {
   // you can also just use 'bottom center'
   position: positions.BOTTOM_RIGHT,
-  timeout: 5000,
+  timeout: 4500,
   offset: '30px',
   // you can also just use 'scale'
-  transition: transitions.SCALE
+  transition: transitions.FADE
 }
 
 const httpLink = createHttpLink({
@@ -24,7 +28,9 @@ const httpLink = createHttpLink({
 
 const client = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: typePolicies
+  }),
   // onError: ({ networkError, graphqlErrors }) => {
   //   console.log(networkError, "networkError")
   //   console.log(graphqlErrors, "graphqlErrors")

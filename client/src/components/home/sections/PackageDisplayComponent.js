@@ -6,6 +6,7 @@ import CategoryItem from './CategoryItem'
 const getPackagesFromPackageTypeId = gql`
     query ($packageTypeId: ID!) {
     packages(packageTypeId: $packageTypeId) {
+    id
     packagename
     packagelogo
     packagelandingpageimage
@@ -60,9 +61,8 @@ const PackageDisplayComponent = ({
                 {
                      data.packages.map((packageItem) => 
                      <CategoryItem key={packageItem.id} 
-                     billerLogo={packageItem.packagelogo}
-                     billerName={packageItem.packagename}
-                      billerDesc={packageItem.packagedescription} />)
+                       packageItem={packageItem}
+                      />)
                 }
                  </>
                  }

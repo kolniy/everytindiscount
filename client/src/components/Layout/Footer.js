@@ -16,7 +16,7 @@ const Footer = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor voluptates pariatur odit. Quaerat obcaecati, fugit eligendi sapiente eum nesciunt laboriosam eos aliquam quos ad! Recusandae sequi possimus dolores ex provident
         </p>
         <div className="footer-icons">
-            <a href="https://www.facebook.com/everytindiscount/" rel="noopener noreferrer" target="_blank" className="social-icon-facebook"> <i class="fa fa-facebook-official" aria-hidden="true"></i><p className="no-display">Facebook</p></a>
+            <a href="https://www.facebook.com/everytindiscount/" rel="noopener noreferrer" target="_blank" className="social-icon-facebook"> <i className="fa fa-facebook-official" aria-hidden="true"></i><p className="no-display">Facebook</p></a>
 
             <a href="https://www.instagram.com/everytindiscount/" rel="noopener noreferrer" target="_blank" className="social-icon"><i className="fa fa-instagram" aria-hidden="true"></i><p className="no-display">some hidden text</p></a>
         </div>
