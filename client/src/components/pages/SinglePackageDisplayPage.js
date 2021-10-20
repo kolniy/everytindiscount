@@ -42,10 +42,6 @@ const SinglePackageDisplayPage = ({ match }) => {
             packageId: match.params.packageid
         }
     })
-
-    if(!loading){
-        console.log(data.singlePackage, 'single package data')
-    }
    
     if(error){
        return <p className="text-center">Error: {error}</p>

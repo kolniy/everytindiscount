@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import authDispatch from "../../state/auth";
 import { withRouter } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { gql, useMutation } from "@apollo/client";
@@ -59,6 +60,14 @@ const Register = ({ history }) => {
         type:'success'
       })
       localStorage.setItem('token', signup.token)
+      authDispatch({
+        type: "USER_SIGNUP",
+        payload: {
+          token: signup.token,
+          user: signup.user,
+          isAuthenticated: true
+        }
+      })
       history.push('/', 'category')
     },
     onError: (error) => {

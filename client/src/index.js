@@ -8,9 +8,11 @@ import reportWebVitals from './reportWebVitals';
 import { url } from "./service/globals"
 import AlertTemplate from 'react-alert-template-basic'
 import dispatch from './state'
+import authDispatch from './state/auth';
 import typePolicies from './typePolicies'
 
 window.dispatch = dispatch
+window.authDispatch = authDispatch
 
 // react alert config optional configuration
 const options = {

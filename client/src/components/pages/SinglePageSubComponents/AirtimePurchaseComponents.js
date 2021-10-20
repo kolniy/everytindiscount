@@ -54,11 +54,15 @@ const AirtimePurchaseComponents = () => {
                          value={phoneNumber}
                          onChange={e => updatePhoneNumber(e)}
                         />
-                        {
-                            (phoneNumber.length < 11 || phoneNumber.length > 11) && (
+                       {
+                           phoneNumber.length > 0 && <>
+                                 {
+                              (phoneNumber.length < 11 || phoneNumber.length > 11) && (
                                 <p className="validation-error-text">invalid phone number type</p>
-                            )
-                        }
+                                    )
+                                }
+                           </>
+                       }
                     </FormGroup>
                     <FormGroup className="package-action__form-group">
                        <Label>Recharge Amount</Label>
@@ -69,11 +73,15 @@ const AirtimePurchaseComponents = () => {
                          value={rechargeAmount}
                          onChange={e => updateRechargeAmount(e)}
                         />
-                        {
+                       {
+                           rechargeAmount.length > 0 && <>
+                             {
                             (parseInt(rechargeAmount) === 0 || rechargeAmount.length === 0) && (
                                 <p className="validation-error-text">invalid recharge amount</p>
                             )
                         }
+                           </>
+                       }
                     </FormGroup>
                     <FormGroup className="package-action__form-group">
                         <Label>Billing Email</Label>

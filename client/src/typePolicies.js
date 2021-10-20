@@ -1,4 +1,5 @@
 import { Todos } from "./state";
+import { Auth } from "./state/auth"
 
 const typePolicies = {
     Query: {
@@ -6,6 +7,11 @@ const typePolicies = {
             Todos: {
                 read(){
                     return Todos()
+                }
+            },
+            Auth: {
+                read(){
+                    return Auth()
                 }
             }
         }

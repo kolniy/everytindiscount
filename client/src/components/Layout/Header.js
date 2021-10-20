@@ -1,5 +1,7 @@
 import React from "react"
+import { useQuery, gql } from "@apollo/client"
 import { Link } from "react-router-dom"
+import authDispatch from "../../state/auth"
 import {
   Button,
   UncontrolledCollapse,
@@ -15,7 +17,22 @@ import {
  import { Link as ScrollLink } from "react-scroll"
  import logo from "../../images/logo.png"
 
+ const GET_USER_AUTH_STATE = gql`
+    query {
+      Auth @client
+    }
+ `
+
 const Header = () => {
+
+      const { data } = useQuery(GET_USER_AUTH_STATE)
+
+      const handleLogout = () => {
+        authDispatch({
+          type:"USER_LOGOUT"
+        })
+      }
+
       return (
         <>
           <Navbar className="navbar-dark" expand="lg">
@@ -62,26 +79,93 @@ const Header = () => {
                     Contact Us
                   </ScrollLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} to="/login">
-                     Log in
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="d-lg-block ml-lg-4">
-                    <Button
-                         className="btn-neutral btn-icon navbar-btn"
-                         color="default"
-                         tag={Link}
-                         to="/signup"
-                           >
-                         <span className="btn-inner--icon">
-                         <i className="ni ni-single-02"></i>
-                         </span>
-                         <span className="nav-link-inner--text ml-1">
-                          Get Started
-                         </span>
-                       </Button>
-                    </NavItem>
+                    {  
+                      data.Auth.isAuthenticated === false && data.Auth.user === null ? 
+                      <>
+                       <NavItem>
+                        <NavLink tag={Link} to="/login">
+                          Log in
+                        </NavLink>
+                        </NavItem>
+                        <NavItem className="d-lg-block ml-lg-2">
+                        <Button
+                              className="btn-neutral btn-icon navbar-btn"
+                              color="default"
+                              tag={Link}
+                              to="/signup"
+                                >
+                              <span className="btn-inner--icon">
+                              <i className="ni ni-single-02"></i>
+                              </span>
+                              <span className="nav-link-inner--text ml-1">
+                              Get Started
+                              </span>
+                            </Button>
+                        </NavItem>
+                      </> : <>
+                        {
+                          data.Auth.user.role === 'admin' ? (<>
+                            <NavItem className="d-lg-block ml-lg-2">
+                              <Button
+                                className="btn-neutral btn-icon navbar-btn"
+                                color="default"
+                                onClick={handleLogout}
+                                  >
+                                <span className="nav-link-inner--text ml-1">
+                                  Logout
+                                </span>
+                              </Button>
+                              </NavItem>
+                            <NavItem className="d-lg-block ml-lg-2">
+                            <Button
+                              className="btn-neutral btn-icon navbar-btn"
+                              color="default"
+                              tag={Link}
+                              to="/admin/dashboard/index"
+                                >
+                              <span className="btn-inner--icon">
+                              <i className="ni ni-single-02"></i>
+                              </span>
+                              <span className="nav-link-inner--text ml-2">
+                               Go To Admin Dashboard
+                              </span>
+                            </Button>
+                        </NavItem>
+                          </>) : (
+                            <>
+                             <NavItem className="d-lg-block ml-lg-2">
+                              <Button
+                                className="btn-neutral btn-icon navbar-btn"
+                                color="default"
+                                  >
+                                <span className="btn-inner--icon">
+                                <i className="ni ni-single-02"></i>
+                                </span>
+                                <span className="nav-link-inner--text ml-1">
+                                  Logout
+                                </span>
+                              </Button>
+                            </NavItem>
+                            <NavItem className="d-lg-block ml-lg-2">
+                             <Button
+                              className="btn-neutral btn-icon navbar-btn"
+                              color="default"
+                              tag={Link}
+                              to="/user/dashboard/index"
+                                >
+                              <span className="btn-inner--icon">
+                              <i className="ni ni-single-02"></i>
+                              </span>
+                              <span className="nav-link-inner--text ml-1">
+                               Go To Dashboard
+                              </span>
+                            </Button>
+                          </NavItem>
+                          </>
+                          )
+                        }
+                      </>
+                    }
                 </Nav>
               </UncontrolledCollapse>
             </Container>

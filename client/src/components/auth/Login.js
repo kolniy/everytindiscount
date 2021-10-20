@@ -2,7 +2,9 @@ import React, { useState } from "react"
 import { withRouter } from 'react-router-dom'
 import { gql, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
-import { useAlert } from 'react-alert'
+import { useAlert } from 'react-alert';
+import authDispatch from "../../state/auth";
+
 import {
     Button,
     Card,
@@ -54,6 +56,14 @@ const Login = ({ history }) => {
       localStorage.setItem('token', signin.token)
       alert.show('sign in was successful', {
         type:'success'
+      })
+      authDispatch({
+        type: "USER_LOGIN",
+        payload: {
+          token: signin.token,
+          user: signin.user,
+          isAuthenticated: true
+        }
       })
       history.push('/', 'category')
     },
