@@ -137,6 +137,7 @@ const Header = () => {
                               <Button
                                 className="btn-neutral btn-icon navbar-btn"
                                 color="default"
+                                onClick={handleLogout}
                                   >
                                 <span className="btn-inner--icon">
                                 <i className="ni ni-single-02"></i>

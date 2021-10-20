@@ -93,6 +93,7 @@ import logo from "../../images/logo.png"
                               <Button
                                 className="btn-neutral btn-icon navbar-btn"
                                 color="default"
+                                onClick={handleLogout}
                                   >
                                 <span className="nav-link-inner--text ml-1">
                                   Logout
