@@ -222,7 +222,23 @@ return <>
                             type="submit"
                             disabled={loading}
                           >
-                            Sign up
+                            {
+                                 loading ? <>
+                                <span className="btn-inner--icon">
+                                <i className="fas fa-circle-notch fa-spin"></i>
+                                </span>
+                                <span className="nav-link-inner--text ml-1">
+                                    Loading
+                                </span>
+                                 </> : <>
+                                <span className="btn-inner--icon">
+                                <i className="ni ni-single-02"></i>
+                                </span>
+                                <span className="nav-link-inner--text ml-1">
+                                   Sign up
+                                </span>
+                                 </>
+                                }
                           </Button>
                         </div>
                       </Form>

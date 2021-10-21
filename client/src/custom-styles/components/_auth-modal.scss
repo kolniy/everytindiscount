@@ -1,0 +1,18 @@
+.auth-modal-img-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-text {
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 10px 0;
+}
+
+.close-modal-btn {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}

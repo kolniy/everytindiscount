@@ -11,13 +11,16 @@ const authDispatch = (action) => {
 
     switch (type) {
         case "USER_LOGIN":
-        case "USER_SIGNUP": {
+        case "USER_SIGNUP":
+        case "USER_AUTHENTICATED":
+        {
            return Auth({
                ...Auth(),
                ...payload
            })
         }
         case "USER_LOGOUT": {
+            localStorage.removeItem('token')
             return Auth({
                 ...Auth(),
                 ...{

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import {
     Card,
@@ -10,6 +10,7 @@ import AirtimePurchaseComponents from './SinglePageSubComponents/AirtimePurchase
 import DecoderSubscriptionComponents from './SinglePageSubComponents/DecoderSubscriptionComponents';
 import DataPurchaseComponents from './SinglePageSubComponents/DataPurchaseComponents';
 import MovieTicketsComponent from './SinglePageSubComponents/MovieTicketsComponent';
+import AuthModal from './AuthModal';
 
 const SINGLE_PACKAGE_QUERY = gql`
     query ($packageId: ID!){
@@ -42,6 +43,14 @@ const SinglePackageDisplayPage = ({ match }) => {
             packageId: match.params.packageid
         }
     })
+
+    const [ openAuthModal, setOpenAuthModal ] = useState(false)
+    const toggleAuthModal = () => setOpenAuthModal(!openAuthModal)
+
+    useEffect(() => {
+        document.documentElement.scrollTop = 0;
+        document.scrollingElement.scrollTop = 0;
+    }, [])
    
     if(error){
        return <p className="text-center">Error: {error}</p>
@@ -49,13 +58,25 @@ const SinglePackageDisplayPage = ({ match }) => {
 
     const determineComponentToRender = (packageType) => {
         if(packageType.toLowerCase().includes('airtime topup')){
-            return <AirtimePurchaseComponents singlePackage={data.singlePackage} />
+            return <AirtimePurchaseComponents
+             singlePackage={data.singlePackage}
+             setOpenAuthModal={setOpenAuthModal}
+              />
         } else if(packageType.toLowerCase().includes('decoder subscription')){
-            return <DecoderSubscriptionComponents singlePackage={data.singlePackage} />
+            return <DecoderSubscriptionComponents 
+            singlePackage={data.singlePackage} 
+            setOpenAuthModal={setOpenAuthModal}
+            />
         } else if(packageType.toLowerCase().includes('data plans')){
-            return <DataPurchaseComponents singlePackage={data.singlePackage} />
+            return <DataPurchaseComponents
+             singlePackage={data.singlePackage}
+             setOpenAuthModal={setOpenAuthModal}
+             />
         } else if(packageType.toLowerCase().includes('movie tickets')){
-            return <MovieTicketsComponent singlePackage={data.singlePackage} />
+            return <MovieTicketsComponent
+             singlePackage={data.singlePackage}
+             setOpenAuthModal={setOpenAuthModal}
+             />
         }
     }
 
@@ -81,7 +102,7 @@ const SinglePackageDisplayPage = ({ match }) => {
                   alignItems:'center',
                   justifyContent:'center'
               }}>
-               <i style={{fontSize:'22px'}} className="fas fa-circle-notch fa-spin"></i></div>
+               <i style={{fontSize:'35px', color:"#fff"}} className="fas fa-circle-notch fa-spin"></i></div>
                 </> : <>
                 <Container fluid style={{
                     width:'90%'
@@ -98,6 +119,7 @@ const SinglePackageDisplayPage = ({ match }) => {
                 </>
             }
           </section>
+          <AuthModal openAuthModal={openAuthModal} toggleAuthModal={toggleAuthModal} />
           <Footer />
     </>
 }

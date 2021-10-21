@@ -154,7 +154,18 @@ return <>
                             type="submit"
                             disabled={loading}
                           >
-                            Login
+                            {
+                                   loading ? <>
+                                   <span className="btn-inner--icon">
+                                   <i className="fas fa-circle-notch fa-spin"></i>
+                                   </span>
+                                   <span className="nav-link-inner--text ml-1">
+                                       Loading
+                                   </span>
+                                    </> : <>
+                                        Login
+                                    </>
+                               }
                           </Button>
                         </div>
                       </Form>

@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import authDispatch from "./state/auth";
+import { useLazyQuery, gql } from "@apollo/client";
 // import Todos from "./components/Todos";
 
 import "./styles/assets/vendor/nucleo/css/nucleo.css";
@@ -13,9 +16,39 @@ import SinglePackageDisplayPage from "./components/pages/SinglePackageDisplayPag
 import Register from "./components/auth/Register"
 import Login from "./components/auth/Login"
 
-// alert('ran') // demonstating that this always runs all through the app
+const USER = gql`
+ query {
+  me {
+    id
+    email
+    name
+    role
+  }
+}
+`
 
 function App() {
+
+     const [getUser] = useLazyQuery(USER, {
+       onCompleted: ({ me }) => {
+        authDispatch({
+          type:"USER_AUTHENTICATED",
+          payload: {
+            token: localStorage.getItem('token'),
+            user: me,
+            isAuthenticated: true
+          }
+        })
+       }
+     })
+
+     useEffect(() => {
+      if(localStorage.getItem('token') !== null){
+        getUser()
+      }
+      // eslint-disable-next-line
+     }, [])
+
   return (
     <Router>
       <Switch>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client"
+import { ApolloClient, ApolloProvider, ApolloLink, concat, InMemoryCache, createHttpLink } from "@apollo/client"
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -28,8 +28,20 @@ const httpLink = createHttpLink({
   uri: url
 })
 
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: localStorage.getItem('token') || '',
+    }
+  }));
+
+  return forward(operation);
+})
+
 const client = new ApolloClient({
-  link: httpLink,
+  link: concat(authMiddleware, httpLink),
   cache: new InMemoryCache({
     typePolicies: typePolicies
   }),

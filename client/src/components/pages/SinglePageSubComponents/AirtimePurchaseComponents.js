@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import { gql, useQuery } from '@apollo/client'
+import { useAlert } from 'react-alert'
 import { Container, Card,
      Row, Col, 
      Input, Label, 
      FormGroup, Button } from 'reactstrap'
 
-const AirtimePurchaseComponents = () => {
+
+const GET_USER_AUTH_STATE = gql`
+     query {
+       Auth @client
+ }
+`     
+
+const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
+
+    const { data } = useQuery(GET_USER_AUTH_STATE)
+    const alert = useAlert()
 
     const [ phoneNumber, setPhoneNumber ] = useState('')
     const [ rechargeAmount, setRechargeAmount ] = useState('')
@@ -31,6 +43,15 @@ const AirtimePurchaseComponents = () => {
 
     const updatePaymentMethod = (e) => {
         setPaymentMethod(e.target.value)
+    }
+
+    const handlePayment = () => {
+        if(data.Auth.isAuthenticated === false && data.Auth.user === null){
+            return setOpenAuthModal(true)
+        }
+        alert.show('payment handled after successful authentication', {
+            type:'success'
+        })
     }
 
     useEffect(() => {
@@ -159,6 +180,7 @@ const AirtimePurchaseComponents = () => {
                             (parseInt(rechargeAmount) === 0 || rechargeAmount.length === 0)
                          }
                          block
+                         onClick={handlePayment}
                          color="primary">Pay Now</Button>
                     </div>
                 </Card>

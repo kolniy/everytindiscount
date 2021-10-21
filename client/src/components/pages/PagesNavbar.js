@@ -90,12 +90,10 @@ import logo from "../../images/logo.png"
                         {
                           data.Auth.user.role === 'admin' ? (<>
                           <NavItem className="d-lg-block ml-lg-2">
-                              <Button
-                                className="btn-neutral btn-icon navbar-btn"
-                                color="default"
-                                onClick={handleLogout}
-                                  >
-                                <span className="nav-link-inner--text ml-1">
+                              <Button 
+                              onClick={handleLogout}
+                              outline color="primary" type="button">
+                               <span className="nav-link-inner--text ml-1">
                                   Logout
                                 </span>
                               </Button>
@@ -116,16 +114,11 @@ import logo from "../../images/logo.png"
                             </Button>
                         </NavItem>
                           </>) : (<>
-                              <NavItem className="d-lg-block ml-lg-2">
-                              <Button
-                                className="btn-neutral btn-icon navbar-btn"
-                                color="default"
-                                onClick={handleLogout}
-                                  >
-                                <span className="btn-inner--icon">
-                                <i className="ni ni-single-02"></i>
-                                </span>
-                                <span className="nav-link-inner--text ml-1">
+                            <NavItem className="d-lg-block ml-lg-2">
+                              <Button 
+                              onClick={handleLogout}
+                              outline color="primary" type="button">
+                               <span className="nav-link-inner--text ml-1">
                                   Logout
                                 </span>
                               </Button>
