@@ -56,7 +56,14 @@ const PackageDisplayComponent = ({
                 <Row>
                  {
                 data.packages.length === 0 ? 
-                <p className="text center mt-3 mb-3">Package not found in this category</p> : 
+                  <div style={{
+                    display:'flex',
+                    alignContent:'center',
+                    justifyContent:'center',
+                    width:'100%'
+                  }}>
+                    <p className="text-center mt-3 mb-3">Package not found in this category</p>
+                  </div> : 
                 <>
                 {
                      data.packages.map((packageItem) => 

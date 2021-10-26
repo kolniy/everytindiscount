@@ -2,16 +2,17 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
 }
 
 model User {
-  id                 String         @id @default(uuid())
+  id                 String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
   name               String
   email              String         @unique
   role               Role           @default(user)
@@ -27,19 +28,19 @@ enum Role {
 }
 
 model Package_Type {
-  id          String    @id @default(uuid())
+  id          String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
   name        String
   iconname    String
   createdby   User      @relation(fields: [createdbyid], references: [id])
-  createdbyid String
+  createdbyid String    @db.ObjectId
   package     Package[]
   createdat   DateTime  @default(now())
 }
 
 model Package {
-  id                      String         @id @default(uuid())
+  id                      String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
   packagetype             Package_Type   @relation(fields: [packagetypeId], references: [id])
-  packagetypeId           String
+  packagetypeId           String         @db.ObjectId
   packagename             String
   packageimage            String
   packagediscount         Float
@@ -47,19 +48,19 @@ model Package {
   packagelandingpageimage String
   packagelogo             String
   createdby               User           @relation(fields: [createdbyid], references: [id])
-  createdbyid             String
+  createdbyid             String         @db.ObjectId
   packageplan             Package_Plan[]
   createdat               DateTime       @default(now())
 }
 
 model Package_Plan {
-  id              String   @id @default(uuid())
+  id              String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
   planname        String
   plandescription String
   planprice       Int
   createdby       User     @relation(fields: [createdbyid], references: [id])
-  createdbyid     String
+  createdbyid     String   @db.ObjectId
   package         Package  @relation(fields: [packageid], references: [id])
-  packageid       String
+  packageid       String   @db.ObjectId
   createdat       DateTime @default(now())
 }
