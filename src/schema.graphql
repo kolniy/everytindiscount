@@ -60,7 +60,7 @@ type PackagePlan {
   plandescription: String!
   planprice: Int!
   createdBy: User!
-  package: Package!
+  singlepackage: Package!
   createdat: String!
 }
 

@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-import { PrismaClient } from "@prisma/client"
-const prisma = new PrismaClient()
+// import { PrismaClient } from "@prisma/client"
+// const prisma = new PrismaClient()
 
 const tokenSecret = process.env.JWTSECRET
 
@@ -223,7 +223,7 @@ const createPackage = async (parent, args, { prisma, userId }, info ) => {
     return newpackage
 }
 
-const updatePackage = async (parent, { idOfPackageToBeUpdated, data }, { userId }, info) => {
+const updatePackage = async (parent, { idOfPackageToBeUpdated, data }, { userId, prisma }, info) => {
     const user = await prisma.user.findUnique({
         where: {
             id: userId
@@ -279,7 +279,7 @@ const updatePackage = async (parent, { idOfPackageToBeUpdated, data }, { userId 
      return updatedPackage
 }
 
-const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId }, info ) => {
+const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId, prisma }, info ) => {
 
     const user = await prisma.user.findUnique({
         where: {
@@ -299,7 +299,7 @@ const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId }, inf
     return deletedPackage
 }
 
-const createPackagePlan = async (_, args, { userId }, info) => {
+const createPackagePlan = async (_, args, { userId, prisma }, info) => {
     const {
         planname,
         plandescription,
@@ -338,7 +338,7 @@ const createPackagePlan = async (_, args, { userId }, info) => {
     return newPackagePlan
 }
 
-const updatePackagePlan = async ( _, { idOfPackagePlanToUpdated, data }, { userId }, info) => {
+const updatePackagePlan = async ( _, { idOfPackagePlanToUpdated, data }, { userId, prisma }, info) => {
     const user = await prisma.user.findUnique({
         where: {
             id: userId
@@ -382,7 +382,7 @@ const updatePackagePlan = async ( _, { idOfPackagePlanToUpdated, data }, { userI
     return updatedPackagePlan
 }
 
-const deletePackagePlan = async ( _, args, { userId }, info) => {
+const deletePackagePlan = async ( _, args, { userId, prisma }, info) => {
     const user = await prisma.user.findUnique({
         where: {
             id: userId

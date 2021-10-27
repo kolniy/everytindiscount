@@ -27,7 +27,7 @@ const packages = async (parent, args, { prisma }, info) => {
     return packagesByPackageTypeId
 }
 
-const singlePackage = async (_, { packageId }, {  }, info) => {
+const singlePackage = async (_, { packageId }, { prisma }, info) => {
     const foundPackage = await prisma.package.findUnique({
         where: {
             id: packageId

@@ -83,6 +83,7 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
               email:"",
               password:""
           })
+          toggleAuthModal()
         },
         onError: (error) => {
           console.log(error)
@@ -118,6 +119,7 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
               password:"",
               password2:""
           })
+          toggleAuthModal()
         },
         onError: (error) => {
           alert.show(error.message, {
@@ -157,7 +159,6 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
           }
          
           signin()
-          toggleAuthModal()
     }
 
     const onHandleRegisterSubmit = (e) => {
@@ -191,7 +192,6 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
           }
           
           signup()
-          toggleAuthModal()
     }
 
     return <>

@@ -8,6 +8,7 @@ import * as Mutation from "./resolvers/Mutation"
 import * as User from "./resolvers/User"
 import * as PackageType from "./resolvers/PackageType"
 import * as Package from "./resolvers/Package"
+import * as PackagePlan from "./resolvers/PackagePlan"
 
 const prisma = new PrismaClient()
 
@@ -16,7 +17,8 @@ const resolvers = {
     Mutation,
     User,
     PackageType,
-    Package
+    Package,
+    PackagePlan
 }
 
 const server = new ApolloServer({
