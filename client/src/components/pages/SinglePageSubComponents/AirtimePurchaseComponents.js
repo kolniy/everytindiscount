@@ -58,6 +58,14 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
         console.log(paymentMethod)
     }, [paymentMethod])
 
+    useEffect(() => {
+        if(data.Auth.user !== null){
+            setBillingEmail(data.Auth.user.email)
+        } else {
+            setBillingEmail('')
+        }
+    }, [data])
+
     return <>
        <Container 
        className="package-action__container"
