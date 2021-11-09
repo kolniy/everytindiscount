@@ -54,10 +54,18 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
             // handle payment by credit card
             const payStack = new PaystackPop()
             payStack.newTransaction({
-                key: 'pk_test_f0d4496ea386a402b4a3d72cda5e5535eb95d5cb',
+                key: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
                 email: data.Auth.user.email,
                 amount: chosenPlanObject.planprice * 100,
-                channels: ['card']
+                currency:'NGN',
+                channels: ['card'],
+                onSuccess: async (transaction) => {
+                    console.log(transaction)
+                    // send a mutation to validate transaction here
+                },
+                onCancel: () => {
+                    alert.show('Are you sure you want to do that!!')
+                }
             })
         } else {
             // handle payment by bank transfer
@@ -110,7 +118,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                 <FormGroup className="package-action__form-group">
                     <Label>Choose A Plan</Label>
                     <Input onChange={e => chosePlan(e)} type="select">
-                        <option value="">Select A Plan</option>
+                        <option key="urejnf94" value="">Select A Plan</option>
                         {
                             singlePackage.packageplan.map((plan) => <><option value={plan.id} style={{
                                 fontSize:'14px',
@@ -154,7 +162,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                                 phoneNumber.length !== 0 ?
                                  <>
                                     {phoneNumber}
-                                 </> : <>{<p className="small">number not specified</p>}</>
+                                 </> : <>{<small>number not specified</small>}</>
                             }</p>
                         </div>
                     </div>

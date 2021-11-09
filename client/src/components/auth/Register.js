@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useLocation } from "react-router-dom"
 import authDispatch from "../../state/auth";
 import { withRouter } from 'react-router-dom'
 import { useAlert } from 'react-alert'
@@ -37,6 +38,9 @@ const SIGN_UP = gql`
 
 const Register = ({ history }) => {
 
+  const location = useLocation().search
+  const ref = new URLSearchParams(location).get("ref")
+
   const [ signupData, setSignupData ] = useState({
     name:'',
     email:'',
@@ -51,7 +55,8 @@ const Register = ({ history }) => {
         name: signupData.name,
         email: signupData.email,
         password: signupData.password,
-        isAdmin: false
+        isAdmin: false,
+        referedby: ref ? ref : ''
       }
     },
     onCompleted: ({ signup }) => {

@@ -20,11 +20,14 @@ model User {
   createdpackagetype Package_Type[]
   createdpackages    Package[]
   packageplan        Package_Plan[]
+  userrefcode        String
+  referedby          String
 }
 
 enum Role {
   user
   admin
+  marketer
 }
 
 model Package_Type {
@@ -38,19 +41,20 @@ model Package_Type {
 }
 
 model Package {
-  id                      String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  packagetype             Package_Type   @relation(fields: [packagetypeId], references: [id])
-  packagetypeId           String         @db.ObjectId
-  packagename             String
-  packageimage            String
-  packagediscount         Float
-  packagedescription      String
-  packagelandingpageimage String
-  packagelogo             String
-  createdby               User           @relation(fields: [createdbyid], references: [id])
-  createdbyid             String         @db.ObjectId
-  packageplan             Package_Plan[]
-  createdat               DateTime       @default(now())
+  id                             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  packagetype                    Package_Type   @relation(fields: [packagetypeId], references: [id])
+  packagetypeId                  String         @db.ObjectId
+  packagename                    String
+  packageimage                   String
+  packagediscountpercard         String
+  packagediscountperbanktransfer String
+  packagedescription             String
+  packagelandingpageimage        String
+  packagelogo                    String
+  createdby                      User           @relation(fields: [createdbyid], references: [id])
+  createdbyid                    String         @db.ObjectId
+  packageplan                    Package_Plan[]
+  createdat                      DateTime       @default(now())
 }
 
 model Package_Plan {

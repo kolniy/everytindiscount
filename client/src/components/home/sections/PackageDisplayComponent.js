@@ -11,7 +11,6 @@ const getPackagesFromPackageTypeId = gql`
     packagelogo
     packagelandingpageimage
     packageimage
-    packagediscount
     packagedescription
   }
 }

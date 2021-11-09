@@ -31,6 +31,8 @@ type User {
   password: String!
   createdpackagetype: [PackageType!]!
   createpackage: [Package!]!
+  userrefcode: String
+  referedby: String
 }
 
 type PackageType {
@@ -46,7 +48,8 @@ type Package {
   packagetype: PackageType
   packagename: String
   packageimage: String
-  packagediscount: Float
+  packagediscountpercard: String
+  packagediscountperbanktransfer: String
   packagedescription: String
   packagelandingpageimage: String
   packagelogo: String
@@ -74,6 +77,7 @@ input signUpInput {
   email: String!
   password: String!
   isAdmin: Boolean!
+  referedby: String
 }
 
 input signInInput {
@@ -84,7 +88,8 @@ input signInInput {
 input createPackageInput {
   packagename: String!
   packageimage: String!
-  packagediscount: Float!
+  packagediscountpercard: String!
+  packagediscountperbanktransfer: String!
   packagedescription: String!
   packagelandingpageimage: String!
   packagelogo: String!
@@ -94,7 +99,8 @@ input createPackageInput {
 input updatePackageInput {
   packagename: String
   packageimage: String
-  packagediscount: Float
+  packagediscountpercard: String!
+  packagediscountperbanktransfer: String!
   packagedescription: String
   packagelandingpageimage: String
   packagelogo: String

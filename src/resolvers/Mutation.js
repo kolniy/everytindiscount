@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import shortid from "shortid"
 
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
@@ -28,6 +29,8 @@ const signup = async (parent, { data }, { prisma }, info ) => {
             email: data.email,
             role: role,
             password: password,
+            userrefcode: shortid.generate(),
+            referedby: data.referedby.length > 0 ? data.referedby : ''
         }
     })
 
@@ -183,8 +186,8 @@ const resetUserPassword = async (parent, { password }, { prisma, userId }, info)
 
 const createPackage = async (parent, args, { prisma, userId }, info ) => {
 
-    const { packagename, packageimage, 
-        packagediscount, packagedescription, 
+    const { packagename, packageimage, packagedescription, 
+        packagediscountpercard, packagediscountperbanktransfer,
         packagelandingpageimage, packagelogo,
          packagetypeId } = args.data
 
@@ -216,7 +219,7 @@ const createPackage = async (parent, args, { prisma, userId }, info ) => {
             packagelandingpageimage: packagelandingpageimage,
             packagedescription: packagedescription,
             packagelogo:packagelogo,
-
+            packagediscountpercard: packagediscountpercard,
         }
     })
 
@@ -267,6 +270,14 @@ const updatePackage = async (parent, { idOfPackageToBeUpdated, data }, { userId,
 
      if(data.packagelogo){
          update['packagelogo'] = data.packagelogo
+     }
+
+     if(data.packagediscountpercard){
+         update['packagediscountpercard'] = data.packagediscountpercard
+     }
+
+     if(data.packagediscountperbanktransfer){
+         update['packagediscountperbanktransfer'] = data.packagediscountperbanktransfer
      }
 
      const updatedPackage = await prisma.package.update({

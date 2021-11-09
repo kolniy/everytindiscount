@@ -22,7 +22,8 @@ const SINGLE_PACKAGE_QUERY = gql`
     packagename
     packageimage
     packagelandingpageimage
-    packagediscount
+    packagediscountpercard
+    packagediscountperbanktransfer
     packagedescription
     packagelogo
     packageplan {

@@ -148,7 +148,7 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                                 phoneNumber.length !== 0 ?
                                  <>
                                     {phoneNumber}
-                                 </> : <>{<p className="small">number not specified</p>}</>
+                                 </> : <>{<small>number not specified</small>}</>
                             }</p>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                       </div>
                     </div>
 
-                    <div className="payment-method__btn mt-3">
+                    <div className="payment-method__btn mt-3 mb-3">
                         <Button
                          disabled={
                             (phoneNumber.length < 11 || phoneNumber.length > 11) ||
