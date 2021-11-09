@@ -6,6 +6,8 @@ import { Container, Card,
      Input, Label, 
      FormGroup, Button } from 'reactstrap'
 
+import paystackimage1 from "../../../images/paystack-ii.png"
+
 
 const GET_USER_AUTH_STATE = gql`
      query {
@@ -73,7 +75,7 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                 width:'88%'
             }}>
             <Row className="mb-3">
-                <Col xs="12" sm="6" md="6">
+                <Col xs="12" sm="12" md="6">
                     <FormGroup className="package-action__form-group">
                         <Label>Phone Number</Label>
                         <Input 
@@ -122,7 +124,7 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                         />
                     </FormGroup>
                 </Col>
-                <Col xs="12" sm="6" md="6">
+                <Col xs="12" sm="12" md="6">
                 <Card className="package-action_payment-cta">
                     <h2 className="call-to-action__text">
                         Buy Airtime
@@ -133,7 +135,11 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                             <h3 className="cost-header">#{
                                 rechargeAmount.length !== 0 ? <>
                                     {rechargeAmount}
-                               </> : ("__.__")
+                               </> : (<p style={{
+                                   color:'#000',
+                                   fontSize:'13px'
+                                        }} 
+                               className="small">amount not specified</p>)
                             }</h3>
                         </div>
                         <div className="recipient-info">
@@ -142,7 +148,7 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                                 phoneNumber.length !== 0 ?
                                  <>
                                     {phoneNumber}
-                                 </> : <>{"08023456789"}</>
+                                 </> : <>{<p className="small">number not specified</p>}</>
                             }</p>
                         </div>
                     </div>
@@ -181,7 +187,7 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                       </div>
                     </div>
 
-                    <div className="payment-method__btn mt-4">
+                    <div className="payment-method__btn mt-3">
                         <Button
                          disabled={
                             (phoneNumber.length < 11 || phoneNumber.length > 11) ||
@@ -191,6 +197,9 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                          onClick={handlePayment}
                          color="primary">Pay Now</Button>
                     </div>
+                   <div className="secure-payments-image-container">
+                       <img src={paystackimage1} alt="..." className="img-fluid" />
+                   </div>
                 </Card>
                 </Col>
             </Row>

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import PaystackPop from "@paystack/inline-js"
 import { gql, useQuery } from "@apollo/client"
 import { useAlert } from 'react-alert'
 import { Container, Card, 
     Row, Col, Input, Label,
     FormGroup, Button
 } from 'reactstrap'
+ 
+import paystackimage1 from "../../../images/paystack-ii.png"
 
 const GET_USER_AUTH_STATE = gql`
      query {
@@ -47,9 +50,19 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
             return setOpenAuthModal(true)
         }
 
-        alert.show('payment handled after successful authentication', {
-            type:'success'
-        })
+        if(paymentMethod === "dcc"){
+            // handle payment by credit card
+            const payStack = new PaystackPop()
+            payStack.newTransaction({
+                key: 'pk_test_f0d4496ea386a402b4a3d72cda5e5535eb95d5cb',
+                email: data.Auth.user.email,
+                amount: chosenPlanObject.planprice * 100,
+                channels: ['card']
+            })
+        } else {
+            // handle payment by bank transfer
+            alert.show('payment by card handled here')
+        }
     }
 
     useEffect(() => {
@@ -74,7 +87,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                      width:'88%'
                  }}>
             <Row className="mb-3">
-              <Col xs="12" sm="6" md="6">
+              <Col xs="12" sm="12" md="6">
                   <FormGroup className="package-action__form-group">
                         <Label>Phone Number</Label>
                         <Input 
@@ -124,7 +137,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                         />
                 </FormGroup>
               </Col>
-              <Col xs="12" sm="6" md="6">
+              <Col xs="12" sm="12" md="6">
               <Card className="package-action_payment-cta">
                     <h2 className="call-to-action__text">
                         Buy Data Plan
@@ -141,7 +154,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                                 phoneNumber.length !== 0 ?
                                  <>
                                     {phoneNumber}
-                                 </> : <>{"08023456789"}</>
+                                 </> : <>{<p className="small">number not specified</p>}</>
                             }</p>
                         </div>
                     </div>
@@ -152,7 +165,10 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                                  #{
                                 chosenPlanObject !== undefined ? <>
                                     {chosenPlanObject?.planprice}
-                               </> : ("__.__") 
+                               </> : (<p style={{
+                                   color:'#000',
+                                   fontSize:'13px'
+                               }} className="small">amount not specified</p>) 
                             }
                             </h3>
                         </div>
@@ -191,7 +207,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                       </div>
                     </div>
 
-                    <div className="payment-method__btn mt-4">
+                    <div className="payment-method__btn mb-3">
                         <Button
                          block
                          disabled={
@@ -201,6 +217,9 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                          onClick={handlePayment}
                          color="primary">Pay Now</Button>
                     </div>
+                 <div className="secure-payments-image-container">
+                    <img src={paystackimage1} alt="..." className="img-fluid" />
+                </div>
                 </Card>
               </Col>
             </Row>
