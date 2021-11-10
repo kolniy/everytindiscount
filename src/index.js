@@ -15,6 +15,8 @@ import "regenerator-runtime/runtime"
 
 const prisma = new PrismaClient()
 
+const PORT = process.env.PORT || 4000
+
 const resolvers = {
     Query,
     Mutation,
@@ -38,5 +40,7 @@ const server = new ApolloServer({
     }
 })
 
-server.listen()
+server.listen({
+    port: PORT
+})
         .then(({ url }) => console.log(`server is running on ${url}`) )
