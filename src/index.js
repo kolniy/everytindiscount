@@ -1,6 +1,9 @@
 import fs from "fs"
 import path from "path"
 import { ApolloServer } from "apollo-server"
+import {
+    ApolloServerPluginLandingPageGraphQLPlayground
+  } from "apollo-server-core";
 import { PrismaClient } from "@prisma/client"
 import { getUserIdFromAuthHeader } from "./utilities/getUserIdFromAuthHeader"
 import * as Query from "./resolvers/Query"
