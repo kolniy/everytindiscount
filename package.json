@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && node dist/index.js",
-    "build": "babel src -d dist npm run rsync:graphql",
+    "build": "babel src -d dist",
     "rsync:graphql": "rsync -r --include '*/' --include '*.graphql' --exclude='*' --prune-empty-dirs 'src/' 'dist/'",
     "client": "npm start --prefix client",
     "dev": "env-cmd -f ./src/config/.dev.env nodemon -e js,graphql --ignore client --exec babel-node ./src/index.js",
