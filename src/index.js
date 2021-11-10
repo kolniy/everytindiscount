@@ -11,6 +11,8 @@ import * as Package from "./resolvers/Package"
 import * as PackagePlan from "./resolvers/PackagePlan"
 import * as Transaction from "./resolvers/Transaction"
 
+import "regenerator-runtime/runtime"
+
 const prisma = new PrismaClient()
 
 const resolvers = {
