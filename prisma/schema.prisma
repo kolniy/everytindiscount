@@ -22,6 +22,7 @@ model User {
   packageplan        Package_Plan[]
   userrefcode        String
   referedby          String
+  transactions       Transaction[]
 }
 
 enum Role {
@@ -58,13 +59,29 @@ model Package {
 }
 
 model Package_Plan {
-  id              String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id              String        @id @default(dbgenerated()) @map("_id") @db.ObjectId
   planname        String
   plandescription String
   planprice       Int
-  createdby       User     @relation(fields: [createdbyid], references: [id])
-  createdbyid     String   @db.ObjectId
-  package         Package  @relation(fields: [packageid], references: [id])
-  packageid       String   @db.ObjectId
-  createdat       DateTime @default(now())
+  createdby       User          @relation(fields: [createdbyid], references: [id])
+  createdbyid     String        @db.ObjectId
+  package         Package       @relation(fields: [packageid], references: [id])
+  packageid       String        @db.ObjectId
+  createdat       DateTime      @default(now())
+  transaction     Transaction[]
+}
+
+model Transaction {
+  id              String       @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  createdat       DateTime     @default(now())
+  plan            Package_Plan @relation(fields: [planid], references: [id])
+  planid          String       @db.ObjectId
+  reference       String
+  amount          String
+  orderby         User         @relation(fields: [userid], references: [id])
+  userid          String       @db.ObjectId
+  paymentmethod   String
+  status          String
+  paymentrefernce String
+  valuerecipient  String
 }

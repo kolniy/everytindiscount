@@ -6,7 +6,10 @@ import { Container, Card,
     Row, Col, Input, Label,
     FormGroup, Button
 } from 'reactstrap'
+import calculateDiscounPerCardPayment from '../../../utilities/calculateDiscountPerCardPayment'
+import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscountPerBankTransfer'
  
+
 import paystackimage1 from "../../../images/paystack-ii.png"
 
 const GET_USER_AUTH_STATE = gql`
@@ -22,6 +25,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
     const [ paymentMethod, setPaymentMethod ] = useState("dcc")
     const { data } = useQuery(GET_USER_AUTH_STATE)
     const alert = useAlert()
+    const [ paymentToPaystack, setPaymentToPaystack ] = useState(0)
 
     const [ idOfChosePlan, setIdOfChosenPlan ] = useState('')
     const [ chosenPlanObject, setChosenPlanObject ] = useState(null)
@@ -56,7 +60,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
             payStack.newTransaction({
                 key: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
                 email: data.Auth.user.email,
-                amount: chosenPlanObject.planprice * 100,
+                amount: paymentToPaystack * 100,
                 currency:'NGN',
                 channels: ['card'],
                 onSuccess: async (transaction) => {
@@ -87,6 +91,15 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
         
         // eslint-disable-next-line
     }, [idOfChosePlan])
+
+    useEffect(() => {
+        if(chosenPlanObject){
+            paymentMethod === 'dcc' ? 
+        setPaymentToPaystack(calculateDiscounPerCardPayment(singlePackage.packagediscountpercard, chosenPlanObject?.planprice)) :
+        setPaymentToPaystack(calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, chosenPlanObject?.planprice))
+        }
+        // eslint-disable-next-line 
+    }, [chosenPlanObject, paymentMethod])
 
     return <>
         <Container
@@ -168,11 +181,23 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                     </div>
                     <div className="data-plan-amount-info-container">
                     <div className="amount-info">
-                            <p className="paragraph-info">Amount:</p>
+                            <p className="paragraph-info">Amount:</p> {
+                                chosenPlanObject !== undefined && <>
+                                    {
+                                        paymentMethod === 'dcc' ?
+                                         <span className="small">(payment amount with credit/debit card)</span> :
+                                         <span className="small">(payment amount with bank transfer)</span>
+                                    }
+                                </>
+                            }
                              <h3 className="cost-header">
                                  #{
                                 chosenPlanObject !== undefined ? <>
-                                    {chosenPlanObject?.planprice}
+                                    {
+                                        paymentMethod === 'dcc' ? 
+                                        <>{calculateDiscounPerCardPayment(singlePackage.packagediscountpercard, chosenPlanObject?.planprice)}</> : 
+                                        <>{calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, chosenPlanObject?.planprice)}</>
+                                    }
                                </> : (<p style={{
                                    color:'#000',
                                    fontSize:'13px'
