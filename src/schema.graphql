@@ -21,6 +21,11 @@ type Mutation {
     data: updatePackagePlanInput
   ): PackagePlan!
   deletePackagePlan(idOfPackagePlanToDelete: ID!): PackagePlan!
+  createTransaction(data: createTransactionInput): Transaction!
+  updateTransaction(
+    transactionId: ID!
+    data: updateTransactionData
+  ): Transaction!
 }
 
 type User {
@@ -67,6 +72,19 @@ type PackagePlan {
   createdat: String!
 }
 
+type Transaction {
+  id: ID!
+  createdat: String!
+  packageplan: PackagePlan!
+  reference: String!
+  amount: String!
+  orderby: User!
+  paymentmethod: String!
+  status: String!
+  paymentreference: String!
+  valuerecipient: String!
+}
+
 type UserAuthPayload {
   user: User!
   token: String!
@@ -104,6 +122,24 @@ input updatePackageInput {
   packagedescription: String
   packagelandingpageimage: String
   packagelogo: String
+}
+
+input createTransactionInput {
+  planid: String!
+  reference: String!
+  amount: String!
+  userid: String!
+  paymentmethod: String!
+  paymentrefernce: String
+  valuerecipient: String!
+}
+
+input updateTransactionData {
+  status: String
+  paymentmethod: String
+  paymentrefernce: String
+  valuerecipient: String
+  amount: String
 }
 
 input createPackagePlanInput {
