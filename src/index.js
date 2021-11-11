@@ -43,7 +43,8 @@ const server = new ApolloServer({
             userId: req && req.headers.authorization ? 
             getUserIdFromAuthHeader(req) : null
         }
-    }
+    },
+    introspection: true
 })
 
 server.listen({
