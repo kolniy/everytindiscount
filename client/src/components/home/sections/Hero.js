@@ -26,7 +26,7 @@ const Hero = () => {
               color="primary"
               size="lg"
               type="button"
-              className="ml-1 mb-3"
+              className="ml-1 mb-3 sign-up-btn"
               tag={Link}
               to="/signup"
             >

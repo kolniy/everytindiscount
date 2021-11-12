@@ -60,7 +60,6 @@ const Register = ({ history }) => {
       }
     },
     onCompleted: ({ signup }) => {
-      console.log(signup.user, 'registration data')
       alert.show('sign up completed successfully', {
         type:'success'
       })

@@ -105,7 +105,7 @@ const Header = () => {
                       </> : <>
                         {
                           data.Auth.user.role === 'admin' ? (<>
-                             <NavItem className="d-lg-block ml-lg-2">
+                             <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
                               outline color="primary" type="button">
@@ -114,6 +114,7 @@ const Header = () => {
                                 </span>
                               </Button>
                             </NavItem>
+                            <br />
                             <NavItem className="d-lg-block ml-lg-2">
                             <Button
                               className="btn-neutral btn-icon navbar-btn"
@@ -131,7 +132,7 @@ const Header = () => {
                         </NavItem>
                           </>) : (
                             <>
-                             <NavItem className="d-lg-block ml-lg-2">
+                             <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
                               outline color="primary" type="button">
@@ -140,6 +141,7 @@ const Header = () => {
                                 </span>
                               </Button>
                             </NavItem>
+                            <br />
                             <NavItem className="d-lg-block ml-lg-2">
                              <Button
                               className="btn-neutral btn-icon navbar-btn"

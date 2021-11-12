@@ -20,15 +20,15 @@
     font-weight: 300;
     font-size: 16px;
     margin-bottom: 50px;
-
-    button {
-      z-index: 1000;
-    }
   }
 
   & .hero-container {
     width: 85%;
     position: relative;
+  }
+
+  .hero-text .sign-up-btn {
+    z-index: 1000;
   }
 
   & .img-container {
@@ -110,5 +110,11 @@
         display: none;
       }
     }
+  }
+}
+
+@media (max-width: 650px) {
+  .hero-section .img-container {
+    display: none;
   }
 }

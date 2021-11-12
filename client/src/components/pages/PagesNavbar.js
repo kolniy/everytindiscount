@@ -89,7 +89,7 @@ import logo from "../../images/logo.png"
                       </> : <>
                         {
                           data.Auth.user.role === 'admin' ? (<>
-                          <NavItem className="d-lg-block ml-lg-2">
+                          <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
                               outline color="primary" type="button">
@@ -98,6 +98,7 @@ import logo from "../../images/logo.png"
                                 </span>
                               </Button>
                             </NavItem>
+          
                             <NavItem className="d-lg-block ml-lg-2">
                             <Button
                               className="btn-neutral btn-icon navbar-btn"
@@ -114,7 +115,7 @@ import logo from "../../images/logo.png"
                             </Button>
                         </NavItem>
                           </>) : (<>
-                            <NavItem className="d-lg-block ml-lg-2">
+                            <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
                               outline color="primary" type="button">
