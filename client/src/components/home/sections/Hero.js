@@ -30,7 +30,7 @@ const Hero = () => {
               tag={Link}
               to="/signup"
             >
-        GET STARTED
+           GET STARTED
       </Button>
             </div>
           </Col>

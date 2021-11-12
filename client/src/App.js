@@ -6,8 +6,8 @@ import { useLazyQuery, gql } from "@apollo/client";
 
 import "./styles/assets/vendor/nucleo/css/nucleo.css";
 import "./styles/assets/vendor/font-awesome/css/font-awesome.min.css";
-import "./styles/assets/css/argon-design-system-react.css";
 import "./styles/assets/css/argon-dashboard-react.css"
+import "./styles/assets/css/argon-design-system-react.css";
 
 // custom styles
 import './App.scss';

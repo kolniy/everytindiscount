@@ -20,6 +20,10 @@
     font-weight: 300;
     font-size: 16px;
     margin-bottom: 50px;
+
+    button {
+      z-index: 1000;
+    }
   }
 
   & .hero-container {
