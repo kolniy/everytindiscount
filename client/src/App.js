@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import authDispatch from "./state/auth";
 import { useLazyQuery, gql } from "@apollo/client";
-// import Todos from "./components/Todos";
+import PrivateAdminRoute from "./routers/PrivateAdminRoute";
 
 import "./styles/assets/vendor/nucleo/css/nucleo.css";
 import "./styles/assets/vendor/font-awesome/css/font-awesome.min.css";
@@ -62,14 +62,14 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Landing} />
-        <Route exact path="/admin" component={AdminLandingPage} />
-        <Route exact path="/admin/administrators" component={AdministratorsPage} />
-        <Route exact path="/admin/marketers" component={AdminMarketersPage} />
-        <Route exact path="/admin/transaction" component={AdminTransactionsPage} />
-        <Route exact path="/admin/packagetypes" component={AdminPackageTypePage} />
-        <Route exact path="/admin/packages" component={AdminPackagesPage} />
-        <Route exact path="/admin/profile" component={AdminProfilePage} />
-        <Route exact path="/admin/users" component={AdminUsersPage} />
+        <PrivateAdminRoute exact path="/admin" component={AdminLandingPage} />
+        <PrivateAdminRoute exact path="/admin/administrators" component={AdministratorsPage} />
+        <PrivateAdminRoute exact path="/admin/marketers" component={AdminMarketersPage} />
+        <PrivateAdminRoute exact path="/admin/transaction" component={AdminTransactionsPage} />
+        <PrivateAdminRoute exact path="/admin/packagetypes" component={AdminPackageTypePage} />
+        <PrivateAdminRoute exact path="/admin/packages" component={AdminPackagesPage} />
+        <PrivateAdminRoute exact path="/admin/profile" component={AdminProfilePage} />
+        <PrivateAdminRoute exact path="/admin/users" component={AdminUsersPage} />
         <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
         <Route exact path="/signup" component={Register} />
         <Route exact path="/login" component={Login} />

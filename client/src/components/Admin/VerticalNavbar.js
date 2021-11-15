@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
+import authDispatch from '../../state/auth'
 import {
     Collapse,
   NavbarBrand,
@@ -32,6 +33,12 @@ const VerticalNavbar = () => {
         updateActiveLink({
             type:"UPDATE_ACTIVE_LINK",
             payload: linkNumber
+        })
+    }
+
+    const handleLogout = () => {
+        authDispatch({
+          type:"USER_LOGOUT"
         })
     }
 
@@ -174,7 +181,7 @@ const VerticalNavbar = () => {
             <hr className="my-3" />
             {/* Heading */}
             <Nav className="mb-md-3" navbar>
-              <NavItem className="active-pro active">
+              <NavItem onClick={handleLogout} className="active-pro active signout-button">
                 <NavLink>
                 <i className="fas fa-sign-out-alt"></i>
                     Logout
