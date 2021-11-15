@@ -50,7 +50,7 @@ const VerticalNavbar = () => {
            >
             <span className="navbar-toggler-icon" />
           </button>
-        <NavbarBrand className="pt-0">
+        <NavbarBrand tag={Link} to="/" className="pt-0">
             <img
             alt="..."
             className="navbar-brand-img"

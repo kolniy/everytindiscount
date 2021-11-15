@@ -52,9 +52,9 @@ const Header = () => {
                       </Link>
                     </Col>
                     <Col className="collapse-close" xs="6">
-                      <button className="navbar-toggler" id="navbar-primary">
-                      <i className="fas fa-bars toggler-style"></i>
-                      </button>
+                      <button className="navbar-toggler" id="navbar-primary"> 
+                       <i className="fas fa-bars toggler-style"></i> 
+                       </button>
                     </Col>
                   </Row>
                 </div>
