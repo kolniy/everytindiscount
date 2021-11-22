@@ -78,7 +78,7 @@ model Transaction {
   planid           String       @db.ObjectId
   reference        String
   amount           Decimal
-  orderby          User         @relation(fields: [userid], references: [id])
+  transactionby    User         @relation(fields: [userid], references: [id])
   userid           String       @db.ObjectId
   paymentmethod    String
   status           String

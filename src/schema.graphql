@@ -83,7 +83,7 @@ type Transaction {
   packageplan: PackagePlan!
   reference: String!
   amount: String!
-  orderby: User!
+  transactionby: User!
   paymentmethod: String!
   status: String
   paymentreference: String

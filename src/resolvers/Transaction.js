@@ -2,11 +2,21 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 const packageplan = async (parent, args, context, info) => {
-
+    const packageplan = await prisma.package_Plan.findUnique({
+        where: {
+            id: parent.planid
+        }
+    })
+    return packageplan
 }
 
-const orderby = async (parent, args, context, info) => {
-
+const transactionby = async (parent, args, context, info) => {
+    const transactionby = await prisma.user.findUnique({
+        where: {
+            id: parent.userid
+        }
+    })
+    return transactionby
 }
 
-export { packageplan, orderby }
+export { packageplan, transactionby }
