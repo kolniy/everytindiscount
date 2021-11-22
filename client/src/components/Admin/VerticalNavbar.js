@@ -45,7 +45,7 @@ const VerticalNavbar = () => {
     return <>
          <Navbar
         className="navbar-vertical fixed-left navbar-light bg-white"
-        expand="md"
+        expand="lg"
         id="sidenav-main"
       >
         <Container fluid>
@@ -56,6 +56,7 @@ const VerticalNavbar = () => {
             onClick={toggleCollapse}
            >
             <span className="navbar-toggler-icon" />
+            
           </button>
         <NavbarBrand tag={Link} to="/" className="pt-0">
             <img
@@ -67,7 +68,7 @@ const VerticalNavbar = () => {
           {/* Collapse */}
           <Collapse navbar isOpen={collapseOpen}>
             {/* Collapse header */}
-            <div className="navbar-collapse-header d-md-none">
+            <div className="navbar-collapse-header">
               <Row>
                   <Col className="collapse-brand" xs="6">
                       <Link to="/admin">
@@ -75,14 +76,16 @@ const VerticalNavbar = () => {
                       </Link>
                   </Col>
                 <Col className="collapse-close" xs="6">
-                  <button
-                    className="navbar-toggler"
-                    type="button"
-                    onClick={toggleCollapse}
-                  >
-                    <span />
-                    <span />
-                  </button>
+                <button
+                  style={{
+                    border:'1px solid transparent',
+                    background:'transparent'
+                  }}
+                  type="button"
+                  onClick={toggleCollapse}
+                >
+                  <i className="fas fa-times toggler-style"></i>
+                </button>
                 </Col>
               </Row>
             </div>

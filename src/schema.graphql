@@ -3,6 +3,11 @@ type Query {
   packagetypes: [PackageType!]!
   packages(packageTypeId: ID!): [Package!]!
   singlePackage(packageId: ID!): Package!
+  adminTransactionCount: Int!
+  adminUsersCount: Int!
+  adminSaleSum: String!
+  adminPackagesCount: Int!
+  transactions: [Transaction]!
 }
 
 type Mutation {
@@ -80,8 +85,8 @@ type Transaction {
   amount: String!
   orderby: User!
   paymentmethod: String!
-  status: String!
-  paymentreference: String!
+  status: String
+  paymentreference: String
   valuerecipient: String!
 }
 
@@ -130,14 +135,13 @@ input createTransactionInput {
   amount: String!
   userid: String!
   paymentmethod: String!
-  paymentrefernce: String
+  paymentreference: String
   valuerecipient: String!
 }
 
 input updateTransactionData {
-  status: String
   paymentmethod: String
-  paymentrefernce: String
+  paymentreference: String
   valuerecipient: String
   amount: String
 }
@@ -168,4 +172,5 @@ input updatePackageTypeInput {
 enum Role {
   user
   admin
+  marketer
 }

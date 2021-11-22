@@ -35,7 +35,7 @@ const Header = () => {
 
       return (
         <>
-          <Navbar className="navbar-dark" expand="lg">
+          <Navbar className="navbar-dark fixed-top" expand="lg">
             <Container>
               <NavbarBrand tag={Link} to="/">
                 <img src={logo} className="img-fluid" alt="everytindiscount logo" />
@@ -53,7 +53,7 @@ const Header = () => {
                     </Col>
                     <Col className="collapse-close" xs="6">
                       <button className="navbar-toggler" id="navbar-primary"> 
-                       <i className="fas fa-bars toggler-style"></i> 
+                      <i className="fas fa-times toggler-style"></i> 
                        </button>
                     </Col>
                   </Row>

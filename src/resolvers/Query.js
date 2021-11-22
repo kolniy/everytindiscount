@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, Prisma } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
@@ -36,4 +36,95 @@ const singlePackage = async (_, { packageId }, { prisma }, info) => {
     return foundPackage
 }
 
-export { me, packagetypes, packages, singlePackage }
+const adminTransactionCount = async (parent, args, { userId }, info) => {
+
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const transactionCount = await prisma.transaction.count()
+    return transactionCount
+}
+
+const adminUsersCount = async (parent, args, { userId }, info) => {
+
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const usersCount = await prisma.user.count()
+    return usersCount
+}
+
+const adminSaleSum = async (parent, args, { userId }, info) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const transationSum = await prisma.transaction.aggregate({
+        _sum: {
+            amount: true
+        }
+    })
+   
+    return transationSum._sum.amount
+}
+
+const adminPackagesCount = async (parent, args, { userId }, info) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const packagesCount = await prisma.package.count()
+    return packagesCount
+}
+
+const transactions = async (parent, args, { userId }, info) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const transactions = await prisma.transaction.findMany({
+        orderBy: {
+            createdat:'desc'
+        }
+    })
+    return transactions
+}
+
+export { me, packagetypes, 
+    packages, singlePackage,
+    adminTransactionCount, adminUsersCount,
+    adminSaleSum, adminPackagesCount,
+    transactions
+}

@@ -2,7 +2,8 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import shortid from "shortid"
 
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, Prisma } from "@prisma/client"
+import { transactions } from "./Query"
 const prisma = new PrismaClient()
 
 const tokenSecret = process.env.JWTSECRET
@@ -220,6 +221,7 @@ const createPackage = async (parent, args, { prisma, userId }, info ) => {
             packagedescription: packagedescription,
             packagelogo:packagelogo,
             packagediscountpercard: packagediscountpercard,
+            packagediscountperbanktransfer: packagediscountperbanktransfer
         }
     })
 
@@ -413,6 +415,43 @@ const deletePackagePlan = async ( _, args, { userId, prisma }, info) => {
     return deletedPackagePlan
 }
 
+const createTransaction = async (parent, args, { userId }, info ) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(!user){
+        throw new Error('Not Authorized')
+    }
+    const { data } = args
+
+    const transactionData = {
+        planid: data.planid,
+        reference: data.reference,
+        amount: new Prisma.Decimal(data.amount),
+        userid: user.id,
+        paymentmethod: data.paymentmethod,
+        valuerecipient: data.valuerecipient,
+        status: 'success',
+    }
+
+    if(data.paymentreference){
+        transactionData['paymentreference'] = data.paymentreference
+    } else {
+        transactionData['paymentreference'] = ''
+    }
+  
+    //  call paystack API to validate the transaction here
+    // after transaction is verified create new transaction
+    const transaction = await prisma.transaction.create({
+        data: transactionData
+    })
+
+    return transaction
+}
+
 export { signup,
      signin,
     createPackageType, 
@@ -424,5 +463,6 @@ export { signup,
     updatePackage,
     createPackagePlan,
     updatePackagePlan,
-    deletePackagePlan
+    deletePackagePlan,
+    createTransaction
 }

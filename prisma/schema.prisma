@@ -72,16 +72,16 @@ model Package_Plan {
 }
 
 model Transaction {
-  id              String       @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  createdat       DateTime     @default(now())
-  plan            Package_Plan @relation(fields: [planid], references: [id])
-  planid          String       @db.ObjectId
-  reference       String
-  amount          String
-  orderby         User         @relation(fields: [userid], references: [id])
-  userid          String       @db.ObjectId
-  paymentmethod   String
-  status          String
-  paymentrefernce String
-  valuerecipient  String
+  id               String       @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  createdat        DateTime     @default(now())
+  plan             Package_Plan @relation(fields: [planid], references: [id])
+  planid           String       @db.ObjectId
+  reference        String
+  amount           Decimal
+  orderby          User         @relation(fields: [userid], references: [id])
+  userid           String       @db.ObjectId
+  paymentmethod    String
+  status           String
+  paymentreference String // payment reference is used to check if the user has made a successful transfer for bank transfer payments
+  valuerecipient   String
 }

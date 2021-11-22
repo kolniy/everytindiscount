@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
-
 const AdminDashboardSummary = () => {
     return <>
         <div className="header bg-gradient-primary pb-8 pt-5 pt-md-8">
@@ -17,6 +16,7 @@ const AdminDashboardSummary = () => {
                           <CardTitle
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
+                            style={{fontSize:'13px'}}
                           >
                             Transactions
                           </CardTitle>
@@ -43,6 +43,7 @@ const AdminDashboardSummary = () => {
                           <CardTitle
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
+                            style={{fontSize:'13px'}}
                           >
                             Users
                           </CardTitle>
@@ -69,6 +70,7 @@ const AdminDashboardSummary = () => {
                           <CardTitle
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
+                            style={{fontSize:'13px'}}
                           >
                             Sales
                           </CardTitle>
@@ -76,7 +78,7 @@ const AdminDashboardSummary = () => {
                         <Col xs="12" sm="12" md="12">
                         <div className="statistics-counter-and-summary">
                                 <div className="h2 font-weight-bold mb-0">
-                                2,356
+                                #2,356
                             </div>
                             <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
                               <i className="fas fa-chart-pie" />
@@ -95,6 +97,7 @@ const AdminDashboardSummary = () => {
                           <CardTitle
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
+                            style={{fontSize:'13px'}}
                           >
                             Packages
                           </CardTitle>
