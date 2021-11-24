@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import shortid from "shortid"
+import axios from "axios"
 
 import { PrismaClient, Prisma } from "@prisma/client"
-import { transactions } from "./Query"
 const prisma = new PrismaClient()
 
 const tokenSecret = process.env.JWTSECRET
@@ -416,40 +416,66 @@ const deletePackagePlan = async ( _, args, { userId, prisma }, info) => {
 }
 
 const createTransaction = async (parent, args, { userId }, info ) => {
-    const user = await prisma.user.findUnique({
-        where: {
-            id: userId
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+    
+        if(!user){
+            throw new Error('Not Authorized')
         }
-    })
-
-    if(!user){
-        throw new Error('Not Authorized')
+        const { data } = args
+    
+            const config = {
+                headers: {
+                    // use payment secret key to validate the transaction
+                    'Authorization': `Bearer ${process.env.PAYSTACKSECRETKEY}`
+                }
+            }
+            
+          const paystack_response = await axios.get(`https://api.paystack.co/transaction/verify/${data.reference}`, config)
+            if(paystack_response.data.data.status === 'success'){
+                const transactionData = {
+                    planid: data.planid,
+                    reference: data.reference,
+                    amount: new Prisma.Decimal(data.amount),
+                    userid: user.id,
+                    paymentmethod: data.paymentmethod,
+                    valuerecipient: data.valuerecipient,
+                    status: 'success',
+                }
+    
+            if(data.paymentreference){
+                transactionData['paymentreference'] = data.paymentreference
+            } else {
+                transactionData['paymentreference'] = ''
+            }
+    
+            const transaction = await prisma.transaction.create({
+                data: transactionData
+            })
+            return transaction
+           } else {
+            const transactionData = {
+                planid: data.planid,
+                reference: data.reference,
+                amount: new Prisma.Decimal(data.amount),
+                userid: user.id,
+                paymentmethod: data.paymentmethod,
+                valuerecipient: data.valuerecipient,
+                status: 'failed',
+            }
+    
+           await prisma.transaction.create({
+                data: transactionData
+           })
+            throw new Error("Your transaction could not be verified at this time")
+        }
+    } catch (error) {
+        console.error(error)
     }
-    const { data } = args
-
-    const transactionData = {
-        planid: data.planid,
-        reference: data.reference,
-        amount: new Prisma.Decimal(data.amount),
-        userid: user.id,
-        paymentmethod: data.paymentmethod,
-        valuerecipient: data.valuerecipient,
-        status: 'success',
-    }
-
-    if(data.paymentreference){
-        transactionData['paymentreference'] = data.paymentreference
-    } else {
-        transactionData['paymentreference'] = ''
-    }
-  
-    //  call paystack API to validate the transaction here
-    // after transaction is verified create new transaction
-    const transaction = await prisma.transaction.create({
-        data: transactionData
-    })
-
-    return transaction
 }
 
 export { signup,

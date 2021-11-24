@@ -30,6 +30,7 @@
     "@prisma/client": "^2.30.3",
     "apollo-server": "^3.0.0",
     "apollo-server-core": "^3.5.0",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.0",
     "caniuse-lite": "^1.0.30001245",
     "env-cmd": "^10.1.0",
