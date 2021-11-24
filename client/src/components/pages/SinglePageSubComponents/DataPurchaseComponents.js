@@ -1,22 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import PaystackPop from "@paystack/inline-js"
-import { gql, useQuery } from "@apollo/client"
+import { gql, useQuery, useMutation } from "@apollo/client"
 import { useAlert } from 'react-alert'
 import { Container, Card, 
     Row, Col, Input, Label,
     FormGroup, Button
 } from 'reactstrap'
+import CurrencyFormat from 'react-currency-format'
 import calculateDiscounPerCardPayment from '../../../utilities/calculateDiscountPerCardPayment'
 import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscountPerBankTransfer'
  
 
 import paystackimage1 from "../../../images/paystack-ii.png"
+import TransactionLoadingModal from '../TransactionLoadingModal'
+import TransactionSuccessModal from '../TransactionSuccessModal'
 
 const GET_USER_AUTH_STATE = gql`
      query {
        Auth @client
  }
 ` 
+
+const CREATE_TRANSACTION = gql`
+    mutation($createMutationData: createTransactionInput!){
+        createTransaction(data: $createMutationData){
+            id
+            reference
+            amount
+            paymentmethod
+            valuerecipient
+            paymentreference
+      }
+    }
+`
 
 const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
 
@@ -29,6 +45,19 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
 
     const [ idOfChosePlan, setIdOfChosenPlan ] = useState('')
     const [ chosenPlanObject, setChosenPlanObject ] = useState(null)
+
+    const [ transactionSuccessModal, setTransactionSuccessModal ] = useState(false)
+    
+    const toggleSuccessModal = () => setTransactionSuccessModal(!transactionSuccessModal)
+
+    const [ createTransaction, { loading: transactionLoading } ] = useMutation(CREATE_TRANSACTION, {
+        onCompleted: () => {
+          toggleSuccessModal()
+        },
+        onError: (error) => {
+            console.log(JSON.stringify(error))
+        }
+    })
 
     const chosePlan = (e) => {
         setIdOfChosenPlan(e.target.value)
@@ -62,10 +91,21 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                 email: data.Auth.user.email,
                 amount: paymentToPaystack * 100,
                 currency:'NGN',
-                channels: ['card'],
-                onSuccess: async (transaction) => {
-                    console.log(transaction)
-                    // send a mutation to validate transaction here
+                // channels: ['card'],
+                onSuccess: (transaction) => {
+                    createTransaction({
+                        variables: {
+                            createMutationData: {
+                              planid: idOfChosePlan,
+                              reference: transaction.reference,
+                              amount: paymentToPaystack,
+                              userid: data.Auth.user.id,
+                              paymentmethod: paymentMethod,
+                              valuerecipient: phoneNumber
+                            }
+                          }
+                    })
+                    setPhoneNumber('')
                 },
                 onCancel: () => {
                     alert.show('Are you sure you want to do that!!')
@@ -191,12 +231,26 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                                 </>
                             }
                              <h3 className="cost-header">
-                                 #{
+                                 {
                                 chosenPlanObject !== undefined ? <>
                                     {
                                         paymentMethod === 'dcc' ? 
-                                        <>{calculateDiscounPerCardPayment(singlePackage.packagediscountpercard, chosenPlanObject?.planprice)}</> : 
-                                        <>{calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, chosenPlanObject?.planprice)}</>
+                                        <>
+                                         <CurrencyFormat 
+                                            value={calculateDiscounPerCardPayment(singlePackage.packagediscountpercard, chosenPlanObject?.planprice)}
+                                            prefix={'#'}
+                                            displayType='text'
+                                            thousandSeparator={true}
+                                            />
+                                        </> : 
+                                        <>
+                                        <CurrencyFormat 
+                                            value= {calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, chosenPlanObject?.planprice)}
+                                            prefix={'#'}
+                                            displayType='text'
+                                            thousandSeparator={true}
+                                        />
+                                       </>
                                     }
                                </> : (<p style={{
                                    color:'#000',
@@ -257,6 +311,9 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
               </Col>
             </Row>
         </Container>
+        <TransactionLoadingModal isOpen={transactionLoading} />
+        <TransactionSuccessModal user={data.Auth.user} isOpen={transactionSuccessModal} 
+        toggleSuccessModal={toggleSuccessModal} />
     </>
 }
 

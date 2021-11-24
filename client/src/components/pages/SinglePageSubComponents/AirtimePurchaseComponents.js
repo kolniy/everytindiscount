@@ -5,7 +5,9 @@ import { Container, Card,
      Row, Col, 
      Input, Label, 
      FormGroup, Button } from 'reactstrap'
-
+     
+import CurrencyFormat from 'react-currency-format'
+    
 import paystackimage1 from "../../../images/paystack-ii.png"
 
 
@@ -132,9 +134,14 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                     <div className="recipient-details_and_amount">
                         <div className="amount-info">
                             <p className="paragraph-info">Amount:</p>
-                            <h3 className="cost-header">#{
+                            <h3 className="cost-header">{
                                 rechargeAmount.length !== 0 ? <>
-                                    {rechargeAmount}
+                                    <CurrencyFormat 
+                                    value={rechargeAmount}
+                                    prefix={'#'}
+                                    displayType='text'
+                                    thousandSeparator={true}
+                                    />
                                </> : (<p style={{
                                    color:'#000',
                                    fontSize:'13px'
