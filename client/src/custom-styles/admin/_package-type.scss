@@ -1,0 +1,14 @@
+.package-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  i {
+    font-size: large;
+    cursor: pointer;
+  }
+}
+
+.package-body {
+  min-height: 35vh;
+}
