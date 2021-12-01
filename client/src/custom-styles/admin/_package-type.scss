@@ -1,4 +1,4 @@
-.package-header {
+.package-type-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -9,6 +9,6 @@
   }
 }
 
-.package-body {
+.package-type-body {
   min-height: 35vh;
 }

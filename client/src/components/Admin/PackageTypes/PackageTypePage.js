@@ -45,7 +45,7 @@ export const PackageTypePage = () => {
                     <Row>
                         <div className="col">
                         <Card className="shadow">
-                            <CardHeader className="bg-transparent package-header">
+                            <CardHeader className="bg-transparent package-type-header">
                             <h3 style={{
                                 fontSize:'17px',
                                 fontWeight:'600'
@@ -55,7 +55,7 @@ export const PackageTypePage = () => {
                                 <i className="fas fa-plus"></i>
                             </div>
                             </CardHeader>
-                            <CardBody className="package-body">
+                            <CardBody className="package-type-body">
                             <Row className="icon-examples">
                                 {
                                     loading ? <>

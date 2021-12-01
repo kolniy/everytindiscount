@@ -1,0 +1,54 @@
+.package-description-details {
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  justify-content: space-between;
+  padding: 9px 3px;
+  border-bottom: 0.09rem solid rgba(0, 0, 0, 0.09);
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.package-title {
+  width: 250px;
+  color: #172b4d;
+}
+
+.package-plans-container {
+  width: 100%;
+}
+
+.package-plan-table-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.package-plan-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.addplan-type-icon {
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.plan-items-actions {
+  display: flex;
+
+  .delete-icon {
+    color: tomato;
+  }
+
+  div {
+    cursor: pointer;
+  }
+
+  i {
+    font-size: 16px;
+  }
+}

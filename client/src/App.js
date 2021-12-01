@@ -19,6 +19,7 @@ import AdminMarketersPage from "./components/Admin/Marketers/MarketersPage"
 import AdminTransactionsPage from "./components/Admin/Transactions/TransactionsPage"
 import AdminPackageTypePage from "./components/Admin/PackageTypes/PackageTypePage"
 import AdminPackagesPage from "./components/Admin/Packages/PackagesPage"
+import AdminSinglePackageItemPage from "./components/Admin/Packages/AdminSinglePackageItemPage"
 import AdminProfilePage from "./components/Admin/Profile/ProfilePage"
 import AdminUsersPage from "./components/Admin/Users/UsersPage"
 import SinglePackageDisplayPage from "./components/pages/SinglePackageDisplayPage";
@@ -68,6 +69,7 @@ function App() {
         <PrivateAdminRoute exact path="/admin/transaction" component={AdminTransactionsPage} />
         <PrivateAdminRoute exact path="/admin/packagetypes" component={AdminPackageTypePage} />
         <PrivateAdminRoute exact path="/admin/packages" component={AdminPackagesPage} />
+        <PrivateAdminRoute exact path="/admin/package/packageitem/:packageitemId" component={AdminSinglePackageItemPage} />
         <PrivateAdminRoute exact path="/admin/profile" component={AdminProfilePage} />
         <PrivateAdminRoute exact path="/admin/users" component={AdminUsersPage} />
         <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
