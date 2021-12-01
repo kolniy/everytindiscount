@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal,
     Card,
    CardHeader,
    CardBody,
    Form, FormGroup,
-   InputGroup, InputGroupAddon,
-   InputGroupText, Input, Button
+  Input, Button
 } from 'reactstrap'
 
 const AddNewPackageModal = ({
@@ -13,6 +12,35 @@ const AddNewPackageModal = ({
     toggleShowAddNewPackageModal,
     activePackageTypeId
 }) => {
+
+    const [ packageFormData, setPackageFormData ] = useState({
+        packagetypeId: "",
+        packagename:"",
+        packagelogo:"",
+        packageimage:"",
+        packagedescription:"",
+        packagediscountpercard:"",
+        packagelandingpageimage:"",
+        packagediscountperbanktransfer:""
+    })
+
+    const updatePackageData = (e) => setPackageFormData({
+        ...packageFormData,
+        [e.target.name]: e.target.value
+    })
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault()
+        console.log(packageFormData, 'form data')
+    }
+
+    useEffect(() => {  // useEffect used to keep track of changes to active package id
+        setPackageFormData({
+            ...packageFormData,
+            packagetypeId: activePackageTypeId
+        })
+    // eslint-disable-next-line
+    }, [activePackageTypeId])
 
     return <>
         <Modal
@@ -34,102 +62,74 @@ const AddNewPackageModal = ({
                     <div onClick={toggleShowAddNewPackageModal} className="close-modal-btn">X</div>
                   </CardHeader>
                   <CardBody className="px-lg-5 py-lg-5">
-                    <Form role="form">
+                    <Form role="form" onSubmit={e => handleFormSubmit(e)}>
                         <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-hat-3" />
-                              </InputGroupText>
-                            </InputGroupAddon>
                             <Input 
                             placeholder="Package Name" 
                             type="text"
                             name="packagename"
+                            value={packageFormData.packagename}
+                            onChange={e => updatePackageData(e)}
                             required
                              />
-                          </InputGroup>
                         </FormGroup>
                         <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-email-83" />
-                              </InputGroupText>
-                            </InputGroupAddon>
                             <Input
                              placeholder="Package Logo"
                               type="text"
                               name="packagelogo"
+                              value={packageFormData.packagelogo}
+                              onChange={e => updatePackageData(e)}
                               required
                               />
-                          </InputGroup>
                         </FormGroup>
                         <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-email-83" />
-                              </InputGroupText>
-                            </InputGroupAddon>
                             <Input
                              placeholder="Package Image"
                               type="text"
                               name="packageimage"
+                              value={packageFormData.packageimage}
+                              onChange={e => updatePackageData(e)}
                               required
                               />
-                          </InputGroup>
                         </FormGroup>
                         <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-email-83" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                             placeholder="Package Bank Transfer Discount"
-                              type="text"
-                              name="discountperbanktransfer"
-                              required
-                              />
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-email-83" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                             placeholder="Package Card Transaction Discount"
-                              type="text"
-                              name="discountpercard"
-                              required
-                              />
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-email-83" />
-                              </InputGroupText>
-                            </InputGroupAddon>
                             <Input
                              placeholder="Package Landing Page Image"
                               type="text"
                               name="packagelandingpageimage"
                               required
+                              value={packageFormData.packagelandingpageimage}
+                              onChange={e => updatePackageData(e)}
                               />
-                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input
+                             placeholder="Package Bank Transfer Discount"
+                              type="text"
+                              name="packagediscountperbanktransfer"
+                              value={packageFormData.packagediscountperbanktransfer}
+                              onChange={e => updatePackageData(e)}
+                              required
+                              />
+                        </FormGroup>
+                        <FormGroup>
+                            <Input
+                             placeholder="Package Card Transaction Discount"
+                              type="text"
+                              name="packagediscountpercard"
+                              value={packageFormData.packagediscountpercard}
+                              onChange={e => updatePackageData(e)}
+                              required
+                              />
                         </FormGroup>
                         <FormGroup>
                             <Input
                              placeholder="Package Description"
                               type="textarea"
                               name="packagedescription"
+                              value={packageFormData.packagedescription}
+                              onChange={e => updatePackageData(e)}
                               rows={3}
                               required
                               />
