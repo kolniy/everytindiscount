@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from 'react'
+import { gql, useMutation } from '@apollo/client'
 import { Modal,
     Card,
    CardHeader,
    CardBody,
    Form, FormGroup,
-  Input, Button
+  Input, Button,
+  Label
 } from 'reactstrap'
+import { useAlert } from 'react-alert'
+import { getPackagesFromPackageTypeId } from './PackageList'
+
+const PACKAGE_CREATION_MUTATION = gql`
+    mutation($createPackageData: createPackageInput!){
+        createPackage(data: $createPackageData){
+        id
+        packagename
+        packagelogo
+        packagelandingpageimage
+        packageimage
+        packagedescription
+        }
+    }
+`
 
 const AddNewPackageModal = ({
     showAddNewPackageModal,
@@ -24,6 +41,65 @@ const AddNewPackageModal = ({
         packagediscountperbanktransfer:""
     })
 
+    const alert = useAlert()
+
+    const [ createPackage, { loading } ] = useMutation(PACKAGE_CREATION_MUTATION, {
+        variables:{
+            createPackageData: {
+              packagetypeId: packageFormData.packagetypeId,
+              packagename: packageFormData.packagename,
+              packagelogo: packageFormData.packagelogo,
+              packageimage: packageFormData.packageimage,
+              packagedescription: packageFormData.packagedescription,
+              packagediscountpercard: packageFormData.packagediscountpercard,
+              packagediscountperbanktransfer: packageFormData.packagediscountperbanktransfer,
+              packagelandingpageimage: packageFormData.packagelandingpageimage
+            }
+        },
+        onError: (error) => {
+            alert.show(error.message, {
+                type:'error'
+            })
+          },
+        onCompleted: () => {
+            setPackageFormData({
+                ...packageFormData,
+                packagename:"",
+                packagelogo:"",
+                packageimage:"",
+                packagedescription:"",
+                packagediscountpercard:"",
+                packagelandingpageimage:"",
+                packagediscountperbanktransfer:""
+            })
+
+            toggleShowAddNewPackageModal()
+
+            alert.show('Package Created Successfully', {
+                type:'success'
+            })
+        },
+        update(cache, { data: { createPackage } }){
+
+            const { packages } = cache.readQuery({
+                query: getPackagesFromPackageTypeId,
+                variables: {
+                    packageTypeId: activePackageTypeId
+                }
+            })
+
+            cache.writeQuery({
+                query: getPackagesFromPackageTypeId,
+                variables: {
+                    packageTypeId: activePackageTypeId
+                },
+                data: {
+                    packages: [ ...packages, createPackage ]
+                }
+            })
+        } 
+    })
+
     const updatePackageData = (e) => setPackageFormData({
         ...packageFormData,
         [e.target.name]: e.target.value
@@ -31,7 +107,8 @@ const AddNewPackageModal = ({
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        console.log(packageFormData, 'form data')
+        // console.log(packageFormData, 'form data')
+        createPackage()
     }
 
     useEffect(() => {  // useEffect used to keep track of changes to active package id
@@ -64,6 +141,7 @@ const AddNewPackageModal = ({
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form role="form" onSubmit={e => handleFormSubmit(e)}>
                         <FormGroup>
+                            <Label>Package Name</Label>
                             <Input 
                             placeholder="Package Name" 
                             type="text"
@@ -74,6 +152,7 @@ const AddNewPackageModal = ({
                              />
                         </FormGroup>
                         <FormGroup>
+                            <Label>Package Logo</Label>
                             <Input
                              placeholder="Package Logo"
                               type="text"
@@ -84,6 +163,7 @@ const AddNewPackageModal = ({
                               />
                         </FormGroup>
                         <FormGroup>
+                            <Label>Package Image</Label>
                             <Input
                              placeholder="Package Image"
                               type="text"
@@ -94,6 +174,7 @@ const AddNewPackageModal = ({
                               />
                         </FormGroup>
                         <FormGroup>
+                            <Label>Package Landing Page Image</Label>
                             <Input
                              placeholder="Package Landing Page Image"
                               type="text"
@@ -104,6 +185,7 @@ const AddNewPackageModal = ({
                               />
                         </FormGroup>
                         <FormGroup>
+                            <Label>Package Bank Transfer Discount</Label>
                             <Input
                              placeholder="Package Bank Transfer Discount"
                               type="text"
@@ -114,6 +196,7 @@ const AddNewPackageModal = ({
                               />
                         </FormGroup>
                         <FormGroup>
+                            <Label>Package Card Transaction Discount</Label>
                             <Input
                              placeholder="Package Card Transaction Discount"
                               type="text"
@@ -124,6 +207,7 @@ const AddNewPackageModal = ({
                               />
                         </FormGroup>
                         <FormGroup>
+                            <Label>Package Description</Label>
                             <Input
                              placeholder="Package Description"
                               type="textarea"
@@ -140,9 +224,9 @@ const AddNewPackageModal = ({
                               block
                               color="primary"
                               type="submit"
-                            //   disabled={loading}
+                              disabled={loading}
                                 >
-                                {/* {
+                                {
                                  loading ? <>
                                 <span className="btn-inner--icon">
                                 <i className="fas fa-circle-notch fa-spin"></i>
@@ -158,8 +242,7 @@ const AddNewPackageModal = ({
                                    Add Package
                                 </span>
                                  </>
-                                } */}
-                                  Add Package
+                                }
                             </Button>
                         </div>
                       </Form>

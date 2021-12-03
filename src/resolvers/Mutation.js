@@ -121,6 +121,18 @@ const deletePackageType = async (parent, { id }, { prisma, userId }, info) => {
          throw new Error("not authorized")
      }
 
+     await prisma.package_Plan.deleteMany({  // delete all package plan that have packagetypeId 
+         where: {                            // of package_type to be deleted
+            packagetypeid: id
+         }
+     })
+
+     await prisma.package.deleteMany({   // delete all package that have packagetypeId 
+        where: {                            // of package_type to be deleted
+            packagetypeId: id
+        }
+     })
+
      const deletedPackageType = await prisma.package_Type.delete({
          where: {
              id: id
@@ -216,7 +228,6 @@ const createPackage = async (parent, args, { prisma, userId }, info ) => {
             },
             packagename: packagename,
             packageimage: packageimage,
-            packagediscount:packagediscount,
             packagelandingpageimage: packagelandingpageimage,
             packagedescription: packagedescription,
             packagelogo:packagelogo,
@@ -292,7 +303,7 @@ const updatePackage = async (parent, { idOfPackageToBeUpdated, data }, { userId,
      return updatedPackage
 }
 
-const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId, prisma }, info ) => {
+const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId }, info ) => {
 
     const user = await prisma.user.findUnique({
         where: {
@@ -303,6 +314,12 @@ const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId, prism
     if(user.role !== "admin"){
         throw new Error("not authorized")
     }
+
+    await prisma.package_Plan.deleteMany({
+        where: {
+            packageid: idOfPackageToBeDeleted
+        }
+    })
 
     const deletedPackage = await prisma.package.delete({
        where: {
@@ -317,7 +334,8 @@ const createPackagePlan = async (_, args, { userId, prisma }, info) => {
         planname,
         plandescription,
         planprice,
-        idOfPackageToSaveTo
+        idOfPackageToSaveTo,
+        packageTypeId
      } = args.data
 
     const user = await prisma.user.findUnique({
@@ -340,6 +358,11 @@ const createPackagePlan = async (_, args, { userId, prisma }, info) => {
                     id: idOfPackageToSaveTo
                 }
             },
+            packagetype: {
+                  connect: {
+                    id: packageTypeId
+                }
+            },  
             createdby: {
                 connect: {
                     id: user.id

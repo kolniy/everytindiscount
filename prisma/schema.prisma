@@ -32,13 +32,14 @@ enum Role {
 }
 
 model Package_Type {
-  id          String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id          String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
   name        String
   iconname    String
-  createdby   User      @relation(fields: [createdbyid], references: [id])
-  createdbyid String    @db.ObjectId
+  createdby   User           @relation(fields: [createdbyid], references: [id])
+  createdbyid String         @db.ObjectId
   package     Package[]
-  createdat   DateTime  @default(now())
+  packageplan Package_Plan[]
+  createdat   DateTime       @default(now())
 }
 
 model Package {
@@ -65,6 +66,8 @@ model Package_Plan {
   planprice       Int
   createdby       User          @relation(fields: [createdbyid], references: [id])
   createdbyid     String        @db.ObjectId
+  packagetypeid   String        @db.ObjectId
+  packagetype     Package_Type  @relation(fields: [packagetypeid], references: [id])
   package         Package       @relation(fields: [packageid], references: [id])
   packageid       String        @db.ObjectId
   createdat       DateTime      @default(now())

@@ -3,7 +3,7 @@ import { useQuery, gql } from "@apollo/client"
 import { Card, CardBody, TabContent, TabPane, Row,  } from 'reactstrap'
 import PackageItem from './PackageItem'
 
-const getPackagesFromPackageTypeId = gql`
+export const getPackagesFromPackageTypeId = gql`
     query ($packageTypeId: ID!) {
     packages(packageTypeId: $packageTypeId) {
     id

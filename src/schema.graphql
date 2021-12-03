@@ -74,6 +74,7 @@ type PackagePlan {
   planprice: Int!
   createdBy: User!
   singlepackage: Package!
+  packagetype: PackageType!
   createdat: String!
 }
 
@@ -151,6 +152,7 @@ input createPackagePlanInput {
   plandescription: String!
   planprice: Int!
   idOfPackageToSaveTo: ID!
+  packageTypeId: ID!
 }
 
 input updatePackagePlanInput {
