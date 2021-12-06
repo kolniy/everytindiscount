@@ -54,7 +54,7 @@ const SinglePackageDisplayPage = ({ match }) => {
     }, [])
    
     if(error){
-       return <p className="text-center">Error: {error}</p>
+       return <p className="text-center">Error: {error.message}</p>
     }
 
     const determineComponentToRender = (packageType) => {

@@ -17,7 +17,7 @@ const CategoryItem = ({ packageItem }) => {
                           <h6 className="text-primary text-uppercase">
                               {packageItem.packagename}
                           </h6>
-                          <p className="description mt-3">
+                          <p title={packageItem.packagedescription} className="description mt-3">
                                 {packageItem.packagedescription}
                           </p>
                           <Button

@@ -58,6 +58,11 @@
 
     & p {
       font-size: 12px;
+      cursor: pointer;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     & .card-image-container {

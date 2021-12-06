@@ -24,6 +24,7 @@ const createdBy = async (parent, args, { prisma }, info) => {
 }
 
 const packageplan = async (parent, args, { prisma }, info) => {
+
     const packageplan = await prisma.package_Plan.findMany({
         orderBy:[
             {

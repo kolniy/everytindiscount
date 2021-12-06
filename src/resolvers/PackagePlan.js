@@ -16,7 +16,7 @@ const packagetype = async (parent, args, context, info) => {
         where: {
             id: parent.id
         }
-    }).packageplan()
+    }).packagetype()
 
     return packageType
 }

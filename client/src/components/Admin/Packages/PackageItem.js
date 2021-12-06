@@ -5,7 +5,7 @@ import { Col, Card, CardImg, CardBody, Button } from "reactstrap"
 const PackageItem = ({ packageItem }) => {
 
     return <>
-        <Col xs="12" sm="6" md="4" xl="3" className="mb-4">
+        <Col xs="12" sm="6" md="4" lg="4" xl="4" className="mb-4">
                       <Card className="card-lift--hover shadow border-0 category-item">
                         <CardBody>
                           <div className="card-image-container">
@@ -17,7 +17,7 @@ const PackageItem = ({ packageItem }) => {
                           <h6 className="text-primary text-uppercase">
                               {packageItem.packagename}
                           </h6>
-                          <p className="description mt-3">
+                          <p title={packageItem.packagedescription} className="description mt-3">
                                 {packageItem.packagedescription}
                           </p>
                           <Button
