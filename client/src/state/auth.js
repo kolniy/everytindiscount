@@ -3,7 +3,7 @@ import { makeVar } from "@apollo/client";
 export const Auth = makeVar({
     token:"",
     user:null,
-    isAuthenticated: false
+    isAuthenticated: !!localStorage.getItem('token')
 })
 
 const authDispatch = (action) => {

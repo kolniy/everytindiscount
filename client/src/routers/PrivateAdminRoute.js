@@ -16,7 +16,7 @@ const PrivateAdminRoute = ({ component: Component, ...rest }) => {
         <Route 
             {...rest}
             component={(props) => (
-                isAuthenticated === true && user !== null && user?.role === 'admin' ? 
+                isAuthenticated === true && user?.role === 'admin' ? 
                 (<Component {...props} />) :
                  (
                     <Redirect to="/" />

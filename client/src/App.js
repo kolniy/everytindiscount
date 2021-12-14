@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import authDispatch from "./state/auth";
 import { useLazyQuery, gql } from "@apollo/client";
+// import { createBrowserHistory } from "history";
 import PrivateAdminRoute from "./routers/PrivateAdminRoute";
 
 import "./styles/assets/vendor/nucleo/css/nucleo.css";
@@ -36,10 +37,13 @@ const USER = gql`
   }
 }
 `
+// const history = createBrowserHistory()
+
+// const appJsx = 
 
 function App() {
 
-     const [getUser] = useLazyQuery(USER, {
+     const [getUser, { loading: appLoading, data }] = useLazyQuery(USER, {
        onCompleted: ({ me }) => {
         authDispatch({
           type:"USER_AUTHENTICATED",
@@ -51,7 +55,6 @@ function App() {
         })
        }
      })
-
      useEffect(() => {
       if(localStorage.getItem('token') !== null){
         getUser()
@@ -59,8 +62,8 @@ function App() {
       // eslint-disable-next-line
      }, [])
 
-  return (
-    <Router>
+  if(localStorage.getItem('token') === null){
+    return (<Router>
       <Switch>
         <Route exact path="/" component={Landing} />
         <PrivateAdminRoute exact path="/admin" component={AdminLandingPage} />
@@ -76,8 +79,31 @@ function App() {
         <Route exact path="/signup" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
-    </Router>  
-  )
+    </Router> )
+  } else {
+      if(appLoading === true && data?.me === undefined){
+        return <p className="text-center lead">Loading...</p>
+      } else {
+       return (<Router>
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin" component={AdminLandingPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/administrators" component={AdministratorsPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/marketers" component={AdminMarketersPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/transaction" component={AdminTransactionsPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/packagetypes" component={AdminPackageTypePage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/packages" component={AdminPackagesPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/package/packageitem/:packageitemId" component={AdminSinglePackageItemPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/profile" component={AdminProfilePage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/users" component={AdminUsersPage} />
+          <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
+          <Route exact path="/signup" component={Register} />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </Router> )
+      }
+  }
+  
 }
 
 export default App;

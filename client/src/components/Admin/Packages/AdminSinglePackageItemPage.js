@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { Container, Row, Card, 
     CardHeader, CardBody,
@@ -9,6 +9,7 @@ import AdminNavbar from '../AdminNavbar'
 import AdminDashboardSummary from '../AdminDashboardSummary'
 import updateActiveLink from '../../../state/activeLinkInAdminDashboard'
 import PackagePlansContainer from './PackagePlansContainer'
+import UpdatePackageModal from './UpdatePackageModal'
 
 export const SINGLE_PACKAGE_QUERY = gql`
     query ($packageId: ID!){
@@ -51,6 +52,10 @@ const SinglePackageItemPage = ({ match }) => {
             packageId: match.params.packageitemId
         }
     })
+
+    const [ displayUpdateModal, setDisplayUpdateModal ] = useState(false)
+
+    const toggleDisplayUpdateModal = () => setDisplayUpdateModal(!displayUpdateModal)
 
     if(error){
         return <p className="text-center">Error: {error}</p>
@@ -124,7 +129,7 @@ const SinglePackageItemPage = ({ match }) => {
                                                 </div>
                                         </div>
                                         <div className="action-containers">
-                                            <Button className="pl-5 pr-5" color="primary">Update</Button>
+                                            <Button onClick={e => setDisplayUpdateModal(true)} className="pl-5 pr-5" color="primary">Update</Button>
                                             <Button className="pl-5 pr-5" outline color="primary">Delete</Button>
                                         </div>
                                     </Col>
@@ -139,8 +144,13 @@ const SinglePackageItemPage = ({ match }) => {
                     </CardBody>
                     </Card>
                 </div>
-            </Row>
-        </Container>        
+                </Row>
+            </Container>        
+                <UpdatePackageModal
+                    displayModal={displayUpdateModal}
+                    toggleModal={toggleDisplayUpdateModal}
+                    packageData={data.singlePackage}
+                />
                 </>
             }
       </div>
