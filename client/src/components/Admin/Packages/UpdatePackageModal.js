@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery, gql } from '@apollo/client'
+import { useMutation, gql } from '@apollo/client'
 import { Modal,
      Button, Card,
      CardHeader,
@@ -11,9 +11,9 @@ import { Modal,
 import { useAlert } from 'react-alert'  
 
 const UPDATE_PACKAGE_MUTATION = gql`
-    mutation($idOfPackageToBeUpdated: ID!, $packageData: updatePackageInput){
-     updatePackage(packageId:$idOfPackageToBeUpdated, data:$packageData){
-        id
+  mutation($idOfPackageToBeUpdated: ID!, $updatePackageData: updatePackageInput){
+  updatePackage(idOfPackageToBeUpdated:$idOfPackageToBeUpdated, data:$updatePackageData){
+    id
     packagetype {
       name
     }
@@ -30,8 +30,9 @@ const UPDATE_PACKAGE_MUTATION = gql`
       plandescription
       planprice
       createdat
-     }
     }
+  }
+}
 `
 
 const UpdatePackageModal = ({
@@ -56,10 +57,35 @@ const UpdatePackageModal = ({
         [e.target.name]: e.target.value
     })
 
+    const [ updatePackage, { loading } ] = useMutation(UPDATE_PACKAGE_MUTATION, {
+        variables: {
+            idOfPackageToBeUpdated: packageData.id,
+            updatePackageData: {
+                packagename: packageFormData.packagename,
+                packageimage: packageFormData.packageimage,
+                packagediscountpercard: packageFormData.packagediscountpercard,
+                packagediscountperbanktransfer: packageFormData.packagediscountperbanktransfer,
+                packagedescription: packageFormData.packagedescription,
+                packagelogo: packageFormData.packagelogo
+            }
+        },
+        onError: (error) => {
+            alert.show(error.message, {
+                type:'error'
+            })
+        },
+        onCompleted: () => {
+            toggleModal()   
+
+            alert.show('Package Updated Successfully', {
+                type:'success'
+            })
+        }
+    })
+
     const handleUpdateSubmit = (e) => {
         e.preventDefault()
-        console.log(packageFormData, 'update data')
-        alert.show('hello')
+        updatePackage()
     }
 
     useEffect(() => {
@@ -167,7 +193,26 @@ const UpdatePackageModal = ({
                 </Card>
                 <ModalFooter>
                     <Button onClick={toggleModal} outline className="pl-5 pr-5" color='primary'>Cancel</Button>
-                    <Button color='primary' onClick={handleUpdateSubmit} className="pl-5 pr-5">Update</Button>
+                    <Button
+                     color='primary'
+                     disabled={loading}
+                     onClick={handleUpdateSubmit}
+                     className="pl-5 pr-5">
+                         {
+                                 loading ? <>
+                                <span className="btn-inner--icon">
+                                <i className="fas fa-circle-notch fa-spin"></i>
+                                </span>
+                                <span className="nav-link-inner--text ml-1">
+                                    Loading
+                                </span>
+                                 </> : <>
+                                <span className="nav-link-inner--text ml-1">
+                                    Update
+                                </span>
+                                 </>
+                                }
+                         </Button>
                 </ModalFooter>
         </Modal>
     </>
