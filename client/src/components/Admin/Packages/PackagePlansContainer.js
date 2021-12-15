@@ -7,9 +7,12 @@ import PackagePlanItem from './PackagePlanItem'
 
 const PackagePlansContainer = ({
     packagePlans,
+    bankTransferDiscount,
+    cardDiscount,
     packageLogo,
-    toggleAddNewPackagePlan
+    toggleAddNewPackagePlan,
 }) => {
+
     return <>
           <div className="package-plans-container mt-4">
                 <Card className="shadow">
@@ -25,6 +28,8 @@ const PackagePlansContainer = ({
                             <tr>
                             <th scope="col">Plan Name</th>
                             <th scope="col">Plan Price</th>
+                            <th scope="col">B/T discount</th>
+                            <th scope="col">Card discount</th>
                             <th scope="col">Plan Description</th>
                             <th scope="col">Actions</th>
                             </tr>
@@ -39,9 +44,11 @@ const PackagePlansContainer = ({
                                 {
                                     packagePlans.map((planItem) =>
                                     <PackagePlanItem 
-                                    key={planItem.id}
+                                     key={planItem.id}
                                      packagePlanItem={planItem}
                                      packageLogo={packageLogo}
+                                     bankTransferDiscount={bankTransferDiscount}
+                                     cardDiscount={cardDiscount}
                                      />)
                                 }
                               </>

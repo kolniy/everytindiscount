@@ -142,6 +142,8 @@ const SinglePackageItemPage = ({ match }) => {
                                     </Row>    
                               <Row>
                                  <PackagePlansContainer 
+                                 bankTransferDiscount={data.singlePackage.packagediscountperbanktransfer}
+                                 cardDiscount={data.singlePackage.packagediscountpercard}
                                  packagePlans={data.singlePackage.packageplan} 
                                  packageLogo={data.singlePackage.packagelogo}
                                  toggleAddNewPackagePlan={toggleDisplayNewPackagePlanModal}

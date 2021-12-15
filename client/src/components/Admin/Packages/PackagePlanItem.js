@@ -1,9 +1,15 @@
 import React from 'react'
 import { Media, Badge } from 'reactstrap'
 import CurrencyFormat from 'react-currency-format'
+import calculateDiscounPerCardPayment from '../../../utilities/calculateDiscountPerCardPayment'
+import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscountPerBankTransfer'
 
-
-export const PackagePlanItem = ({ packagePlanItem, packageLogo }) => {
+export const PackagePlanItem = ({
+     packagePlanItem,
+     packageLogo,
+    bankTransferDiscount,
+    cardDiscount
+ }) => {
     return <>
      <tr>
         <th scope="row">
@@ -34,6 +40,8 @@ export const PackagePlanItem = ({ packagePlanItem, packageLogo }) => {
             thousandSeparator={true}
          />
         </td>
+        <td>{calculateDiscountPerBankTransfer(bankTransferDiscount, packagePlanItem.planprice)}</td>
+        <td>{calculateDiscounPerCardPayment(cardDiscount, packagePlanItem.planprice)}</td>
         <td>
             <Badge color="" className="badge-dot mr-4">
             <i className="bg-warning" />
