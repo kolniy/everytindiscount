@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Media, Badge } from 'reactstrap'
 import CurrencyFormat from 'react-currency-format'
 import calculateDiscounPerCardPayment from '../../../utilities/calculateDiscountPerCardPayment'
 import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscountPerBankTransfer'
+import DeletePackagePlanConfirmationModal from './DeletePackagePlanConfirmationModal'
 
 export const PackagePlanItem = ({
      packagePlanItem,
@@ -10,6 +11,14 @@ export const PackagePlanItem = ({
     bankTransferDiscount,
     cardDiscount
  }) => {
+
+    const [ deletePackagePlanConfirmation, setDeletPackagePlanConfirmation ] = useState(false)
+    const toggleDisplayDeletePackagePlanConfirmation = () => setDeletPackagePlanConfirmation(!deletePackagePlanConfirmation)
+
+    const handleDeletePlan = () => {
+        console.log(packagePlanItem.id)
+    }
+
     return <>
      <tr>
         <th scope="row">
@@ -55,12 +64,17 @@ export const PackagePlanItem = ({
               <div className="edit-item-icon mr-2 ml-2">
                 <i className="fas fa-edit"></i>
               </div>
-              <div className="delete-item-icon mr-2 ml-2">
+              <div onClick={toggleDisplayDeletePackagePlanConfirmation} className="delete-item-icon mr-2 ml-2">
                 <i className="fas fa-times delete-icon"></i>
               </div>
           </div>
         </td>
     </tr>
+    <DeletePackagePlanConfirmationModal 
+        modalOpen={deletePackagePlanConfirmation}
+        toggleModalOpen={toggleDisplayDeletePackagePlanConfirmation}
+        handleDeletePlan={handleDeletePlan}
+    />
     </>
 }
 
