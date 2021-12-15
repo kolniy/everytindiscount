@@ -152,7 +152,6 @@ input createPackagePlanInput {
   plandescription: String!
   planprice: Int!
   idOfPackageToSaveTo: ID!
-  packageTypeId: ID!
 }
 
 input updatePackagePlanInput {

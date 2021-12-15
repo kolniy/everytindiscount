@@ -329,13 +329,12 @@ const deletePackage = async (parent, { idOfPackageToBeDeleted }, { userId }, inf
     return deletedPackage
 }
 
-const createPackagePlan = async (_, args, { userId, prisma }, info) => {
+const createPackagePlan = async (_, args, { userId }, info) => {
     const {
         planname,
         plandescription,
         planprice,
         idOfPackageToSaveTo,
-        packageTypeId
      } = args.data
 
     const user = await prisma.user.findUnique({
@@ -348,6 +347,12 @@ const createPackagePlan = async (_, args, { userId, prisma }, info) => {
         throw new Error("not authorized")
     }
 
+    const singlePackage = await prisma.package.findUnique({
+        where: {
+            id: idOfPackageToSaveTo
+        }
+    })
+   
     const newPackagePlan = await prisma.package_Plan.create({
         data: {
             planname: planname,
@@ -360,7 +365,7 @@ const createPackagePlan = async (_, args, { userId, prisma }, info) => {
             },
             packagetype: {
                   connect: {
-                    id: packageTypeId
+                    id: singlePackage.packagetypeId
                 }
             },  
             createdby: {

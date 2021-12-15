@@ -7,7 +7,8 @@ import PackagePlanItem from './PackagePlanItem'
 
 const PackagePlansContainer = ({
     packagePlans,
-    packageLogo
+    packageLogo,
+    toggleAddNewPackagePlan
 }) => {
     return <>
           <div className="package-plans-container mt-4">
@@ -15,7 +16,7 @@ const PackagePlansContainer = ({
                     <CardHeader className="border-0 package-plan-table-header">
                       <h3 className="mb-0 package-plan-table-title">Package Plans</h3>
 
-                      <div className="addplan-type-icon">
+                      <div onClick={toggleAddNewPackagePlan} className="addplan-type-icon">
                                 <i className="fas fa-plus"></i>
                             </div>
                     </CardHeader>

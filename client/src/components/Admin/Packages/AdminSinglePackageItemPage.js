@@ -11,6 +11,7 @@ import updateActiveLink from '../../../state/activeLinkInAdminDashboard'
 import PackagePlansContainer from './PackagePlansContainer'
 import UpdatePackageModal from './UpdatePackageModal'
 import DeletePackageModalConfirmation from './DeletePackageModalConfirmation'
+import AddNewPackagePlanModal from './AddNewPackagePlanModal'
 
 export const SINGLE_PACKAGE_QUERY = gql`
     query ($packageId: ID!){
@@ -56,9 +57,11 @@ const SinglePackageItemPage = ({ match }) => {
 
     const [ displayUpdateModal, setDisplayUpdateModal ] = useState(false)
     const [ deleteModalOpen, setDisplayDeleteModalOpen ] = useState(false)
+    const [ displayNewPackagePlanModal, setDisplayNewPackagePlanModal ] = useState(false)
 
     const toggleDisplayUpdateModal = () => setDisplayUpdateModal(!displayUpdateModal)
     const toggleDisplayDeleteModal = () => setDisplayDeleteModalOpen(!deleteModalOpen)
+    const toggleDisplayNewPackagePlanModal = () => setDisplayNewPackagePlanModal(!displayNewPackagePlanModal)
 
     if(error){
         return <p className="text-center">Error: {error}</p>
@@ -141,6 +144,7 @@ const SinglePackageItemPage = ({ match }) => {
                                  <PackagePlansContainer 
                                  packagePlans={data.singlePackage.packageplan} 
                                  packageLogo={data.singlePackage.packagelogo}
+                                 toggleAddNewPackagePlan={toggleDisplayNewPackagePlanModal}
                                  />
                              </Row>
                         </div>               
@@ -158,6 +162,11 @@ const SinglePackageItemPage = ({ match }) => {
                     deleteModalOpen={deleteModalOpen}
                     toggleDeleteModalOpen={toggleDisplayDeleteModal}
                     packageId={data.singlePackage.id}
+                />
+                <AddNewPackagePlanModal 
+                displayNewPackagePlanModal={displayNewPackagePlanModal}
+                toggleDisplayNewPackagePlanModal={toggleDisplayNewPackagePlanModal}
+                packageId={data.singlePackage.id}
                 />
                 </>
             }
