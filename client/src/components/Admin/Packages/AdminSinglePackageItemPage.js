@@ -147,6 +147,7 @@ const SinglePackageItemPage = ({ match }) => {
                                  packagePlans={data.singlePackage.packageplan} 
                                  packageLogo={data.singlePackage.packagelogo}
                                  toggleAddNewPackagePlan={toggleDisplayNewPackagePlanModal}
+                                  packageId={data.singlePackage.id}
                                  />
                              </Row>
                         </div>               

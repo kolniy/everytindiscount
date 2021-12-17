@@ -1,87 +1,56 @@
-import React, { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import React, { useState, useEffect } from 'react'
+import { useMutation, gql } from '@apollo/client'
+import { Modal, Card,
+     CardHeader, CardBody,
+     Form, FormGroup,
+     Label, Input,
+     Button
+    } from 'reactstrap'
 import { useAlert } from 'react-alert'
-import { Modal,
-    Card,
-   CardHeader,
-   CardBody,
-   Form, FormGroup,
-  Input, Button,
-  Label
-} from 'reactstrap'
-import { SINGLE_PACKAGE_QUERY } from './AdminSinglePackageItemPage'
 
-const CREATE_NEW_PACKAGE_PLAN = gql`
-    mutation($createPackagePlanData: createPackagePlanInput!){
-        createPackagePlan(data: $createPackagePlanData){
+const UPDATE_PACKAGE_PLAN_MUTATION = gql`
+    mutation($idOfPackagePlanToUpdated: ID!, $updatePlanData: updatePackagePlanInput){
+        updatePackagePlan(idOfPackagePlanToUpdated: $idOfPackagePlanToUpdated, data: $updatePlanData){
             id
             planname
-            plandescription
             planprice
-            createdat
-         }
+            plandescription
+        }
     }
 `
-
-const AddNewPackagePlanModal = ({
-    displayNewPackagePlanModal,
-    toggleDisplayNewPackagePlanModal,
-    packageId
+    
+const UpdatePackagePlanModal = ({
+    displayModal,
+    toggleModal,
+    planDetails
 }) => {
 
-    const alert = useAlert()
     const [ packagePlanData, setPackagePlanData ] = useState({
         planname:"",
         planprice:"",
         plandescription:""
     })
+    const alert = useAlert()
 
-    const [ createPackagePlan, { loading } ] = useMutation(CREATE_NEW_PACKAGE_PLAN, {
+    const [ updatePackagePlan, { loading, error } ] = useMutation(UPDATE_PACKAGE_PLAN_MUTATION, {
         variables: {
-            createPackagePlanData: {
-                idOfPackageToSaveTo: packageId,
+            idOfPackagePlanToUpdated: planDetails.id,
+            updatePlanData: {
                 planname: packagePlanData.planname,
                 planprice: parseInt(packagePlanData.planprice),
                 plandescription: packagePlanData.plandescription
             }
-        },
+        }, 
         onError: (error) => {
             alert.show(error.message, {
-                type:'error'
+                type: 'error'
             })
-        },
+        }, 
         onCompleted: () => {
-            alert.show("Plan Added Successfully!", {
+            alert.show('Plan Updated Successfully', {
                 type:'success'
             })
-            toggleDisplayNewPackagePlanModal()
-            setPackagePlanData({
-                planname:"",
-                plandescription:"",
-                planprice:""
-            })
-        },
-        update(cache, { data: { createPackagePlan }}){
-
-            const { singlePackage } = cache.readQuery({
-                query: SINGLE_PACKAGE_QUERY,
-                variables: {
-                    packageId: packageId
-                }
-            })
-
-            cache.writeQuery({
-                query: SINGLE_PACKAGE_QUERY,
-                variables: {
-                    packageId: packageId
-                },
-                data: {
-                    singlePackage: {
-                        ...singlePackage,
-                        packageplan: [...singlePackage.packageplan, createPackagePlan]
-                    }
-                }
-            })
+            toggleModal()
         }
     })
 
@@ -92,15 +61,26 @@ const AddNewPackagePlanModal = ({
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        createPackagePlan()
+        updatePackagePlan()
     }
+
+    console.log(JSON.stringify(error))
+
+    useEffect(() => {
+        setPackagePlanData({
+            planname: planDetails.planname,
+            planprice: planDetails.planprice,
+            plandescription: planDetails.plandescription
+        })
+        // eslint-disable-next-line
+    }, [])
 
     return <>
         <Modal
-         isOpen={displayNewPackagePlanModal}
-         toggle={toggleDisplayNewPackagePlanModal}
-         size="md"
-         centered
+            isOpen={displayModal}
+            toggle={toggleModal}
+            size='md'
+            centered
         >
              <Card className="bg-secondary shadow border-0">
                   <CardHeader style={{
@@ -111,8 +91,8 @@ const AddNewPackagePlanModal = ({
                     <h3 style={{
                         fontSize:'16px',
                         fontWeight:'bold'
-                    }} className="action-title">Add New Package Plan</h3>
-                    <div onClick={toggleDisplayNewPackagePlanModal} className="close-modal-btn">X</div>
+                    }} className="action-title">Update Package Plan</h3>
+                    <div onClick={toggleModal} className="close-modal-btn">X</div>
                   </CardHeader>
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form role="form" onSubmit={e => handleFormSubmit(e)}>
@@ -158,20 +138,20 @@ const AddNewPackagePlanModal = ({
                               type="submit"
                               disabled={loading}
                                 >
-                                    {
-                                        loading ? <>
-                                        <span className="btn-inner--icon">
-                                        <i className="fas fa-circle-notch fa-spin"></i>
-                                        </span>
-                                        <span className="nav-link-inner--text ml-1">
-                                            Loading
-                                        </span>
-                                        </> : <>
-                                        <span className="nav-link-inner--text ml-1">
-                                            Add New Package Plan
-                                        </span>
-                                        </>
-                                    }
+                               {
+                                loading ? <>
+                                <span className="btn-inner--icon">
+                                <i className="fas fa-circle-notch fa-spin"></i>
+                                </span>
+                                <span className="nav-link-inner--text ml-1">
+                                    Loading
+                                </span>
+                                </> : <>
+                                <span className="nav-link-inner--text ml-1">
+                                    Update
+                                </span>
+                                </>
+                               }
                             </Button>
                         </div>
                       </Form>
@@ -181,4 +161,4 @@ const AddNewPackagePlanModal = ({
     </>
 }
 
-export default AddNewPackagePlanModal
+export default UpdatePackagePlanModal

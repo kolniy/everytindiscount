@@ -11,6 +11,7 @@ const PackagePlansContainer = ({
     cardDiscount,
     packageLogo,
     toggleAddNewPackagePlan,
+    packageId
 }) => {
 
     return <>
@@ -49,6 +50,7 @@ const PackagePlansContainer = ({
                                      packageLogo={packageLogo}
                                      bankTransferDiscount={bankTransferDiscount}
                                      cardDiscount={cardDiscount}
+                                     packageId={packageId}
                                      />)
                                 }
                               </>

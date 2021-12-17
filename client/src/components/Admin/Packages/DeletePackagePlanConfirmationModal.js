@@ -7,12 +7,12 @@ import { Modal, ModalBody,
 const DeletePackagePlanConfirmationModal = ({
     modalOpen,
     toggleModalOpen,
-    handleDeletePlan
+    handleDeletePlan,
+    operationLoading
 }) => {
 
     const deletePlan = () => {
         handleDeletePlan()
-        toggleModalOpen()
     }
 
     return <>
@@ -27,7 +27,26 @@ const DeletePackagePlanConfirmationModal = ({
             </ModalBody>
             <ModalFooter>
             <Button color='primary' onClick={toggleModalOpen} outline className="pl-5 pr-5">Cancel</Button>
-            <Button color='primary' onClick={deletePlan} className="pl-5 pr-5">Delete Plan</Button>
+            <Button
+             disabled={operationLoading}
+             color='primary'
+             onClick={deletePlan} 
+             className="pl-5 pr-5">
+                    {
+                        operationLoading ? <>
+                        <span className="btn-inner--icon">
+                        <i className="fas fa-circle-notch fa-spin"></i>
+                        </span>
+                        <span className="nav-link-inner--text ml-1">
+                            Loading
+                        </span>
+                        </> : <>
+                        <span className="nav-link-inner--text ml-1">
+                        Delete
+                        </span>
+                        </>
+                    }
+               </Button>
             </ModalFooter>
         </Modal>
     </>
