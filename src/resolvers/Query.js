@@ -52,6 +52,27 @@ const adminTransactionCount = async (parent, args, { userId }, info) => {
     return transactionCount
 }
 
+const adminAccounts = async (parent, args, { userId }, info) => {
+
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    if(user.role !== "admin"){
+        throw new Error("not authorized")
+    }
+
+    const admins = await prisma.user.findMany({
+        where: {
+            role:'admin'
+        }
+    })
+
+    return admins
+}
+
 const adminUsersCount = async (parent, args, { userId }, info) => {
 
     const user = await prisma.user.findUnique({
@@ -126,5 +147,5 @@ export { me, packagetypes,
     packages, singlePackage,
     adminTransactionCount, adminUsersCount,
     adminSaleSum, adminPackagesCount,
-    transactions
+    transactions, adminAccounts
 }
