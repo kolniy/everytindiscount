@@ -61,7 +61,7 @@ export const PackageTypePage = () => {
                                     loading ? <>
                                         <div style={{
                                             display:'flex',
-                                            width:'50%',
+                                            width:'100%',
                                             justifyContent:'center',
                                             alignItems:'center'
                                         }}>

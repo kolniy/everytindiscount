@@ -17,7 +17,7 @@ export const AdminAccountItem = ({
                 account.email
             }
         </td>
-        <td style={{fontSize:'13.6px'}}>
+        <td style={{fontSize:'13.4px'}}>
             {
                 account.role
             }

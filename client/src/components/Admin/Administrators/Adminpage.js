@@ -28,7 +28,6 @@ export const Adminpage = () => {
     }, [])
 
     const { data, loading } = useQuery(GET_ADMIN_USERS)
-    console.log(data.adminAccounts, 'admin users')
     return <>
     <VerticalNavbar />
     <div className="main-content">
