@@ -115,7 +115,7 @@ const SinglePackageDisplayPage = ({ match }) => {
                     </Card>
                 </Container>
                 {
-                  determineComponentToRender(data.singlePackage.packagetype.name)
+                    determineComponentToRender(data.singlePackage.packagetype.name)
                 }
                 </>
             }

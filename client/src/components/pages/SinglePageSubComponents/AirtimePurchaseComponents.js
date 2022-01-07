@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useMutation } from '@apollo/client'
+import PaystackPop from "@paystack/inline-js"
 import { useAlert } from 'react-alert'
 import { Container, Card,
      Row, Col, 
@@ -7,17 +8,32 @@ import { Container, Card,
      FormGroup, Button } from 'reactstrap'
      
 import CurrencyFormat from 'react-currency-format'
-    
-import paystackimage1 from "../../../images/paystack-ii.png"
+import calculateDiscountPerCardPayment from '../../../utilities/calculateDiscountPerCardPayment'
+import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscountPerBankTransfer'
 
+import paystackimage1 from "../../../images/paystack-ii.png"
+import TransactionLoadingModal from '../TransactionLoadingModal'
+import TransactionSuccessModal from '../TransactionSuccessModal'
 
 const GET_USER_AUTH_STATE = gql`
      query {
        Auth @client
  }
-`     
+`   
+const CREATE_TRANSACTION = gql`
+    mutation($createMutationData: createTransactionInput!){
+        createTransaction(data: $createMutationData){
+            id
+            reference
+            amount
+            paymentmethod
+            valuerecipient
+            paymentreference
+      }
+    }
+`
 
-const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
+const AirtimePurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
 
     const { data } = useQuery(GET_USER_AUTH_STATE)
     const alert = useAlert()
@@ -26,6 +42,11 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
     const [ rechargeAmount, setRechargeAmount ] = useState('')
     const [ billingEmail, setBillingEmail ] = useState('')
     const [ paymentMethod, setPaymentMethod ] = useState("dcc")
+
+    const [ paymentToPaystack, setPaymentToPaystack ] = useState(0)
+    const [ transactionSuccessModal, setTransactionSuccessModal ] = useState(false)
+
+    const toggleSuccessModal = () => setTransactionSuccessModal(!transactionSuccessModal)
 
     const updatePhoneNumber = (e) => {
         const number = e.target.value
@@ -41,6 +62,15 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
         }
     }
 
+    const [ createTransaction, { loading: transactionLoading }  ] = useMutation(CREATE_TRANSACTION, {
+        onCompleted: () => {
+            toggleSuccessModal()
+        },
+        onError: (error) => {
+            alert.show(error.message)
+        }
+    })
+
     const updateBillingEmail = (e) => {
         setBillingEmail(e.target.value)
     }
@@ -53,14 +83,48 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
         if(data.Auth.isAuthenticated === false && data.Auth.user === null){
             return setOpenAuthModal(true)
         }
-        alert.show('payment handled after successful authentication', {
-            type:'success'
-        })
+        
+        if(paymentMethod === "dcc"){
+            // handle payment by credit card
+            const payStack = new PaystackPop()
+            payStack.newTransaction({
+                key: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+                email: data.Auth.user.email,
+                amount: paymentToPaystack * 100,
+                currency:'NGN',
+                // channels: ['card'],
+                onSuccess: (transaction) => {
+                    createTransaction({
+                        variables: {
+                            createMutationData: {
+                              reference: transaction.reference,
+                              amount: paymentToPaystack,
+                              userid: data.Auth.user.id,
+                              paymentmethod: paymentMethod,
+                              valuerecipient: phoneNumber
+                            }
+                          }
+                    })
+                    setPhoneNumber('')
+                    setRechargeAmount('')
+                },
+                onCancel: () => {
+                    alert.show('Are you sure you want to do that!!')
+                }
+            })
+        } else {
+            alert.show('Are you sure you want to do that!!')
+        }
     }
 
     useEffect(() => {
-        console.log(paymentMethod)
-    }, [paymentMethod])
+        if(rechargeAmount.length > 0){
+            paymentMethod === "dcc" ?
+             setPaymentToPaystack(calculateDiscountPerCardPayment(singlePackage.packagediscountpercard, rechargeAmount)) : 
+            setPaymentToPaystack(calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, rechargeAmount))
+        }
+    // eslint-disable-next-line 
+    }, [paymentMethod, rechargeAmount])
 
     useEffect(() => {
         if(data.Auth.user !== null){
@@ -129,19 +193,30 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                 <Col xs="12" sm="12" md="6">
                 <Card className="package-action_payment-cta">
                     <h2 className="call-to-action__text">
-                        Buy Airtime
+                        Buy A {`${singlePackage.packagename}`} Airtime
                     </h2>
                     <div className="recipient-details_and_amount">
                         <div className="amount-info">
                             <p className="paragraph-info">Amount:</p>
                             <h3 className="cost-header">{
                                 rechargeAmount.length !== 0 ? <>
-                                    <CurrencyFormat 
-                                    value={rechargeAmount}
-                                    prefix={'#'}
-                                    displayType='text'
-                                    thousandSeparator={true}
-                                    />
+                                   {
+                                       paymentMethod === 'dcc' ? <>
+                                        <CurrencyFormat 
+                                            value={calculateDiscountPerCardPayment(singlePackage.packagediscountperbanktransfer, rechargeAmount)}
+                                            prefix={'#'}
+                                            displayType='text'
+                                            thousandSeparator={true}
+                                        />
+                                       </> : <>
+                                       <CurrencyFormat 
+                                            value= {calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, rechargeAmount)}
+                                            prefix={'#'}
+                                            displayType='text'
+                                            thousandSeparator={true}
+                                        />
+                                       </>
+                                   }
                                </> : (<p style={{
                                    color:'#000',
                                    fontSize:'13px'
@@ -211,6 +286,9 @@ const AirtimePurchaseComponents = ({ setOpenAuthModal }) => {
                 </Col>
             </Row>
        </Container>
+       <TransactionLoadingModal isOpen={transactionLoading} />
+       <TransactionSuccessModal user={data.Auth.user} isOpen={transactionSuccessModal} 
+        toggleSuccessModal={toggleSuccessModal} />
     </>
 }
 

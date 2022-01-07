@@ -55,7 +55,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
           toggleSuccessModal()
         },
         onError: (error) => {
-            console.log(JSON.stringify(error))
+            alert.show(error.message)
         }
     })
 
@@ -106,6 +106,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                           }
                     })
                     setPhoneNumber('')
+                    setIdOfChosenPlan('')
                 },
                 onCancel: () => {
                     alert.show('Are you sure you want to do that!!')
@@ -188,20 +189,20 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                     }
                 </FormGroup>
                 <FormGroup className="package-action__form-group">
-                        <Label>Billing Email</Label>
-                        <Input 
-                         name="billing-email"
-                         type="email"
-                         value={billingEmail}
-                         placeholder="johndoe@gmail.com"
-                         onChange={e => updateBillingEmail(e)}
-                        />
+                    <Label>Billing Email</Label>
+                    <Input 
+                        name="billing-email"
+                        type="email"
+                        value={billingEmail}
+                        placeholder="johndoe@gmail.com"
+                        onChange={e => updateBillingEmail(e)}
+                    />
                 </FormGroup>
               </Col>
               <Col xs="12" sm="12" md="6">
               <Card className="package-action_payment-cta">
                     <h2 className="call-to-action__text">
-                        Buy Data Plan
+                        Buy A {`${singlePackage.packagename}`} Data Plan
                     </h2>
                     <div className="recipient-details_and_amount">
                         <div className="data-plan-infomation">

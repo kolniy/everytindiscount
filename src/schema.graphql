@@ -132,7 +132,7 @@ input updatePackageInput {
 }
 
 input createTransactionInput {
-  planid: String!
+  planid: String
   reference: String!
   amount: String!
   userid: String!

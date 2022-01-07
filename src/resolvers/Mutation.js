@@ -466,7 +466,6 @@ const createTransaction = async (parent, args, { userId }, info ) => {
           const paystack_response = await axios.get(`https://api.paystack.co/transaction/verify/${data.reference}`, config)
             if(paystack_response.data.data.status === 'success'){
                 const transactionData = {
-                    planid: data.planid,
                     reference: data.reference,
                     amount: new Prisma.Decimal(data.amount),
                     userid: user.id,
@@ -480,14 +479,17 @@ const createTransaction = async (parent, args, { userId }, info ) => {
             } else {
                 transactionData['paymentreference'] = ''
             }
-    
+
+            if(data.planid !== null){
+                transactionData['planid'] = data.planid
+            } 
+
             const transaction = await prisma.transaction.create({
                 data: transactionData
             })
             return transaction
            } else {
             const transactionData = {
-                planid: data.planid,
                 reference: data.reference,
                 amount: new Prisma.Decimal(data.amount),
                 userid: user.id,
@@ -495,7 +497,11 @@ const createTransaction = async (parent, args, { userId }, info ) => {
                 valuerecipient: data.valuerecipient,
                 status: 'failed',
             }
-    
+            
+            if(data.planid){
+                transactionData['planid'] = data.planid
+            }
+
            await prisma.transaction.create({
                 data: transactionData
            })

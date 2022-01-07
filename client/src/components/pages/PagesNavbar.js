@@ -88,7 +88,7 @@ import logo from "../../images/logo.png"
                         </NavItem>
                       </> : <>
                         {
-                          data.Auth.user.role === 'admin' ? (<>
+                          data?.Auth?.user?.role === 'admin' ? (<>
                           <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
