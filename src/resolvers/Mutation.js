@@ -512,6 +512,43 @@ const createTransaction = async (parent, args, { userId }, info ) => {
     }
 }
 
+const createTransactionViaBankTransfer = async (parent, args, { userId }, info) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+    
+        if(!user){
+            throw new Error('Not Authorized')
+        }
+        const { data } = args
+
+        const transactionData = {
+            amount: new Prisma.Decimal(data.amount),
+            userid: user.id,
+            paymentmethod: data.paymentmethod,
+            valuerecipient: data.valuerecipient,
+            status: 'success',
+            paymentreference: data.paymentreference
+        }
+
+        if(data.planid !== null){
+            transactionData['planid'] = data.planid
+        } 
+
+        const transaction = await prisma.transaction.create({
+            data: transactionData
+        })
+
+        return transaction
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export { signup,
      signin,
     createPackageType, 
@@ -524,5 +561,6 @@ export { signup,
     createPackagePlan,
     updatePackagePlan,
     deletePackagePlan,
-    createTransaction
+    createTransaction,
+    createTransactionViaBankTransfer
 }

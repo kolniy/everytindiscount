@@ -198,22 +198,27 @@ const AirtimePurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                     <div className="recipient-details_and_amount">
                         <div className="amount-info">
                             <p className="paragraph-info">Amount:</p>
-                            <h3 className="cost-header">{
+                            <h3 className="cost-header">
+                                {
                                 rechargeAmount.length !== 0 ? <>
                                    {
                                        paymentMethod === 'dcc' ? <>
+                                        &#8358;
                                         <CurrencyFormat 
                                             value={calculateDiscountPerCardPayment(singlePackage.packagediscountperbanktransfer, rechargeAmount)}
-                                            prefix={'#'}
                                             displayType='text'
                                             thousandSeparator={true}
+                                            fixedDecimalScale={true}
+                                            decimalScale={2}
                                         />
                                        </> : <>
+                                        &#8358;
                                        <CurrencyFormat 
                                             value= {calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, rechargeAmount)}
-                                            prefix={'#'}
                                             displayType='text'
                                             thousandSeparator={true}
+                                            fixedDecimalScale={true}
+                                            decimalScale={2}
                                         />
                                        </>
                                    }

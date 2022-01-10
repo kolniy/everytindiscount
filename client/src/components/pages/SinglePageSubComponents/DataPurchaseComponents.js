@@ -14,6 +14,7 @@ import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscou
 import paystackimage1 from "../../../images/paystack-ii.png"
 import TransactionLoadingModal from '../TransactionLoadingModal'
 import TransactionSuccessModal from '../TransactionSuccessModal'
+import PaymentReferenceModal from '../PaymentReferenceModal'
 
 const GET_USER_AUTH_STATE = gql`
      query {
@@ -34,6 +35,19 @@ const CREATE_TRANSACTION = gql`
     }
 `
 
+const CREATE_TRANSACTION_VIA_BANK_TRANSFER = gql`
+    mutation($createMutationViaBankTransferData: createTransactionViaBankTransferInput!){
+        createTransactionViaBankTransfer(data: $createMutationViaBankTransferData){
+            id
+            reference
+            amount
+            paymentmethod
+            valuerecipient
+            paymentreference
+        }
+    }
+`
+
 const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
 
     const [ phoneNumber, setPhoneNumber ] = useState('')
@@ -50,6 +64,12 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
     
     const toggleSuccessModal = () => setTransactionSuccessModal(!transactionSuccessModal)
 
+    const [ paymentReferenceText, setPaymentReferenceText ] = useState('')
+    const [ paymentReferenceModal, setPaymentReferenceModal ] = useState(false)
+
+    const openPaymentReferenceModal = () => setPaymentReferenceModal(true)
+    const closePaymentReferenceModal = () => setPaymentReferenceModal(false)
+
     const [ createTransaction, { loading: transactionLoading } ] = useMutation(CREATE_TRANSACTION, {
         onCompleted: () => {
           toggleSuccessModal()
@@ -58,6 +78,34 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
             alert.show(error.message)
         }
     })
+
+    const [ createTransactionViaBankTransfer, { loading: bankTransferLoading, error } ] = useMutation(CREATE_TRANSACTION_VIA_BANK_TRANSFER, {
+        onCompleted: () => {
+          toggleSuccessModal()
+        },
+        onError: (error) => {
+            alert.show(error.message, {
+                type:'error'
+            })
+        }
+    })
+
+    console.log(JSON.stringify(error), 'error')
+
+    const handleSubmitTransactionWithBankTransferReference = () => {
+        createTransactionViaBankTransfer({
+            variables: {
+                createMutationViaBankTransferData: {
+                  planid: idOfChosePlan,
+                  amount: paymentToPaystack,
+                  userid: data.Auth.user.id,
+                  paymentmethod: paymentMethod,
+                  valuerecipient: phoneNumber,
+                  paymentreference:paymentReferenceText
+                }
+              }
+        })
+    }
 
     const chosePlan = (e) => {
         setIdOfChosenPlan(e.target.value)
@@ -76,6 +124,10 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
 
     const updatePaymentMethod = (e) => {
         setPaymentMethod(e.target.value)
+    }
+
+    const updatePaymentReferenceText = (e) => {
+        setPaymentReferenceText(e.target.value)
     }
 
     const handlePayment = () => {
@@ -114,7 +166,7 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
             })
         } else {
             // handle payment by bank transfer
-            alert.show('payment by card handled here')
+            openPaymentReferenceModal()
         }
     }
 
@@ -174,10 +226,10 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                     <Input onChange={e => chosePlan(e)} type="select">
                         <option key="urejnf94" value="">Select A Plan</option>
                         {
-                            singlePackage.packageplan.map((plan) => <><option value={plan.id} style={{
+                            singlePackage.packageplan.map((plan) => <><option key={plan.id} value={plan.id} style={{
                                 fontSize:'14px',
                                 margin:'15px'
-                            }} key={plan.id}>
+                            }}>
                                 { plan.planname } {` (${plan.plandescription})`}
                             </option></>)
                         }
@@ -237,19 +289,23 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                                     {
                                         paymentMethod === 'dcc' ? 
                                         <>
+                                        &#8358;
                                          <CurrencyFormat 
                                             value={calculateDiscounPerCardPayment(singlePackage.packagediscountpercard, chosenPlanObject?.planprice)}
-                                            prefix={'#'}
                                             displayType='text'
                                             thousandSeparator={true}
+                                            fixedDecimalScale={true}
+                                            decimalScale={2}
                                             />
                                         </> : 
                                         <>
+                                        &#8358;
                                         <CurrencyFormat 
                                             value= {calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, chosenPlanObject?.planprice)}
-                                            prefix={'#'}
                                             displayType='text'
                                             thousandSeparator={true}
+                                            fixedDecimalScale={true}
+                                            decimalScale={2}
                                         />
                                        </>
                                     }
@@ -312,9 +368,17 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
               </Col>
             </Row>
         </Container>
-        <TransactionLoadingModal isOpen={transactionLoading} />
+        <TransactionLoadingModal isOpen={transactionLoading || bankTransferLoading} />
         <TransactionSuccessModal user={data.Auth.user} isOpen={transactionSuccessModal} 
         toggleSuccessModal={toggleSuccessModal} />
+        <PaymentReferenceModal
+            isOpen={paymentReferenceModal}
+            closePaymentReferenceModal={closePaymentReferenceModal}
+            paymentReferenceText={paymentReferenceText}
+            updatePaymentReferenceText={updatePaymentReferenceText}
+            handleSubmitTransactionWithBankTransferReference={handleSubmitTransactionWithBankTransferReference}
+            paymentAmount={paymentToPaystack}
+        />
     </>
 }
 

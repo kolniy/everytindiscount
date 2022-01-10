@@ -77,3 +77,19 @@
 .payment-method__btn button {
   border-radius: 20px;
 }
+
+.payment-reference-header__modal-contents {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-reference-header__modal-contents h3 {
+  font-size: 16.9px;
+  font-weight: 540;
+}
+
+.payment-reference-header__modal-contents .close-modal__icon {
+  cursor: pointer;
+}

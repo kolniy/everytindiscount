@@ -79,7 +79,7 @@ model Transaction {
   createdat        DateTime      @default(now())
   plan             Package_Plan? @relation(fields: [planid], references: [id])
   planid           String?       @db.ObjectId
-  reference        String
+  reference        String?
   amount           Decimal
   transactionby    User          @relation(fields: [userid], references: [id])
   userid           String        @db.ObjectId

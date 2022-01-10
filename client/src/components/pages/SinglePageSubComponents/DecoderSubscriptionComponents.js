@@ -106,7 +106,7 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
                           }
                     })
                     setDeviceNumber('')
-                    setIdOfChosenPlan('')
+                    setIdOfChosenPlan('')   
                 },
                 onCancel: () => {
                     alert.show('Are you sure you want to do that!!')
@@ -237,19 +237,23 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
                                     {
                                         paymentMethod === 'dcc' ? 
                                         <>
+                                         &#8358;
                                          <CurrencyFormat 
                                             value={calculateDiscounPerCardPayment(singlePackage.packagediscountpercard, chosenPlanObject?.planprice)}
-                                            prefix={'#'}
                                             displayType='text'
                                             thousandSeparator={true}
+                                            fixedDecimalScale={true}
+                                            decimalScale={2}
                                             />
                                         </> : 
-                                        <>
+                                        <> 
+                                        &#8358;
                                         <CurrencyFormat 
                                             value= {calculateDiscountPerBankTransfer(singlePackage.packagediscountperbanktransfer, chosenPlanObject?.planprice)}
-                                            prefix={'#'}
                                             displayType='text'
                                             thousandSeparator={true}
+                                            fixedDecimalScale={true}
+                                            decimalScale={2}
                                         />
                                        </>
                                     }

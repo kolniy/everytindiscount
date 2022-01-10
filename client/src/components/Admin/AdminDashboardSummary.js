@@ -123,11 +123,13 @@ const AdminDashboardSummary = () => {
                             adminSalesSumLoading ? <div>
                               <i className="fas fa-spinner fa-spin"></i> 
                             </div> : <div className="h4 font-weight-bold mb-0">
+                            &#8358;
                             <CurrencyFormat 
                             value={adminSalesSumData.adminSaleSum}
-                            prefix={'#'}
                             displayType='text'
                             thousandSeparator={true}
+                            fixedDecimalScale={true}
+                            decimalScale={2}
                             />
                         </div>
                           }
