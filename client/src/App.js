@@ -66,6 +66,9 @@ function App() {
     return (<Router>
       <Switch>
         <Route exact path="/" component={Landing} />
+        <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
+        <Route exact path="/signup" component={Register} />
+        <Route exact path="/login" component={Login} />
         <PrivateAdminRoute exact path="/admin" component={AdminLandingPage} />
         <PrivateAdminRoute exact path="/admin/administrators" component={AdministratorsPage} />
         <PrivateAdminRoute exact path="/admin/marketers" component={AdminMarketersPage} />
@@ -75,9 +78,6 @@ function App() {
         <PrivateAdminRoute exact path="/admin/package/packageitem/:packageitemId" component={AdminSinglePackageItemPage} />
         <PrivateAdminRoute exact path="/admin/profile" component={AdminProfilePage} />
         <PrivateAdminRoute exact path="/admin/users" component={AdminUsersPage} />
-        <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
-        <Route exact path="/signup" component={Register} />
-        <Route exact path="/login" component={Login} />
       </Switch>
     </Router> )
   } else {
@@ -87,6 +87,9 @@ function App() {
        return (<Router>
         <Switch>
           <Route exact path="/" component={Landing} />
+          <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
+          <Route exact path="/signup" component={Register} />
+          <Route exact path="/login" component={Login} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin" component={AdminLandingPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/administrators" component={AdministratorsPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/marketers" component={AdminMarketersPage} />
@@ -96,9 +99,6 @@ function App() {
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/package/packageitem/:packageitemId" component={AdminSinglePackageItemPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/profile" component={AdminProfilePage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/users" component={AdminUsersPage} />
-          <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
-          <Route exact path="/signup" component={Register} />
-          <Route exact path="/login" component={Login} />
         </Switch>
       </Router> )
       }

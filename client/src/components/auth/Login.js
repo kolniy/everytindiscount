@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { gql, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { useAlert } from 'react-alert';
-import authDispatch from "../../state/auth";
+import authDispatch from '../../state/auth'
 
 import {
     Button,

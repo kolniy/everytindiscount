@@ -11,17 +11,17 @@ const GET_USER_AUTH_STATE = gql`
 const PrivateAdminRoute = ({ component: Component, ...rest }) => {
     const { data } = useQuery(GET_USER_AUTH_STATE)
     const { isAuthenticated, user } = data.Auth
-
+  
     return (
         <Route 
             {...rest}
-            component={(props) => (
-                isAuthenticated === true && user?.role === 'admin' ? 
-                (<Component {...props} />) :
-                 (
-                    <Redirect to="/" />
-                 )
-            )}
+            render={(props) => {
+                if(isAuthenticated && user?.role === 'admin'){
+                    return <Component {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }}
         />
     )
 }
