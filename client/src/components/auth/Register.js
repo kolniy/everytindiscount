@@ -44,6 +44,7 @@ const Register = ({ history }) => {
   const [ signupData, setSignupData ] = useState({
     name:'',
     email:'',
+    phonenumber:'',
     password:'',
     password2:'',
   })
@@ -55,6 +56,7 @@ const Register = ({ history }) => {
         name: signupData.name,
         email: signupData.email,
         password: signupData.password,
+        phonenumber: signupData.phonenumber,
         isAdmin: false,
         referedby: ref ? ref : ''
       }
@@ -126,7 +128,7 @@ return <>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-hat-3" />
+                                <i className="ni ni-single-02" />
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input 
@@ -144,7 +146,7 @@ return <>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-email-83" />
+                               <i className="ni ni-email-83" />
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -154,6 +156,24 @@ return <>
                               autoComplete="off"
                               required
                               value={signupData.email}
+                              onChange={e => updateSignupForm(e)}
+                              />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="fas fa-phone"></i>
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                             placeholder="Phone Number"
+                              type="tel"
+                              name="phonenumber"
+                              autoComplete="off"
+                              required
+                              value={signupData.phonenumber}
                               onChange={e => updateSignupForm(e)}
                               />
                           </InputGroup>

@@ -27,19 +27,24 @@
     "@babel/core": "^7.12.10",
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "7.12.11",
+    "@graphql-tools/schema": "^8.3.1",
     "@prisma/client": "^2.30.3",
-    "apollo-server": "^3.0.0",
-    "apollo-server-core": "^3.5.0",
+    "apollo-server-core": "^3.6.2",
+    "apollo-server-express": "^3.6.2",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.0",
     "caniuse-lite": "^1.0.30001245",
     "env-cmd": "^10.1.0",
-    "graphql": "^15.5.1",
+    "express": "^4.17.2",
+    "g": "^2.0.1",
+    "graphql": "^15.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.1.3",
     "nodemailer": "^6.4.17",
+    "nodemon": "^2.0.15",
     "regenerator-runtime": "^0.13.9",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "subscriptions-transport-ws": "^0.11.0"
   },
   "devDependencies": {
     "prisma": "^2.30.3"

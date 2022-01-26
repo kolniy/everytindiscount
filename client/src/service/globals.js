@@ -1,1 +1,1 @@
-export const url = process.env.NODE_ENV === "production" ? "https://everytindiscount.herokuapp.com/" : "http://localhost:4000"
+export const url = process.env.NODE_ENV === "production" ? "https://everytindiscount.herokuapp.com/graphql" : "http://localhost:4000/graphql"

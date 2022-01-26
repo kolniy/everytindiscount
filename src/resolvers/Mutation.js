@@ -29,6 +29,7 @@ const signup = async (parent, { data }, { prisma }, info ) => {
             name: data.name,
             email: data.email,
             role: role,
+            phonenumber: data.phonenumber,
             password: password,
             userrefcode: shortid.generate(),
             referedby: data.referedby.length > 0 ? data.referedby : ''

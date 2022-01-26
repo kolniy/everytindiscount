@@ -42,6 +42,7 @@ type User {
   name: String!
   email: String!
   role: Role
+  phonenumber: String
   password: String!
   createdpackagetype: [PackageType!]!
   createpackage: [Package!]!
@@ -106,6 +107,7 @@ input signUpInput {
   password: String!
   isAdmin: Boolean!
   referedby: String
+  phonenumber: String!
 }
 
 input signInInput {

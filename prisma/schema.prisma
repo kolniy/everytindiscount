@@ -16,6 +16,7 @@ model User {
   name               String
   email              String         @unique
   role               Role           @default(user)
+  phonenumber        String?
   password           String
   createdpackagetype Package_Type[]
   createdpackages    Package[]
