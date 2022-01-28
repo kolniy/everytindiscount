@@ -2,6 +2,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import shortid from "shortid"
 import axios from "axios"
+import { pubsub } from "../index"
 
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
@@ -488,6 +489,11 @@ const createTransaction = async (parent, args, { userId }, info ) => {
             const transaction = await prisma.transaction.create({
                 data: transactionData
             })
+
+            pubsub.publish('TRANSACTION_CREATED', {
+                transactionCreated: transaction
+            })    
+
             return transaction
            } else {
             const transactionData = {
@@ -541,6 +547,10 @@ const createTransactionViaBankTransfer = async (parent, args, { userId }, info) 
 
         const transaction = await prisma.transaction.create({
             data: transactionData
+        })
+
+        pubsub.publish('TRANSACTION_CREATED', {
+            transactionCreated: transaction
         })
 
         return transaction

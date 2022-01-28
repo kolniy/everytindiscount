@@ -7,6 +7,7 @@ import { SubscriptionServer } from "subscriptions-transport-ws"
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import express from 'express'
 import http from 'http'
+import { PubSub } from "graphql-subscriptions"
 import {
     ApolloServerPluginLandingPageGraphQLPlayground
   } from "apollo-server-core";
@@ -14,6 +15,7 @@ import { PrismaClient } from "@prisma/client"
 import { getUserIdFromAuthHeader } from "./utilities/getUserIdFromAuthHeader"
 import * as Query from "./resolvers/Query"
 import * as Mutation from "./resolvers/Mutation"
+import * as Subscription from "./resolvers/Subscription"
 import * as User from "./resolvers/User"
 import * as PackageType from "./resolvers/PackageType"
 import * as Package from "./resolvers/Package"
@@ -23,12 +25,14 @@ import * as Transaction from "./resolvers/Transaction"
 import "regenerator-runtime/runtime"
 
 const prisma = new PrismaClient()
+export const pubsub = new PubSub()
 
 const PORT = process.env.PORT || 4000
 
 const resolvers = {
     Query,
     Mutation,
+    Subscription,
     User,
     PackageType,
     Package,
@@ -43,16 +47,6 @@ async function startApolloServer(typeDefs, resolvers) {
     const httpServer = http.createServer(app)
 
     const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-    const subScriptionServer = SubscriptionServer.create({
-        schema,
-        execute,
-        subscribe
-    }, {
-        server: httpServer,
-        path:'/graphql/subscription'
-    })
-
 
     const server = new ApolloServer({
         schema: schema,
@@ -80,8 +74,13 @@ async function startApolloServer(typeDefs, resolvers) {
         introspection: true
     })
 
-    app.use('/index', async (req, res) => {
-        res.send("Hello there")
+    const subScriptionServer = SubscriptionServer.create({
+        schema,
+        execute,
+        subscribe
+    }, {
+        server: httpServer,
+        path: server.graphqlPath
     })
 
     await server.start()
@@ -91,8 +90,8 @@ async function startApolloServer(typeDefs, resolvers) {
     })
 
     await new Promise(resolve => httpServer.listen({ port: PORT }, resolve));
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.graphqlPath}`)
 }
 
 

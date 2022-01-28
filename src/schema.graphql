@@ -37,6 +37,11 @@ type Mutation {
   ): Transaction!
 }
 
+type Subscription {
+  transactionCreated: Transaction!
+  count: Int!
+}
+
 type User {
   id: ID!
   name: String!
