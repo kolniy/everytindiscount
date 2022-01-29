@@ -12,6 +12,12 @@ const handleUpdate = async () => {
             email:'kolaniyi3@gmail.com'
         }
     })
+    // await prisma.transaction.updateMany({
+    //     data: {
+    //         isseen: false
+    //     }
+    // })
+    // console.log('i done finish')
 }
 
 handleUpdate()

@@ -137,7 +137,7 @@ const transactions = async (parent, args, { userId }, info) => {
 
     const transactions = await prisma.transaction.findMany({
         orderBy: {
-            createdat:'desc'
+            createdat:'asc'
         }
     })
     return transactions

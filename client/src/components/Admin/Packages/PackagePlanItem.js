@@ -100,9 +100,8 @@ const PackagePlanItem = ({
             </Media>
         </th>
         <td>
-        <CurrencyFormat 
+        &#8358;<CurrencyFormat 
             value={packagePlanItem.planprice}
-            prefix={' #'}
             suffix={' NGN'}
             displayType='text'
             thousandSeparator={true}

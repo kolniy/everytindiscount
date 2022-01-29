@@ -99,6 +99,7 @@ type Transaction {
   status: String
   paymentreference: String
   valuerecipient: String!
+  isseen: Boolean
 }
 
 type UserAuthPayload {
