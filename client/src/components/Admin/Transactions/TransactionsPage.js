@@ -9,9 +9,11 @@ import AdminDashboardSummary from '../AdminDashboardSummary'
 import updateActiveLink from '../../../state/activeLinkInAdminDashboard'
 import TransactionItem from './TransactionItem'
 
+import notificationPop from '../../../sounds/notificationpop.mp3'
+
 export const GET_TRANSACTIONS = gql`
     query {
-    transactions{
+    transactions {
         id
         createdat
         amount
@@ -31,12 +33,66 @@ export const GET_TRANSACTIONS = gql`
         packagetype {
             name
         }
-     }
+      }
      }
   }
 `
 
+export const GET_LATETEST_TRANSACTIONS = gql`
+     subscription {
+        transactionCreated {
+        id
+        createdat
+        amount
+        valuerecipient
+        paymentmethod
+        reference
+        paymentreference
+        isseen
+        transactionby {
+        name
+        email
+        phonenumber
+     }
+        packageplan{ 
+        planname
+        planprice
+        packagetype {
+            name
+        }
+      }
+     }
+   }
+`
+
 const TransactionsPage = () => {
+
+    const { subscribeToMore, data, loading } = useQuery(GET_TRANSACTIONS)
+
+    const playNotificationSound = () => {
+        const audio = new Audio(notificationPop)
+        audio.play()
+    }
+
+    const subscribeToNewTransactions = () => {
+        subscribeToMore({
+            document: GET_LATETEST_TRANSACTIONS,
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev;
+                const newTransactionItem = subscriptionData.data.transactionCreated
+                playNotificationSound()
+                return Object.assign({}, prev, {
+                    transactions : [...prev.transactions, newTransactionItem]
+                  });
+            },
+            
+        })
+    }
+
+    useEffect(() => {
+        subscribeToNewTransactions()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         updateActiveLink({
@@ -44,8 +100,6 @@ const TransactionsPage = () => {
             payload: 4
         })
     }, [])
-
-    const { data, loading } = useQuery(GET_TRANSACTIONS)
 
     return <>
         <VerticalNavbar />
@@ -97,11 +151,11 @@ const TransactionsPage = () => {
                             </thead>
                             <tbody>
                             {
-                                data.transactions.length === 0 ? <>
+                                data?.transactions?.length === 0 ? <>
                                      <p className="lead text-center">No Transactions Found</p>
                                 </> : <>
                                     {
-                                        data.transactions.map((transaction) => {
+                                        data?.transactions.map((transaction) => {
                                             return <TransactionItem key={transaction.id} 
                                                 transaction={transaction}
                                             />

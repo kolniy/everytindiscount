@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import { ApolloClient, ApolloProvider, ApolloLink, concat, InMemoryCache, createHttpLink } from "@apollo/client"
+import { ApolloClient, ApolloProvider, ApolloLink, split, concat, InMemoryCache, createHttpLink } from "@apollo/client"
+import { getMainDefinition } from "@apollo/client/utilities"
+import { WebSocketLink } from '@apollo/client/link/ws';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { url } from "./service/globals"
+import { url, wsurl } from "./service/globals"
 import AlertTemplate from 'react-alert-template-basic'
 // import dispatch from './state'
 // import authDispatch from './state/auth';
@@ -24,9 +26,28 @@ const options = {
   transition: transitions.FADE
 }
 
+const wsLink = new WebSocketLink({
+    uri: wsurl,
+    options: {
+      reconnect: true
+    }
+})
+
 const httpLink = createHttpLink({
   uri: url
 })
+
+const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query)
+      return (
+        definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+      )
+    },
+    wsLink,
+    httpLink
+)
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
@@ -41,7 +62,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 })
 
 const client = new ApolloClient({
-  link: concat(authMiddleware, httpLink),
+  link: concat(authMiddleware, splitLink),
   cache: new InMemoryCache({
     typePolicies: typePolicies
   }),
