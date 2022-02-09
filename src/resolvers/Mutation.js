@@ -473,6 +473,7 @@ const createTransaction = async (parent, args, { userId }, info ) => {
                     userid: user.id,
                     paymentmethod: data.paymentmethod,
                     valuerecipient: data.valuerecipient,
+                    vendor: data.vendor,
                     status: 'success',
                 }
     
@@ -502,6 +503,7 @@ const createTransaction = async (parent, args, { userId }, info ) => {
                 userid: user.id,
                 paymentmethod: data.paymentmethod,
                 valuerecipient: data.valuerecipient,
+                vendor: data.vendor,
                 status: 'failed',
             }
             
@@ -538,7 +540,8 @@ const createTransactionViaBankTransfer = async (parent, args, { userId }, info) 
             paymentmethod: data.paymentmethod,
             valuerecipient: data.valuerecipient,
             status: 'success',
-            paymentreference: data.paymentreference
+            paymentreference: data.paymentreference,
+            vendor: data.vendor
         }
 
         if(data.planid !== null){

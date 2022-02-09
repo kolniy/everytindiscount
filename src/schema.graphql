@@ -91,7 +91,7 @@ type PackagePlan {
 type Transaction {
   id: ID!
   createdat: String!
-  packageplan: PackagePlan!
+  packageplan: PackagePlan
   reference: String
   amount: String!
   transactionby: User!
@@ -100,6 +100,7 @@ type Transaction {
   paymentreference: String
   valuerecipient: String!
   isseen: Boolean
+  vendor: String!
 }
 
 type UserAuthPayload {
@@ -150,6 +151,7 @@ input createTransactionInput {
   paymentmethod: String!
   paymentreference: String
   valuerecipient: String!
+  vendor: String!
 }
 
 input createTransactionViaBankTransferInput {
@@ -160,6 +162,7 @@ input createTransactionViaBankTransferInput {
   paymentmethod: String!
   paymentreference: String!
   valuerecipient: String!
+  vendor: String!
 }
 
 input updateTransactionData {

@@ -14,12 +14,17 @@ const TransactionItem = ({
     </td>
     <td>
         {
-            transaction.packageplan.planname
+            transaction.packageplan === null ? 'Airtime Recharge' : transaction.packageplan.planname
         }
     </td>
     <td>
         {
-            transaction.packageplan.packagetype.name
+            transaction.vendor
+        }
+    </td>
+    <td>
+        {
+            transaction.packageplan === null ? 'Airtime Recharge' : transaction.packageplan.packagetype.name
         }
     </td>
     <td>

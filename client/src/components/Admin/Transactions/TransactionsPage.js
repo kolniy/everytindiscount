@@ -22,14 +22,14 @@ export const GET_TRANSACTIONS = gql`
         reference
         paymentreference
         isseen
+        vendor
         transactionby {
         name
         email
         phonenumber
-     }
+      }
         packageplan{ 
         planname
-        planprice
         packagetype {
             name
         }
@@ -49,6 +49,7 @@ export const GET_LATETEST_TRANSACTIONS = gql`
         reference
         paymentreference
         isseen
+        vendor
         transactionby {
         name
         email
@@ -56,7 +57,6 @@ export const GET_LATETEST_TRANSACTIONS = gql`
      }
         packageplan{ 
         planname
-        planprice
         packagetype {
             name
         }
@@ -138,6 +138,7 @@ const TransactionsPage = () => {
                                 <tr>
                                     <th scope="col">Date</th>
                                     <th scope='col'>Plan Name</th>
+                                    <th scope='col'>Vendor</th>
                                     <th scope='col'>Plan Type</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Value Recipient</th>

@@ -89,4 +89,5 @@ model Transaction {
   paymentreference String // payment reference is used to check if the user has made a successful transfer for bank transfer payments
   valuerecipient   String
   isseen           Boolean    @default(false)
+  vendor           String
 }

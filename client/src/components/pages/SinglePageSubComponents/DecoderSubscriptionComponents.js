@@ -101,7 +101,8 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
                               amount: paymentToPaystack,
                               userid: data.Auth.user.id,
                               paymentmethod: paymentMethod,
-                              valuerecipient: deviceNumber
+                              valuerecipient: deviceNumber,
+                              vendor: singlePackage.packagename
                             }
                           }
                     })

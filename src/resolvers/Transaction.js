@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 const packageplan = async (parent, args, context, info) => {
+    if(parent.planid === null) return null
     const packageplan = await prisma.package_Plan.findUnique({
         where: {
             id: parent.planid

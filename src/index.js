@@ -46,6 +46,10 @@ async function startApolloServer(typeDefs, resolvers) {
     const app = express()
     const httpServer = http.createServer(app)
 
+    // app.use('/', (req, res) => {
+    //     res.send('Hello gettat')
+    // })
+
     const schema = makeExecutableSchema({ typeDefs, resolvers });
 
     const server = new ApolloServer({

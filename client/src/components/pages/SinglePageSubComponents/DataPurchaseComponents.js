@@ -101,7 +101,8 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                   userid: data.Auth.user.id,
                   paymentmethod: paymentMethod,
                   valuerecipient: phoneNumber,
-                  paymentreference:paymentReferenceText
+                  paymentreference:paymentReferenceText,
+                  vendor: singlePackage.packagename
                 }
               }
         })
@@ -153,7 +154,8 @@ const DataPurchaseComponents = ({ singlePackage, setOpenAuthModal }) => {
                               amount: paymentToPaystack,
                               userid: data.Auth.user.id,
                               paymentmethod: paymentMethod,
-                              valuerecipient: phoneNumber
+                              valuerecipient: phoneNumber,
+                              vendor: singlePackage.packagename
                             }
                           }
                     })
