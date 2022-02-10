@@ -10,7 +10,7 @@
     "rsync:graphql": "rsync -r --include '*/' --include '*.graphql' --exclude='*' --prune-empty-dirs 'src/' 'dist/'",
     "client": "npm start --prefix client",
     "dev": "env-cmd -f ./src/config/.dev.env nodemon -e js,graphql --ignore client --exec babel-node ./src/index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run rsync:graphql"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run rsync:graphql && npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",

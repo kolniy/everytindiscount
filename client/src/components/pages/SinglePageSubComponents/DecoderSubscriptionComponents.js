@@ -15,6 +15,7 @@ import calculateDiscountPerBankTransfer from '../../../utilities/calculateDiscou
 import paystackimage1 from "../../../images/paystack-ii.png"
 import TransactionLoadingModal from '../TransactionLoadingModal'
 import TransactionSuccessModal from '../TransactionSuccessModal'
+import PaymentReferenceModal from '../PaymentReferenceModal'
 
 const GET_USER_AUTH_STATE = gql`
      query {
@@ -34,6 +35,19 @@ const CREATE_TRANSACTION = gql`
     }
 `
 
+const CREATE_TRANSACTION_VIA_BANK_TRANSFER = gql`
+    mutation($createMutationViaBankTransferData: createTransactionViaBankTransferInput!){
+        createTransactionViaBankTransfer(data: $createMutationViaBankTransferData){
+            id
+            reference
+            amount
+            paymentmethod
+            valuerecipient
+            paymentreference
+        }
+    }
+`
+
 export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal }) => {
 
     const [ deviceNumber, setDeviceNumber ] = useState('')
@@ -50,6 +64,12 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
     
     const toggleSuccessModal = () => setTransactionSuccessModal(!transactionSuccessModal)
 
+    const [ paymentReferenceText, setPaymentReferenceText ] = useState('')
+    const [ paymentReferenceModal, setPaymentReferenceModal ] = useState(false)
+
+    const openPaymentReferenceModal = () => setPaymentReferenceModal(true)
+    const closePaymentReferenceModal = () => setPaymentReferenceModal(false)
+
     const [ createTransaction, { loading: transactionLoading } ] = useMutation(CREATE_TRANSACTION, {
         onCompleted: () => {
           toggleSuccessModal()
@@ -58,6 +78,35 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
             alert.show(error.message)
         }
     })
+
+    const [ createTransactionViaBankTransfer, { loading: bankTransferLoading, error } ] = useMutation(CREATE_TRANSACTION_VIA_BANK_TRANSFER, {
+        onCompleted: () => {
+          toggleSuccessModal()
+        },
+        onError: (error) => {
+            alert.show(error.message, {
+                type:'error'
+            })
+        }
+    })
+
+    console.log(JSON.stringify(error), 'error')
+
+    const handleSubmitTransactionWithBankTransferReference = () => {
+        createTransactionViaBankTransfer({
+            variables: {
+                createMutationViaBankTransferData: {
+                    planid: idOfChosePlan,
+                    paymentreference:paymentReferenceText,
+                    amount: paymentToPaystack,
+                    userid: data.Auth.user.id,
+                    paymentmethod: paymentMethod,
+                    valuerecipient: deviceNumber,
+                    vendor: singlePackage.packagename
+                }
+              }
+        })
+    }
 
     const chosePlan = (e) => {
         setIdOfChosenPlan(e.target.value)
@@ -76,6 +125,10 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
 
     const updatePaymentMethod = (e) => {
         setPaymentMethod(e.target.value)
+    }
+
+    const updatePaymentReferenceText = (e) => {
+        setPaymentReferenceText(e.target.value)
     }
 
     const handlePayment = () => {
@@ -115,7 +168,7 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
             })
         } else {
             // handle payment by bank transfer
-            alert.show('payment by card handled here')
+            openPaymentReferenceModal()
         }
     }
 
@@ -317,9 +370,17 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
               </Col>
               </Row>
         </Container>
-        <TransactionLoadingModal isOpen={transactionLoading} />
+        <TransactionLoadingModal isOpen={transactionLoading || bankTransferLoading} />
         <TransactionSuccessModal user={data.Auth.user} isOpen={transactionSuccessModal} 
         toggleSuccessModal={toggleSuccessModal} />
+         <PaymentReferenceModal
+            isOpen={paymentReferenceModal}
+            closePaymentReferenceModal={closePaymentReferenceModal}
+            paymentReferenceText={paymentReferenceText}
+            updatePaymentReferenceText={updatePaymentReferenceText}
+            handleSubmitTransactionWithBankTransferReference={handleSubmitTransactionWithBankTransferReference}
+            paymentAmount={paymentToPaystack}
+        />
     </>
 }
 
