@@ -70,7 +70,7 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
     const openPaymentReferenceModal = () => setPaymentReferenceModal(true)
     const closePaymentReferenceModal = () => setPaymentReferenceModal(false)
 
-    const [ createTransaction, { loading: transactionLoading, error: dccError } ] = useMutation(CREATE_TRANSACTION, {
+    const [ createTransaction, { loading: transactionLoading } ] = useMutation(CREATE_TRANSACTION, {
         onCompleted: () => {
           toggleSuccessModal()
         },
@@ -79,7 +79,7 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
         }
     })
 
-    const [ createTransactionViaBankTransfer, { loading: bankTransferLoading, error } ] = useMutation(CREATE_TRANSACTION_VIA_BANK_TRANSFER, {
+    const [ createTransactionViaBankTransfer, { loading: bankTransferLoading } ] = useMutation(CREATE_TRANSACTION_VIA_BANK_TRANSFER, {
         onCompleted: () => {
           toggleSuccessModal()
         },
@@ -90,9 +90,6 @@ export const DecoderSubscriptionComponents = ({ singlePackage, setOpenAuthModal 
         }
     })
 
-    console.log(JSON.stringify(error), 'error')
-
-    console.log(JSON.stringify(dccError), 'error')
 
     const handleSubmitTransactionWithBankTransferReference = () => {
         createTransactionViaBankTransfer({

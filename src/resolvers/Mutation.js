@@ -476,8 +476,6 @@ const createTransaction = async (parent, args, { userId }, info ) => {
                     vendor: data.vendor,
                     status: 'success',
                 }
-
-                console.log(data.reference, "data reference")
     
             if(data.paymentreference){
                 transactionData['paymentreference'] = data.paymentreference
@@ -489,8 +487,6 @@ const createTransaction = async (parent, args, { userId }, info ) => {
                 transactionData['planid'] = data.planid
             } 
 
-            console.log(transactionData, 'transaction data before saving')
-
             const transaction = await prisma.transaction.create({
                 data: transactionData
             })
@@ -501,23 +497,6 @@ const createTransaction = async (parent, args, { userId }, info ) => {
 
             return transaction
            } else {
-            const transactionData = {
-                reference: data.reference,
-                amount: new Prisma.Decimal(data.amount),
-                userid: user.id,
-                paymentmethod: data.paymentmethod,
-                valuerecipient: data.valuerecipient,
-                vendor: data.vendor,
-                status: 'failed',
-            }
-            
-            if(data.planid){
-                transactionData['planid'] = data.planid
-            }
-
-           await prisma.transaction.create({
-                data: transactionData
-           })
             throw new Error("Your transaction could not be verified at this time")
         }
     } catch (error) {
