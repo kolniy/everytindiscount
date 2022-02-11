@@ -476,6 +476,8 @@ const createTransaction = async (parent, args, { userId }, info ) => {
                     vendor: data.vendor,
                     status: 'success',
                 }
+
+                console.log(data.reference, "data reference")
     
             if(data.paymentreference){
                 transactionData['paymentreference'] = data.paymentreference
@@ -486,6 +488,8 @@ const createTransaction = async (parent, args, { userId }, info ) => {
             if(data.planid !== null){
                 transactionData['planid'] = data.planid
             } 
+
+            console.log(transactionData, 'transaction data before saving')
 
             const transaction = await prisma.transaction.create({
                 data: transactionData
