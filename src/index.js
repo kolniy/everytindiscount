@@ -48,14 +48,14 @@ async function startApolloServer(typeDefs, resolvers) {
 
      // set static files
     // block of code come's after application routes
-    if(process.env.NODE_ENV === 'production'){
+    // if(process.env.NODE_ENV === 'production'){
     // set static files
-    app.use(express.static('client/build'))
+    // app.use(express.static('client/build'))
     
-    app.get("/*", (req, res) => {
-      res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'))
-    })
-  }
+    // app.get("/*", (req, res) => {
+    //   res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'))
+    // })
+//   }
 
     const schema = makeExecutableSchema({ typeDefs, resolvers });
 

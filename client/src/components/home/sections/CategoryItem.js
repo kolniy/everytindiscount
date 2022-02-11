@@ -26,7 +26,7 @@ const CategoryItem = ({ packageItem }) => {
                             className="mt-2"
                             color="primary"
                           >
-                          Buy Now
+                          Subscribe
                           </Button>
                         </CardBody>
                         <div className="card-item-primary__img">
