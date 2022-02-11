@@ -86,7 +86,7 @@ model Transaction {
   userid           String        @db.ObjectId
   paymentmethod    String
   status           String
-  paymentreference String // payment reference is used to check if the user has made a successful transfer for bank transfer payments
+  paymentreference String?  // payment reference is used to check if the user has made a successful transfer for bank transfer payments
   valuerecipient   String
   isseen           Boolean    @default(false)
   vendor           String
