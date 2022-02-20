@@ -10,6 +10,7 @@ import { Modal, Card,
     NavItem, NavLink
 } from 'reactstrap'
 import { useAlert } from 'react-alert'
+import { USER_LOGIN, USER_SIGNUP } from '../../action/types'
 import logo from '../../images/logo.png'
 
 const SIGN_UP = gql`
@@ -72,7 +73,7 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
           })
           localStorage.setItem('token', signup.token)
           authDispatch({
-            type: "USER_SIGNUP",
+            type: USER_SIGNUP,
             payload: {
               token: signup.token,
               user: signup.user,
@@ -106,7 +107,7 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
             type:'success'
           })
           authDispatch({
-            type: "USER_LOGIN",
+            type: USER_LOGIN,
             payload: {
               token: signin.token,
               user: signin.user,

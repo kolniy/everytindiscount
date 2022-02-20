@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import authDispatch from "./state/auth";
 import { useLazyQuery, gql } from "@apollo/client";
-// import { createBrowserHistory } from "history";
 import PrivateAdminRoute from "./routers/PrivateAdminRoute";
+import { USER_AUTHENTICATED } from "./action/types";
 
 import "./styles/assets/vendor/nucleo/css/nucleo.css";
 import "./styles/assets/vendor/font-awesome/css/font-awesome.min.css";
@@ -46,7 +46,7 @@ function App() {
      const [getUser, { loading: appLoading, data }] = useLazyQuery(USER, {
        onCompleted: ({ me }) => {
         authDispatch({
-          type:"USER_AUTHENTICATED",
+          type: USER_AUTHENTICATED,
           payload: {
             token: localStorage.getItem('token'),
             user: me,

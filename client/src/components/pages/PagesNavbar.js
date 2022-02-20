@@ -15,6 +15,7 @@ import {
   Col
  } from "reactstrap"
 import logo from "../../images/logo.png"
+import { USER_LOGOUT } from '../../action/types'
 
 
  const GET_USER_AUTH_STATE = gql`
@@ -28,7 +29,7 @@ import logo from "../../images/logo.png"
 
   const handleLogout = () => {
     authDispatch({
-      type:"USER_LOGOUT"
+      type: USER_LOGOUT
     })
   }
 

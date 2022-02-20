@@ -1,4 +1,6 @@
 import { makeVar } from "@apollo/client";
+import { USER_LOGIN, USER_SIGNUP, 
+    USER_AUTHENTICATED, USER_LOGOUT } from "../action/types"
 
 export const Auth = makeVar({
     token:"",
@@ -10,16 +12,17 @@ const authDispatch = (action) => {
     const { type, payload } = action
 
     switch (type) {
-        case "USER_LOGIN":
-        case "USER_SIGNUP":
-        case "USER_AUTHENTICATED":
+        case USER_LOGIN:
+        case USER_SIGNUP:
+        case USER_AUTHENTICATED:
         {
+         console.log(payload, 'this code ran')   
            return Auth({
                ...Auth(),
                ...payload
            })
         }
-        case "USER_LOGOUT": {
+        case USER_LOGOUT: {
             localStorage.removeItem('token')
             return Auth({
                 ...Auth(),

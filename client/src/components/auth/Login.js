@@ -4,6 +4,7 @@ import { gql, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { useAlert } from 'react-alert';
 import authDispatch from '../../state/auth'
+import { USER_LOGIN } from "../../action/types";
 
 import {
     Button,
@@ -53,12 +54,12 @@ const Login = ({ history }) => {
       }
     },
     onCompleted: ({ signin }) => {
-      localStorage.setItem('token', signin.token)
       alert.show('sign in was successful', {
         type:'success'
       })
+      localStorage.setItem('token', signin.token)
       authDispatch({
-        type: "USER_LOGIN",
+        type: USER_LOGIN,
         payload: {
           token: signin.token,
           user: signin.user,

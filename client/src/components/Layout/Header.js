@@ -16,6 +16,7 @@ import {
  } from "reactstrap"
  import { Link as ScrollLink } from "react-scroll"
  import logo from "../../images/logo.png"
+import { USER_LOGOUT } from "../../action/types"
 
  const GET_USER_AUTH_STATE = gql`
     query {
@@ -29,7 +30,7 @@ const Header = () => {
 
       const handleLogout = () => {
         authDispatch({
-          type:"USER_LOGOUT"
+          type: USER_LOGOUT
         })
       }
 
