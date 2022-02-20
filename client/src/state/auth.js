@@ -16,7 +16,6 @@ const authDispatch = (action) => {
         case USER_SIGNUP:
         case USER_AUTHENTICATED:
         {
-         console.log(payload, 'this code ran')   
            return Auth({
                ...Auth(),
                ...payload
