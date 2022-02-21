@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery, gql, useReactiveVar } from "@apollo/client"
+import { useReactiveVar } from "@apollo/client"
 import { Link } from "react-router-dom"
 import authDispatch from "../../state/auth"
 import {
@@ -19,18 +19,17 @@ import {
 import { USER_LOGOUT } from "../../action/types"
 import { Auth } from "../../state/auth"
 
- const GET_USER_AUTH_STATE = gql`
-    query {
-      Auth @client
-    }
- `
+//  const GET_USER_AUTH_STATE = gql`
+//     query {
+//       Auth @client
+//     }
+//  `
 
 const Header = () => {
 
-      const { data } = useQuery(GET_USER_AUTH_STATE)
+      // const { data } = useQuery(GET_USER_AUTH_STATE)
 
       const AuthState = useReactiveVar(Auth)
-      console.log(AuthState, 'auth state')
 
       const handleLogout = () => {
         authDispatch({

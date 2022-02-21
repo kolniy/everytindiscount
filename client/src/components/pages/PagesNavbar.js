@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { Link } from "react-router-dom"
 import authDispatch from '../../state/auth'
 import {
@@ -16,16 +16,18 @@ import {
  } from "reactstrap"
 import logo from "../../images/logo.png"
 import { USER_LOGOUT } from '../../action/types'
+import { Auth } from '../../state/auth'
 
-
- const GET_USER_AUTH_STATE = gql`
- query {
-   Auth @client
- }
-`
+//  const GET_USER_AUTH_STATE = gql`
+//  query {
+//    Auth @client
+//  }
+// `
  const PagesNavbar = () => {
 
-  const { data } = useQuery(GET_USER_AUTH_STATE)
+  // const { data } = useQuery(GET_USER_AUTH_STATE)
+
+  const AuthState = useReactiveVar(Auth)
 
   const handleLogout = () => {
     authDispatch({
@@ -65,7 +67,7 @@ import { USER_LOGOUT } from '../../action/types'
                     </Link>
                   </NavItem>
                   {  
-                      data.Auth.isAuthenticated === false && data.Auth.user == null ? 
+                      AuthState.isAuthenticated === false && AuthState.Auth.user === null ? 
                       <>
                        <NavItem>
                         <NavLink tag={Link} to="/login">
@@ -89,7 +91,7 @@ import { USER_LOGOUT } from '../../action/types'
                         </NavItem>
                       </> : <>
                         {
-                          data?.Auth?.user?.role === 'admin' ? (<>
+                          AuthState?.user?.role === 'admin' ? (<>
                           <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
