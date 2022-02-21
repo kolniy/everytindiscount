@@ -65,7 +65,7 @@ import { USER_LOGOUT } from '../../action/types'
                     </Link>
                   </NavItem>
                   {  
-                      data.Auth.isAuthenticated === false && data.Auth.user === null ? 
+                      data.Auth.isAuthenticated === false && data.Auth.user == null ? 
                       <>
                        <NavItem>
                         <NavLink tag={Link} to="/login">

@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery, gql } from "@apollo/client"
+import { useQuery, gql, useReactiveVar } from "@apollo/client"
 import { Link } from "react-router-dom"
 import authDispatch from "../../state/auth"
 import {
@@ -17,6 +17,7 @@ import {
  import { Link as ScrollLink } from "react-scroll"
  import logo from "../../images/logo.png"
 import { USER_LOGOUT } from "../../action/types"
+import { Auth } from "../../state/auth"
 
  const GET_USER_AUTH_STATE = gql`
     query {
@@ -27,6 +28,9 @@ import { USER_LOGOUT } from "../../action/types"
 const Header = () => {
 
       const { data } = useQuery(GET_USER_AUTH_STATE)
+
+      const AuthState = useReactiveVar(Auth)
+      console.log(AuthState, 'auth state')
 
       const handleLogout = () => {
         authDispatch({
@@ -81,7 +85,7 @@ const Header = () => {
                   </ScrollLink>
                   </NavItem>
                     {  
-                      data.Auth.isAuthenticated === false && data.Auth.user == null ? 
+                      AuthState.isAuthenticated === false && AuthState.user === null ? 
                       <>
                        <NavItem>
                         <NavLink tag={Link} to="/login">
@@ -105,7 +109,7 @@ const Header = () => {
                         </NavItem>
                       </> : <>
                         {
-                          data.Auth?.user?.role === 'admin' ? (<>
+                          AuthState?.user?.role === 'admin' ? (<>
                              <NavItem className="d-lg-block ml-lg-2 mb-1">
                               <Button 
                               onClick={handleLogout}
