@@ -67,7 +67,7 @@ import { Auth } from '../../state/auth'
                     </Link>
                   </NavItem>
                   {  
-                      AuthState.isAuthenticated === false && AuthState.Auth.user === null ? 
+                      AuthState?.isAuthenticated === false && AuthState?.user == null ? 
                       <>
                        <NavItem>
                         <NavLink tag={Link} to="/login">

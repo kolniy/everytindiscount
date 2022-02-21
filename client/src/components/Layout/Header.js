@@ -84,7 +84,7 @@ const Header = () => {
                   </ScrollLink>
                   </NavItem>
                     {  
-                      AuthState.isAuthenticated === false && AuthState.user === null ? 
+                      AuthState?.isAuthenticated === false && AuthState?.user === null ? 
                       <>
                        <NavItem>
                         <NavLink tag={Link} to="/login">
