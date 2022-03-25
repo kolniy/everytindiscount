@@ -4,6 +4,8 @@ import shortid from "shortid"
 import axios from "axios"
 import { pubsub } from "../index"
 
+import transporter from "../email/config"
+
 import { PrismaClient, Prisma } from "@prisma/client"
 const prisma = new PrismaClient()
 
