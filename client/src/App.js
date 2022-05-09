@@ -16,16 +16,23 @@ import './App.scss';
 import Landing from "./components/home/Landing"
 import AdminLandingPage from "./components/Admin/Index"
 import AdministratorsPage from "./components/Admin/Administrators/Adminpage"
-import AdminMarketersPage from "./components/Admin/Marketers/MarketersPage"
 import AdminTransactionsPage from "./components/Admin/Transactions/TransactionsPage"
+import AdminUserTransactionPage from "./components/Admin/AdminTransactions/AdminUserTransaction"
 import AdminPackageTypePage from "./components/Admin/PackageTypes/PackageTypePage"
 import AdminPackagesPage from "./components/Admin/Packages/PackagesPage"
 import AdminSinglePackageItemPage from "./components/Admin/Packages/AdminSinglePackageItemPage"
 import AdminProfilePage from "./components/Admin/Profile/ProfilePage"
 import AdminUsersPage from "./components/Admin/Users/UsersPage"
+// client imports below
+import Index from "./components/Client/Index";
+import ClientProfilePage from "./components/Client/Profile/ClientProfilePage";
+import ClientTransactionPage from "./components/Client/Transactions/ClientTransactionPage";
+
+// regular pages
 import SinglePackageDisplayPage from "./components/pages/SinglePackageDisplayPage";
 import Register from "./components/auth/Register"
 import Login from "./components/auth/Login"
+import PasswordReset from "./components/auth/PasswordReset";
 
 const USER = gql`
  query {
@@ -69,15 +76,20 @@ function App() {
         <Route exact path="/package/single/:packageid" component={SinglePackageDisplayPage} />
         <Route exact path="/signup" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/reset/password" component={PasswordReset} />
         <PrivateAdminRoute exact path="/admin" component={AdminLandingPage} />
         <PrivateAdminRoute exact path="/admin/administrators" component={AdministratorsPage} />
-        <PrivateAdminRoute exact path="/admin/marketers" component={AdminMarketersPage} />
+        <PrivateAdminRoute exact path="/admin/user/transactions" component={AdminUserTransactionPage} />
         <PrivateAdminRoute exact path="/admin/transaction" component={AdminTransactionsPage} />
         <PrivateAdminRoute exact path="/admin/packagetypes" component={AdminPackageTypePage} />
         <PrivateAdminRoute exact path="/admin/packages" component={AdminPackagesPage} />
         <PrivateAdminRoute exact path="/admin/package/packageitem/:packageitemId" component={AdminSinglePackageItemPage} />
         <PrivateAdminRoute exact path="/admin/profile" component={AdminProfilePage} />
         <PrivateAdminRoute exact path="/admin/users" component={AdminUsersPage} />
+          {/* client Routes  */}
+        <PrivateAdminRoute exact path="/user/package" component={Index} />
+        <PrivateAdminRoute exact path="/user/profile" component={ClientProfilePage} />
+        <PrivateAdminRoute exact path="/user/transaction" component={ClientTransactionPage} />
       </Switch>
     </Router> )
   } else {
@@ -92,13 +104,17 @@ function App() {
           <Route exact path="/login" component={Login} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin" component={AdminLandingPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/administrators" component={AdministratorsPage} />
-          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/marketers" component={AdminMarketersPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/admin/user/transactions" component={AdminUserTransactionPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/transaction" component={AdminTransactionsPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/packagetypes" component={AdminPackageTypePage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/packages" component={AdminPackagesPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/package/packageitem/:packageitemId" component={AdminSinglePackageItemPage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/profile" component={AdminProfilePage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/users" component={AdminUsersPage} />
+           {/* client Routes  */}
+          <PrivateAdminRoute exact path="/user/package" component={Index} />
+          <PrivateAdminRoute exact path="/user/profile" component={ClientProfilePage} />
+          <PrivateAdminRoute exact path="/user/transaction" component={ClientTransactionPage} />
         </Switch>
       </Router> )
       }

@@ -145,8 +145,8 @@ return <>
                             />
                           </InputGroup>
                         </FormGroup>
-                        <div className="text-muted mt-1 mb-1">
-                        <small>Forgot your passord? <Link>Click Here</Link></small>
+                      <div className="text-muted mt-1 mb-1">
+                        <small>Forgot your passord? <Link to="/reset/password">Click Here</Link></small>
                       </div>
                         <div className="text-center">
                           <Button

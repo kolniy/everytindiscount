@@ -19,7 +19,7 @@ const TransactionSuccessModal = ({
         if(user.role === 'admin'){
             history.push('/admin/user/transactions')
         } else {
-            history.push('/dashboard/user')
+            history.push('/user/transaction')
         }
     }
 

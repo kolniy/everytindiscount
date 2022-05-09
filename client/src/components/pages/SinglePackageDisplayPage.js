@@ -83,8 +83,8 @@ const SinglePackageDisplayPage = ({ match }) => {
 
     return <>
         <PagesNavbar />
-<section className="register section section-shaped full-width">
- <div className="shape shape-style-1 section-background">
+        <section className="register section section-shaped full-width">
+        <div className="shape shape-style-1 section-background">
               <span />
               <span />
               <span />

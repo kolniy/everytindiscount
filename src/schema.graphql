@@ -8,6 +8,7 @@ type Query {
   adminSaleSum: String!
   adminPackagesCount: Int!
   transactions: [Transaction]!
+  adminUserTransactions: [Transaction]!
   adminAccounts: [User!]!
 }
 

@@ -132,7 +132,7 @@ import { Auth } from '../../state/auth'
                               className="btn-neutral btn-icon navbar-btn"
                               color="default"
                               tag={Link}
-                              to="/user/dashboard"
+                              to="/user/package"
                                 >
                               <span className="btn-inner--icon">
                               <i className="ni ni-single-02"></i>

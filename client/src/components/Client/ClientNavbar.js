@@ -19,8 +19,7 @@ const GET_USER_AUTH_STATE = gql`
       Auth @client
     }
 `
-
-const AdminNavbar = () => {
+const ClientNavbar = () => {
 
   const { data } = useQuery(GET_USER_AUTH_STATE)
 
@@ -33,7 +32,7 @@ const AdminNavbar = () => {
           <Container fluid>
             <Link
               className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-              to="/admin"
+              to="/user/package"
             >
              EverytinDiscount
             </Link>
@@ -49,7 +48,7 @@ const AdminNavbar = () => {
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span style={{color:"#fff"}} className="mb-0 text-sm font-weight-bold">
-                        Admin {user.name}
+                        Client { user?.name }
                       </span>
                     </Media>
                   </Media>
@@ -58,21 +57,17 @@ const AdminNavbar = () => {
                   <DropdownItem className="noti-title" header tag="div">
                     <h6 className="text-overflow m-0">Welcome!</h6>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <DropdownItem to="/user/profile" tag={Link}>
                     <i className="ni ni-single-02" />
                     <span>My profile</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <DropdownItem to="/user/faq" tag={Link}>
                     <i className="ni ni-settings-gear-65" />
-                    <span>Settings</span>
+                    <span>Faq</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <DropdownItem to="/user/support" tag={Link}>
                     <i className="ni ni-calendar-grid-58" />
-                    <span>Activity</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-support-16" />
-                    <span>Support</span>
+                    <span>Contact Support</span>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
@@ -87,4 +82,4 @@ const AdminNavbar = () => {
     </>
 }
 
-export default AdminNavbar
+export default ClientNavbar

@@ -23,7 +23,7 @@ const GET_DASHBOARD_ACTIVE_LINK = gql`
     }
 `
 
-const VerticalNavbar = () => {
+const ClientVerticalNavbar = () => {
 
     const { data : activeLink } = useQuery(GET_DASHBOARD_ACTIVE_LINK)
     const [ collapseOpen, setCollapseOpen ] = useState(false)
@@ -58,7 +58,7 @@ const VerticalNavbar = () => {
             <span className="navbar-toggler-icon" />
             
           </button>
-        <NavbarBrand tag={Link} to="/" className="pt-0">
+        <NavbarBrand tag={Link} to="/user/package" className="pt-0">
             <img
             alt="..."
             className="navbar-brand-img"
@@ -71,7 +71,7 @@ const VerticalNavbar = () => {
             <div className="navbar-collapse-header">
               <Row>
                   <Col className="collapse-brand" xs="6">
-                      <Link to="/admin">
+                      <Link to="/user/package">
                         <img alt="..." src={logo} />
                       </Link>
                   </Col>
@@ -95,90 +95,35 @@ const VerticalNavbar = () => {
              onClick={e => updateLinkOnClick(1)}
              className={activeLink.adminNavbarActiveLink === 1 && 'active-navbar-item'}>
                 <NavLink
-                    to="/admin"
+                    to="/user/package"
                     tag={Link}
                 >
                 <i className="fas fa-tv"></i>
-                    Dashboard
+                    Packages
                 </NavLink>
             </NavItem>
              <NavItem
              onClick={e => updateLinkOnClick(2)}
              className={activeLink.adminNavbarActiveLink === 2 && 'active-navbar-item'}>
                 <NavLink
-                    to="/admin/administrators"
+                    to="/user/transaction"
                     tag={Link}
                 >
                 <i className="fas fa-user"></i>
-                    Admins
+                    Transaction
                 </NavLink>
             </NavItem>
             <NavItem 
              onClick={e => updateLinkOnClick(3)}
              className={activeLink.adminNavbarActiveLink === 3 && 'active-navbar-item'}>
             <NavLink
-                to="/admin/user/transactions"
-                tag={Link}
-            >
-            <i className="fas fa-users"></i>
-               My Transactions
-            </NavLink>
-            </NavItem>  
-            <NavItem
-            onClick={e => updateLinkOnClick(4)}
-            className={activeLink.adminNavbarActiveLink === 4 && 'active-navbar-item'}>
-            <NavLink
-                to="/admin/transaction"
-                tag={Link}
-            >
-            <i className="fas fa-chart-line"></i>
-                Transactions
-            </NavLink>
-            </NavItem>  
-            <NavItem
-            onClick={e => updateLinkOnClick(5)}
-            className={activeLink.adminNavbarActiveLink === 5 && 'active-navbar-item'}>
-            <NavLink
-                to="/admin/packagetypes"
-                tag={Link}
-            >
-            <i className="fas fa-layer-group"></i>
-                Package Types
-            </NavLink>
-            </NavItem> 
-            <NavItem 
-            onClick={e => updateLinkOnClick(6)}
-            className={activeLink.adminNavbarActiveLink === 6 && 'active-navbar-item'}>
-            <NavLink
-                to="/admin/packages"
-                tag={Link}
-            >
-            <i className="fas fa-cubes"></i>
-                Packages
-            </NavLink>
-            </NavItem> 
-            <NavItem
-            onClick={e => updateLinkOnClick(7)}
-            className={activeLink.adminNavbarActiveLink === 7 && 'active-navbar-item'}>
-            <NavLink
-                to="/admin/profile"
+                to="/user/profile"
                 tag={Link}
             >
             <i className="fas fa-id-card"></i>
-                Profile
+               My profile
             </NavLink>
-            </NavItem>  
-            <NavItem
-            onClick={e => updateLinkOnClick(8)}
-            className={activeLink.adminNavbarActiveLink === 8 && 'active-navbar-item'}>
-            <NavLink
-                to="/admin/users"
-                tag={Link}
-            >
-            <i className="fas fa-users"></i>
-                Users
-            </NavLink>
-            </NavItem>  
+            </NavItem>      
             </Nav>
             {/* Divider */}
             <hr className="my-3" />
@@ -197,4 +142,4 @@ const VerticalNavbar = () => {
     </>
 }
 
-export default VerticalNavbar
+export default ClientVerticalNavbar

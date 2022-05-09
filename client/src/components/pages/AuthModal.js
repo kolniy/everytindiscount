@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useMutation, gql } from '@apollo/client'
 import authDispatch from '../../state/auth'
 import { Modal, Card,
@@ -285,6 +286,9 @@ export const AuthModal = ({ openAuthModal, toggleAuthModal }) => {
                                  />
                               </InputGroup>
                             </FormGroup>
+                           <div className="text-muted mt-1 mb-1">
+                               <small>Forgot your passord? <Link to="/reset/password">Click Here</Link></small>
+                           </div>
                             <div className="text-center">
                               <Button
                                 className="my-4"
