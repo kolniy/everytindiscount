@@ -58,7 +58,7 @@ const ClientVerticalNavbar = () => {
             <span className="navbar-toggler-icon" />
             
           </button>
-        <NavbarBrand tag={Link} to="/user/package" className="pt-0">
+        <NavbarBrand tag={Link} to="/" className="pt-0">
             <img
             alt="..."
             className="navbar-brand-img"
@@ -71,7 +71,7 @@ const ClientVerticalNavbar = () => {
             <div className="navbar-collapse-header">
               <Row>
                   <Col className="collapse-brand" xs="6">
-                      <Link to="/user/package">
+                      <Link to="/">
                         <img alt="..." src={logo} />
                       </Link>
                   </Col>

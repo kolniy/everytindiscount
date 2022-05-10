@@ -27,6 +27,30 @@ const packages = async (parent, args, { prisma }, info) => {
     return packagesByPackageTypeId
 }
 
+const getPackagesInClientDashboard = async (parent, { packageTypeId, queryString }, { prisma }, info) => {
+     const queryWhereCondition = queryString.length > 0 ? {
+        AND: [
+            {
+                packagetypeId: packageTypeId
+            },
+            {
+                packagename: {
+                    contains: queryString,
+                    mode: 'insensitive'
+                }
+            }
+        ]
+    } : {
+        packagetypeId: packageTypeId
+     }
+
+     const packagesByPackageTypeIdAndName = await prisma.package.findMany({
+        where: queryWhereCondition
+    })
+
+    return packagesByPackageTypeIdAndName
+}
+
 const singlePackage = async (_, { packageId }, { prisma }, info) => {
     const foundPackage = await prisma.package.findUnique({
         where: {
@@ -171,5 +195,5 @@ export { me, packagetypes,
     adminTransactionCount, adminUsersCount,
     adminSaleSum, adminPackagesCount,
     transactions, adminAccounts,
-    adminUserTransactions
+    adminUserTransactions, getPackagesInClientDashboard
 }

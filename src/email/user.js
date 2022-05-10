@@ -15,7 +15,7 @@ const passwordResetEmail = async (to) => {
    </div>`
 
    await transporter.sendMail({
-    from: 'customerservice@everytindiscount.com',
+    from: 'noreply@everytindiscount.com',
     to: to,
     subject: `Password Reset`,
     html:html

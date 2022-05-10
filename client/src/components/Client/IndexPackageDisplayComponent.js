@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
-import { useQuery, gql } from "@apollo/client"
+import { useQuery, gql } from '@apollo/client'
 import { Card, CardBody, TabContent, TabPane, Row, } from 'reactstrap'
-import CategoryItem from './CategoryItem'
+import IndexPackageItem from './IndexPackageItem'
 
-const getPackagesFromPackageTypeId = gql`
-    query ($packageTypeId: ID!) {
-    packages(packageTypeId: $packageTypeId) {
+const getPackagesFromPackageTypeIdAndName = gql`
+    query ($packageTypeId: ID!, $queryString: String!) {
+    getPackagesInClientDashboard(
+        packageTypeId: $packageTypeId,
+        queryString: $queryString
+    ) {
     id
     packagename
     packagelogo
@@ -16,21 +19,24 @@ const getPackagesFromPackageTypeId = gql`
 }
 `
 
-const PackageDisplayComponent = ({
-    activeTabId
+const IndexPackageDisplayComponent = ({
+    activeTabId,
+    searchQuery
 }) => {
 
-    const { data, error, loading, refetch } = useQuery(getPackagesFromPackageTypeId, {
+    const { data, error, loading, refetch } = useQuery(getPackagesFromPackageTypeIdAndName, {
         variables: {
-            packageTypeId: activeTabId
+            packageTypeId: activeTabId,
+            queryString: searchQuery
         }
     })
 
     useEffect(() => {
-      refetch({
-        packageTypeId: activeTabId
-      })
-    }, [refetch, activeTabId])
+        refetch({
+            packageTypeId: activeTabId,
+            queryString: searchQuery
+        })
+    }, [activeTabId, searchQuery, refetch])
 
     if(loading){
         return (<div style={{
@@ -47,14 +53,14 @@ const PackageDisplayComponent = ({
         return <p className="text-center mt-3 mb-3">error {error}</p>
     }
 
-    return <>
-        <Card>
+  return <>
+         <Card>
               <CardBody>
                 <TabContent>
                   <TabPane>
                 <Row>
                  {
-                data.packages.length === 0 ? 
+                data.getPackagesInClientDashboard.length === 0 ? 
                   <div style={{
                     display:'flex',
                     alignContent:'center',
@@ -65,8 +71,8 @@ const PackageDisplayComponent = ({
                   </div> : 
                 <>
                 {
-                     data.packages.map((packageItem) => 
-                     <CategoryItem key={packageItem.id} 
+                     data.getPackagesInClientDashboard.map((packageItem) => 
+                     <IndexPackageItem key={packageItem.id} 
                        packageItem={packageItem}
                       />)
                 }
@@ -77,7 +83,7 @@ const PackageDisplayComponent = ({
                 </TabContent>
               </CardBody>
             </Card>
-    </>
+  </>
 }
 
-export default PackageDisplayComponent
+export default IndexPackageDisplayComponent

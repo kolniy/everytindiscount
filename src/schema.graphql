@@ -2,6 +2,7 @@ type Query {
   me: User!
   packagetypes: [PackageType!]!
   packages(packageTypeId: ID!): [Package!]!
+  getPackagesInClientDashboard(packageTypeId: ID!, queryString: String!): [Package!]!
   singlePackage(packageId: ID!): Package!
   adminTransactionCount: Int!
   adminUsersCount: Int!

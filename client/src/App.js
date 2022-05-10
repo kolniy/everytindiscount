@@ -24,7 +24,7 @@ import AdminSinglePackageItemPage from "./components/Admin/Packages/AdminSingleP
 import AdminProfilePage from "./components/Admin/Profile/ProfilePage"
 import AdminUsersPage from "./components/Admin/Users/UsersPage"
 // client imports below
-import Index from "./components/Client/Index";
+import ClientPackagesPage from "./components/Client/ClientPackagesPage";
 import ClientProfilePage from "./components/Client/Profile/ClientProfilePage";
 import ClientTransactionPage from "./components/Client/Transactions/ClientTransactionPage";
 
@@ -87,7 +87,7 @@ function App() {
         <PrivateAdminRoute exact path="/admin/profile" component={AdminProfilePage} />
         <PrivateAdminRoute exact path="/admin/users" component={AdminUsersPage} />
           {/* client Routes  */}
-        <PrivateAdminRoute exact path="/user/package" component={Index} />
+        <PrivateAdminRoute exact path="/user/package" component={ClientPackagesPage} />
         <PrivateAdminRoute exact path="/user/profile" component={ClientProfilePage} />
         <PrivateAdminRoute exact path="/user/transaction" component={ClientTransactionPage} />
       </Switch>
@@ -112,9 +112,9 @@ function App() {
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/profile" component={AdminProfilePage} />
           <PrivateAdminRoute exact appLoading={appLoading} path="/admin/users" component={AdminUsersPage} />
            {/* client Routes  */}
-          <PrivateAdminRoute exact path="/user/package" component={Index} />
-          <PrivateAdminRoute exact path="/user/profile" component={ClientProfilePage} />
-          <PrivateAdminRoute exact path="/user/transaction" component={ClientTransactionPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/user/package" component={ClientPackagesPage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/user/profile" component={ClientProfilePage} />
+          <PrivateAdminRoute exact appLoading={appLoading} path="/user/transaction" component={ClientTransactionPage} />
         </Switch>
       </Router> )
       }

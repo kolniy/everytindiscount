@@ -21,3 +21,27 @@ const handleUpdate = async () => {
 }
 
 handleUpdate()
+
+const nodemailer = require("nodemailer")
+
+const transporter = nodemailer.createTransport({
+    host: "mail.okedtv.com",
+    port: 465,
+    secure:true,
+    auth: {
+        user: "customerservice@okedtv.com",
+        pass: "UgOV!-tO]vQp"
+    }
+})
+
+const sendMail = async () => {
+    await transporter.sendMail({
+        from: 'noreply@everytindiscount.com',
+        to: 'kolniysoft@gmail.com',
+        subject: `Password Reset`,
+        // html:html
+        text: 'Testing the mail client'
+      })
+}
+
+sendMail()
