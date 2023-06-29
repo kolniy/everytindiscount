@@ -49,7 +49,7 @@ const AdminNavbar = () => {
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span style={{color:"#fff"}} className="mb-0 text-sm font-weight-bold">
-                        Admin {user.name}
+                        Admin {user?.name}
                       </span>
                     </Media>
                   </Media>

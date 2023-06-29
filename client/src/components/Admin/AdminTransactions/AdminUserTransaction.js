@@ -10,7 +10,7 @@ import AdminUserTransactionItem from './AdminUserTransactionItem'
 
 export const GET_USER_TRANSACTIONS = gql`
   query {
-    adminUserTransactions {
+    getUserTransactions {
         id
         createdat
         amount
@@ -96,11 +96,11 @@ const AdminTransaction = () => {
                             </thead>
                             <tbody>
                                {
-                                 data?.adminUserTransactions?.length === 0 ? <>
+                                 data?.getUserTransactions?.length === 0 ? <>
                                      <p className="lead text-center">No Transactions Found</p>
                                  </> : <>
                                       {
-                                        data?.adminUserTransactions.map((transaction) => {
+                                        data?.getUserTransactions.map((transaction) => {
                                           return <AdminUserTransactionItem  
                                             key={transaction.id} 
                                             transaction={transaction}

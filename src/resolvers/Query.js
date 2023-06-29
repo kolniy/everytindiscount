@@ -167,7 +167,7 @@ const transactions = async (parent, args, { userId }, info) => {
     return transactions
 }
 
-const adminUserTransactions = async (parent, args, { userId }, info) => {
+const getUserTransactions = async (parent, args, { userId }, info) => {
     const user = await prisma.user.findUnique({
         where: {
             id: userId
@@ -195,5 +195,6 @@ export { me, packagetypes,
     adminTransactionCount, adminUsersCount,
     adminSaleSum, adminPackagesCount,
     transactions, adminAccounts,
-    adminUserTransactions, getPackagesInClientDashboard
+    getUserTransactions,
+    getPackagesInClientDashboard
 }

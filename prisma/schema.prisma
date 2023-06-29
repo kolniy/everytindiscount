@@ -7,12 +7,11 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+  provider = "prisma-client-js"
 }
 
 model User {
-  id                 String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
   name               String
   email              String         @unique
   role               Role           @default(user)
@@ -33,7 +32,7 @@ enum Role {
 }
 
 model Package_Type {
-  id          String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   iconname    String
   createdby   User           @relation(fields: [createdbyid], references: [id])
@@ -44,7 +43,7 @@ model Package_Type {
 }
 
 model Package {
-  id                             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id                             String         @id @default(auto()) @map("_id") @db.ObjectId
   packagetype                    Package_Type   @relation(fields: [packagetypeId], references: [id])
   packagetypeId                  String         @db.ObjectId
   packagename                    String
@@ -61,7 +60,7 @@ model Package {
 }
 
 model Package_Plan {
-  id              String        @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
   planname        String
   plandescription String
   planprice       Int
@@ -76,18 +75,18 @@ model Package_Plan {
 }
 
 model Transaction {
-  id               String        @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
   createdat        DateTime      @default(now())
   plan             Package_Plan? @relation(fields: [planid], references: [id])
   planid           String?       @db.ObjectId
   reference        String?
-  amount           Decimal
+  amount           Float
   transactionby    User          @relation(fields: [userid], references: [id])
   userid           String        @db.ObjectId
   paymentmethod    String
   status           String
-  paymentreference String?  // payment reference is used to check if the user has made a successful transfer for bank transfer payments
+  paymentreference String? // payment reference is used to check if the user has made a successful transfer for bank transfer payments
   valuerecipient   String
-  isseen           Boolean    @default(false)
+  isseen           Boolean       @default(false)
   vendor           String
 }
